@@ -1,4 +1,4 @@
-export type Kind =
+export type MapNodeKind =
   | 'EvalDefinition'
   | 'HTTPOperationDefinition'
   | 'IterationDefinition'
@@ -21,43 +21,43 @@ export interface Location {
   end: number;
 }
 
-export interface ASTNodeBase {
-  kind: Kind;
+export interface MapASTNodeBase {
+  kind: MapNodeKind;
   loc?: Location;
 }
 
-export interface JSExpressionNode extends ASTNodeBase {
+export interface JSExpressionNode extends MapASTNodeBase {
   kind: 'JSExpression';
   expression: string;
   source: string;
   sourceMap: string;
 }
 
-export interface MapExpressionDefinitionNode extends ASTNodeBase {
+export interface MapExpressionDefinitionNode extends MapASTNodeBase {
   kind: 'MapExpressionsDefinition';
   left: string;
   right: JSExpressionNode;
 }
 
-export interface VariableExpressionDefinitionNode extends ASTNodeBase {
+export interface VariableExpressionDefinitionNode extends MapASTNodeBase {
   kind: 'VariableExpressionsDefinition';
   left: string;
   right: JSExpressionNode;
 }
 
-export interface OutcomeDefinitionNode extends ASTNodeBase {
+export interface OutcomeDefinitionNode extends MapASTNodeBase {
   kind: 'OutcomeDefinition';
   resultDefinition?: MapExpressionDefinitionNode[];
   returnDefinition?: MapExpressionDefinitionNode[];
   setDefinition?: VariableExpressionDefinitionNode[];
 }
 
-export interface EvalDefinitionNode extends ASTNodeBase {
+export interface EvalDefinitionNode extends MapASTNodeBase {
   kind: 'EvalDefinition';
   outcomeDefinition: OutcomeDefinitionNode;
 }
 
-export interface HTTPOperationDefinitionNode extends ASTNodeBase {
+export interface HTTPOperationDefinitionNode extends MapASTNodeBase {
   kind: 'HTTPOperationDefinition';
   method: string;
   url: string;
@@ -76,23 +76,23 @@ export interface HTTPOperationDefinitionNode extends ASTNodeBase {
   };
 }
 
-export interface NetworkOperationDefinitionNode extends ASTNodeBase {
+export interface NetworkOperationDefinitionNode extends MapASTNodeBase {
   kind: 'NetworkOperationDefinition';
   definition: HTTPOperationDefinitionNode;
 }
 
-export interface OperationCallDefinitionNode extends ASTNodeBase {
+export interface OperationCallDefinitionNode extends MapASTNodeBase {
   kind: 'OperationCallDefinition';
   operationName: string;
   arguments: VariableExpressionDefinitionNode[];
   successOutcomeDefinition: OutcomeDefinitionNode;
 }
 
-export interface IterationDefinitionNode extends ASTNodeBase {
+export interface IterationDefinitionNode extends MapASTNodeBase {
   kind: 'IterationDefinition';
 }
 
-export interface StepDefinitionNode extends ASTNodeBase {
+export interface StepDefinitionNode extends MapASTNodeBase {
   kind: 'StepDefinition';
   stepName: string;
   condition: JSExpressionNode;
@@ -104,30 +104,30 @@ export interface StepDefinitionNode extends ASTNodeBase {
     | OperationCallDefinitionNode;
 }
 
-export interface OperationDefinitionNode extends ASTNodeBase {
+export interface OperationDefinitionNode extends MapASTNodeBase {
   kind: 'OperationDefinition';
   operationName: string;
   variableExpressionsDefinition: VariableExpressionDefinitionNode[];
   stepsDefinition: StepDefinitionNode[];
 }
 
-export interface ProfileIdNode extends ASTNodeBase {
+export interface ProfileIdNode extends MapASTNodeBase {
   kind: 'ProfileId';
   profileId: string;
 }
 
-export interface ProviderNode extends ASTNodeBase {
+export interface ProviderNode extends MapASTNodeBase {
   kind: 'Provider';
   providerId: string;
 }
 
-export interface MapNode extends ASTNodeBase {
+export interface MapNode extends MapASTNodeBase {
   kind: 'Map';
   profileId: ProfileIdNode;
   provider: ProviderNode;
 }
 
-export interface MapDefinitionNode extends ASTNodeBase {
+export interface MapDefinitionNode extends MapASTNodeBase {
   kind: 'MapDefinition';
   mapName: string;
   usecaseName: string;
@@ -135,13 +135,13 @@ export interface MapDefinitionNode extends ASTNodeBase {
   stepsDefinition: StepDefinitionNode[];
 }
 
-export interface MapDocumentNode extends ASTNodeBase {
+export interface MapDocumentNode extends MapASTNodeBase {
   kind: 'MapDocument';
   map: MapNode;
   definitions: (MapDefinitionNode | OperationDefinitionNode)[];
 }
 
-export type ASTNode =
+export type MapASTNode =
   | EvalDefinitionNode
   | HTTPOperationDefinitionNode
   | IterationDefinitionNode
