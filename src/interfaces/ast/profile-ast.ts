@@ -86,16 +86,16 @@ export interface FieldDefinition extends ProfileASTNodeBase, DocumentedNode {
   kind: 'FieldDefinition';
   fieldName: string;
   type: Type;
-  exampleValue: string;
+  exampleValue?: string;
 }
 
 export interface ProfileUseCaseDefinitionNode extends ProfileASTNodeBase, DocumentedNode {
   kind: 'UseCaseDefinition';
   useCaseName: string;
   safety: ProfileUseCaseSafety;
-  input: ObjectModelDefinitionNode | ObjectModelTypeName;
+  input?: ObjectModelDefinitionNode | ObjectModelTypeName;
   result: ObjectModelDefinitionNode | ObjectModelTypeName;
-  errors: ObjectModelTypeName[];
+  errors?: ObjectModelTypeName[];
 }
 
 export interface NamedScalarModelDefinitionNode extends ProfileASTNodeBase, DocumentedNode {
