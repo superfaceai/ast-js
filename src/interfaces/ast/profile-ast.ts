@@ -1,12 +1,9 @@
-export type ScalarTypeName = 
-  | 'boolean'
-  | 'number'
-  | 'string'
+export type ScalarTypeName = 'boolean' | 'number' | 'string';
 
-export type ModelTypeName = string
-export type ObjectModelTypeName = string
+export type ModelTypeName = string;
+export type ObjectModelTypeName = string;
 
-export type ProfileNodeKind = 
+export type ProfileNodeKind =
   | 'ProfileDocument'
   | 'Profile'
   | 'ProfileId'
@@ -19,7 +16,7 @@ export type ProfileNodeKind =
   | 'EnumValueDefinition'
   | 'NamedType'
   | 'ListType'
-  | 'NonNullType'
+  | 'NonNullType';
 
 // TODO: Same as in Map AST -> reuse?
 export interface Location {
@@ -45,9 +42,9 @@ export interface DocumentedNode {
 }
 
 export interface ProfileNode extends ProfileASTNodeBase, DocumentedNode {
-  kind: 'Profile'
+  kind: 'Profile';
   profileId: ProfileIdNode;
-} 
+}
 
 export interface ProfileDocumentNode extends ProfileASTNodeBase {
   kind: 'ProfileDocument';
@@ -56,9 +53,9 @@ export interface ProfileDocumentNode extends ProfileASTNodeBase {
 }
 
 export enum ProfileUseCaseSafety {
-  safe = "safe",
-  unsafe = "unsafe",
-  idempotent  = "idempotent"
+  safe = 'safe',
+  unsafe = 'unsafe',
+  idempotent = 'idempotent',
 }
 
 export interface NamedType extends ProfileASTNodeBase {
@@ -76,11 +73,11 @@ export interface NonNullType extends ProfileASTNodeBase {
   type: NamedType | ListType | AnonymousModelDefinitionNode;
 }
 
-export type Type = 
+export type Type =
   | NamedType
   | ListType
   | NonNullType
-  | AnonymousModelDefinitionNode
+  | AnonymousModelDefinitionNode;
 
 export interface FieldDefinition extends ProfileASTNodeBase, DocumentedNode {
   kind: 'FieldDefinition';
@@ -89,7 +86,9 @@ export interface FieldDefinition extends ProfileASTNodeBase, DocumentedNode {
   exampleValue?: string;
 }
 
-export interface ProfileUseCaseDefinitionNode extends ProfileASTNodeBase, DocumentedNode {
+export interface ProfileUseCaseDefinitionNode
+  extends ProfileASTNodeBase,
+    DocumentedNode {
   kind: 'UseCaseDefinition';
   useCaseName: string;
   safety: ProfileUseCaseSafety;
@@ -98,31 +97,41 @@ export interface ProfileUseCaseDefinitionNode extends ProfileASTNodeBase, Docume
   errors?: ObjectModelTypeName[];
 }
 
-export interface NamedScalarModelDefinitionNode extends ProfileASTNodeBase, DocumentedNode {
+export interface NamedScalarModelDefinitionNode
+  extends ProfileASTNodeBase,
+    DocumentedNode {
   kind: 'ScalarModelDefinition';
   modelName: ModelTypeName;
   baseType: ScalarTypeName;
 }
 
-export interface ObjectModelDefinitionNode extends ProfileASTNodeBase, DocumentedNode {
+export interface ObjectModelDefinitionNode
+  extends ProfileASTNodeBase,
+    DocumentedNode {
   kind: 'ObjectModelDefinition';
   fields: FieldDefinition[];
 }
 
-export interface NamedObjectModelDefinitionNode extends ObjectModelDefinitionNode {
+export interface NamedObjectModelDefinitionNode
+  extends ObjectModelDefinitionNode {
   modelName: ObjectModelTypeName;
 }
 
-export interface UnionModelDefinitionNode extends ProfileASTNodeBase, DocumentedNode {
+export interface UnionModelDefinitionNode
+  extends ProfileASTNodeBase,
+    DocumentedNode {
   kind: 'UnionModelDefinition';
   modelName: ModelTypeName;
 }
 
-export interface NamedUnionModelDefinitionNode extends UnionModelDefinitionNode {
+export interface NamedUnionModelDefinitionNode
+  extends UnionModelDefinitionNode {
   modelName: ModelTypeName;
 }
 
-export interface EnumModelDefinitionNode extends ProfileASTNodeBase, DocumentedNode {
+export interface EnumModelDefinitionNode
+  extends ProfileASTNodeBase,
+    DocumentedNode {
   kind: 'EnumModelDefinition';
   enumValues: EnumValueDefinition[];
 }
@@ -131,18 +140,20 @@ export interface NamedEnumModelDefinitionNode extends EnumModelDefinitionNode {
   modelName: ModelTypeName;
 }
 
-export interface EnumValueDefinition extends ProfileASTNodeBase, DocumentedNode {
+export interface EnumValueDefinition
+  extends ProfileASTNodeBase,
+    DocumentedNode {
   kind: 'EnumValueDefinition';
   enumValue: string;
 }
 
-export type AnonymousModelDefinitionNode = 
+export type AnonymousModelDefinitionNode =
   | ObjectModelDefinitionNode
   | UnionModelDefinitionNode
-  | EnumModelDefinitionNode
+  | EnumModelDefinitionNode;
 
-export type ProfileModelDefinitionNode = 
+export type ProfileModelDefinitionNode =
   | NamedScalarModelDefinitionNode
   | NamedObjectModelDefinitionNode
   | NamedUnionModelDefinitionNode
-  | NamedEnumModelDefinitionNode
+  | NamedEnumModelDefinitionNode;
