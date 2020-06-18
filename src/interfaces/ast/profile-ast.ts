@@ -1,7 +1,14 @@
 export type ScalarTypeName = 'boolean' | 'number' | 'string';
 
-export type ModelTypeName = string;
-export type ObjectModelTypeName = string;
+export interface ModelTypeName extends ProfileASTNodeBase {
+  kind: 'ModelTypeName';
+  name: string;
+}
+
+export interface ObjectModelTypeName extends ProfileASTNodeBase {
+  kind: 'ObjectModelTypeName';
+  name: string;
+}
 
 export type ProfileNodeKind =
   | 'ProfileDocument'
@@ -16,7 +23,9 @@ export type ProfileNodeKind =
   | 'EnumValueDefinition'
   | 'NamedType'
   | 'ListType'
-  | 'NonNullType';
+  | 'NonNullType'
+  | 'ModelTypeName'
+  | 'ObjectModelTypeName';
 
 // TODO: Same as in Map AST -> reuse?
 export interface Location {
@@ -49,7 +58,7 @@ export interface ProfileNode extends ProfileASTNodeBase, DocumentedNode {
 export interface ProfileDocumentNode extends ProfileASTNodeBase {
   kind: 'ProfileDocument';
   profile: ProfileNode;
-  definitions: (ProfileUseCaseDefinitionNode | ProfileModelDefinitionNode)[];
+  definitions: DocumentDefinition[];
 }
 
 export enum ProfileUseCaseSafety {
@@ -144,7 +153,7 @@ export interface EnumValueDefinition
   extends ProfileASTNodeBase,
     DocumentedNode {
   kind: 'EnumValueDefinition';
-  enumValue: string;
+  enumValue: string | number;
 }
 
 export type AnonymousModelDefinitionNode =
@@ -157,3 +166,7 @@ export type ProfileModelDefinitionNode =
   | NamedObjectModelDefinitionNode
   | NamedUnionModelDefinitionNode
   | NamedEnumModelDefinitionNode;
+
+export type DocumentDefinition =
+  | ProfileUseCaseDefinitionNode
+  | ProfileModelDefinitionNode;
