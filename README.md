@@ -29,3 +29,19 @@ Package publishing is done through GitHub release functionality.
 Use semver for the version tag. It must be in format of `v<major>.<minor>.<patch>`.
 
 Github Actions workflow will pick up the release and publish it as one of the [packages](https://github.com/superindustries/language/packages).
+
+## Licensing
+
+Licenses of node_modules are checked during CI/CD for every commit. Only the following licenses are allowed:
+
+- 0BDS
+- MIT
+- Apache-2.0
+- ISC
+- BSD-3-Clause
+- BSD-2-Clause
+- CC-BY-4.0
+- CC-BY-3.0;BSD
+- CC0-1.0
+- Unlicense
+- UNLICENSED
