@@ -26,12 +26,13 @@ jobs:
         run: yarn test
       - name: Build
         run: yarn build
-      - name: Publish Info
+      - name: Publish Git preparation
         run: |
           echo Publishing as version ${GITHUB_REF##*/v}
-          # This is to silence the GIT gods. Yarn cannot publish without a version bump (that would invoke git with empty credentials)
+          # This is to appease the GIT gods. Yarn cannot publish without a version bump (that would invoke git with empty credentials)
           git config --global user.email "foo@bar.com"
           git config --global user.name "Foo Bar"
+          git tag -d  ${GITHUB_REF##*/}
       - name: Publish
         run: yarn publish --new-version ${GITHUB_REF##*/v} --verbose
         env:
