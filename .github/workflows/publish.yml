@@ -29,6 +29,9 @@ jobs:
       - name: Publish Info
         run: |
           echo Publishing as version ${GITHUB_REF##*/v}
+          # This is to silence the GIT gods. Yarn cannot publish without a version bump (that would invoke git with empty credentials)
+          git config --global user.email "foo@bar.com"
+          git config --global user.name "Foo Bar"
       - name: Publish
         run: yarn publish --new-version ${GITHUB_REF##*/v} --verbose
         env:
