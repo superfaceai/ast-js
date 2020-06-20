@@ -27,6 +27,6 @@ jobs:
       - name: Build
         run: yarn build
       - name: Publish
-        run: yarn publish
+        run: yarn publish --version ${GITHUB_REF##*/v}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
