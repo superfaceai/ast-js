@@ -1,6 +1,6 @@
 {
-  "name": "language",
-  "version": "0.0.0",
+  "name": "@superindustries/language",
+  "version": "0.1.4",
   "description": "Level 5 autonomous, self-driving API client, https://superface.ai",
   "main": "dist/language.js",
   "source": "src/index.ts",
@@ -9,9 +9,11 @@
   "browser": "dist/language.umd.js",
   "types": "dist/index.d.ts",
   "repository": "https://github.com/superindustries/language.git",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "author": "Superface Team",
   "license": "MIT",
-  "private": true,
   "scripts": {
     "build": "microbundle --tsconfig tsconfig.release.json",
     "watch": "yarn build --watch",
