@@ -30,6 +30,6 @@ jobs:
         run: |
           echo Publishing as version ${GITHUB_REF##*/v}
       - name: Publish
-        run: yarn publish --version ${GITHUB_REF##*/v}
+        run: yarn publish --version ${GITHUB_REF##*/v} --verbose
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
