@@ -29,8 +29,8 @@ export interface MapASTNodeBase {
 export interface JSExpressionNode extends MapASTNodeBase {
   kind: 'JSExpression';
   expression: string;
-  source: string;
-  sourceMap: string;
+  source?: string;
+  sourceMap?: string;
 }
 
 export interface MapExpressionDefinitionNode extends MapASTNodeBase {
@@ -69,7 +69,7 @@ export interface HTTPOperationDefinitionNode extends MapASTNodeBase {
     queryParametersDefinition: VariableExpressionDefinitionNode[];
   };
   responseDefinition: {
-    statusCode: string;
+    statusCode: number;
     contentType: string;
     contentLanguage: string;
     outcomeDefinition: OutcomeDefinitionNode;
@@ -96,7 +96,7 @@ export interface StepDefinitionNode extends MapASTNodeBase {
   kind: 'StepDefinition';
   stepName: string;
   condition: JSExpressionNode;
-  iterationDefinition: IterationDefinitionNode;
+  iterationDefinition?: IterationDefinitionNode;
   variableExpressionsDefinition: VariableExpressionDefinitionNode[];
   run:
     | EvalDefinitionNode
