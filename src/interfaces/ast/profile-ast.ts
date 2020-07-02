@@ -1,3 +1,5 @@
+import { Location } from './location';
+
 export type ScalarTypeName = 'boolean' | 'number' | 'string';
 
 export interface ModelTypeName extends ProfileASTNodeBase {
@@ -27,20 +29,11 @@ export type ProfileNodeKind =
   | 'ModelTypeName'
   | 'ObjectModelTypeName';
 
-// TODO: Same as in Map AST -> reuse?
-export interface Location {
-  start: number;
-  end: number;
-}
-
-// TODO: Similar as in Map AST -> reuse?
 export interface ProfileASTNodeBase {
   kind: ProfileNodeKind;
   loc?: Location;
 }
-
-// TODO: Same as in Map AST -> reuse?
-export interface ProfileIdNode extends ProfileASTNodeBase {
+export interface ProfileProfileIdNode extends ProfileASTNodeBase {
   kind: 'ProfileId';
   profileId: string;
 }
@@ -52,7 +45,7 @@ export interface DocumentedNode {
 
 export interface ProfileNode extends ProfileASTNodeBase, DocumentedNode {
   kind: 'Profile';
-  profileId: ProfileIdNode;
+  profileId: ProfileProfileIdNode;
 }
 
 export interface ProfileDocumentNode extends ProfileASTNodeBase {

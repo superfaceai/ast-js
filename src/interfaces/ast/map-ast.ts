@@ -1,3 +1,5 @@
+import { Location } from './location';
+
 export type MapNodeKind =
   | 'EvalDefinition'
   | 'HTTPOperationDefinition'
@@ -15,11 +17,6 @@ export type MapNodeKind =
   | 'Provider'
   | 'StepDefinition'
   | 'VariableExpressionsDefinition';
-
-export interface Location {
-  start: number;
-  end: number;
-}
 
 export interface MapASTNodeBase {
   kind: MapNodeKind;
@@ -111,7 +108,7 @@ export interface OperationDefinitionNode extends MapASTNodeBase {
   stepsDefinition: StepDefinitionNode[];
 }
 
-export interface ProfileIdNode extends MapASTNodeBase {
+export interface MapProfileIdNode extends MapASTNodeBase {
   kind: 'ProfileId';
   profileId: string;
 }
@@ -123,7 +120,7 @@ export interface ProviderNode extends MapASTNodeBase {
 
 export interface MapNode extends MapASTNodeBase {
   kind: 'Map';
-  profileId: ProfileIdNode;
+  profileId: MapProfileIdNode;
   provider: ProviderNode;
 }
 
@@ -154,7 +151,7 @@ export type MapASTNode =
   | OperationCallDefinitionNode
   | OperationDefinitionNode
   | OutcomeDefinitionNode
-  | ProfileIdNode
+  | MapProfileIdNode
   | ProviderNode
   | StepDefinitionNode
   | VariableExpressionDefinitionNode;

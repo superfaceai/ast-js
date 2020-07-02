@@ -1,7 +1,7 @@
 {
   "name": "@superindustries/language",
-  "version": "0.1.4",
-  "description": "Level 5 autonomous, self-driving API client, https://superface.ai",
+  "version": "0.2.0",
+  "description": "Superface profile and map language ASTs, https://superface.ai",
   "main": "dist/language.js",
   "source": "src/index.ts",
   "module": "dist/language.modern.js",
