@@ -1,4 +1,4 @@
-import { Location } from './location';
+import { Location, Span } from './source';
 
 // BASE //
 
@@ -24,8 +24,8 @@ export type ProfileNodeKind =
 
 export interface ProfileASTNodeBase {
   kind: ProfileNodeKind;
-  /** Corresponds to span in lexer */
-  loc?: Location;
+  span?: Span;
+  location?: Location;
 }
 
 /** Node preceded by documenting string literal */

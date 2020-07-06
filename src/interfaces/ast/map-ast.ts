@@ -1,4 +1,4 @@
-import { Location } from './location';
+import { Location, Span } from './source';
 
 export type MapNodeKind =
   | 'EvalDefinition'
@@ -20,7 +20,8 @@ export type MapNodeKind =
 
 export interface MapASTNodeBase {
   kind: MapNodeKind;
-  loc?: Location;
+  span?: Span;
+  location?: Location;
 }
 
 export interface JSExpressionNode extends MapASTNodeBase {
