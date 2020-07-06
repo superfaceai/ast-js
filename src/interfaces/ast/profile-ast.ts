@@ -209,6 +209,7 @@ export interface ProfileUseCaseDefinitionNode
   safety: ProfileUseCaseSafety;
   input?: Type;
   result: Type;
+  asyncResult: boolean;
   errors?: Type[];
 }
 
