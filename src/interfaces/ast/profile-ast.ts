@@ -84,12 +84,11 @@ export interface EnumModelDefinitionNode
  *
  * These are either string or number literals
  */
-export interface EnumValueDefinition
-  extends ProfileASTNodeBase,
-    DocumentedNode {
+export interface EnumValueDefinition extends ProfileASTNodeBase {
   kind: 'EnumValueDefinition';
-  enumValue: string | number;
+  enumValue: string | number | boolean;
 }
+
 export type AnonymousModelDefinitionNode =
   | ObjectModelDefinitionNode
   | UnionModelDefinitionNode
