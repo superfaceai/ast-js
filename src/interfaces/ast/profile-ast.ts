@@ -47,8 +47,7 @@ export interface ScalarTypeName extends ProfileASTNodeBase {
  * `{ fields... }`
  */
 export interface ObjectModelDefinitionNode
-  extends ProfileASTNodeBase,
-    DocumentedNode {
+  extends ProfileASTNodeBase {
   kind: 'ObjectModelDefinition';
   fields: FieldDefinition[];
 }
@@ -67,8 +66,7 @@ export interface FieldDefinition extends ProfileASTNodeBase, DocumentedNode {
  * `type | type | ...`
  */
 export interface UnionModelDefinitionNode
-  extends ProfileASTNodeBase,
-    DocumentedNode {
+  extends ProfileASTNodeBase {
   kind: 'UnionModelDefinition';
   types: Type[];
 }
@@ -77,8 +75,7 @@ export interface UnionModelDefinitionNode
  * `enum { values... }`
  */
 export interface EnumModelDefinitionNode
-  extends ProfileASTNodeBase,
-    DocumentedNode {
+  extends ProfileASTNodeBase {
   kind: 'EnumModelDefinition';
   enumValues: EnumValueDefinition[];
 }
@@ -151,7 +148,7 @@ export interface NamedScalarModelDefinitionNode
  * `model ident { fields... }`
  */
 export interface NamedObjectModelDefinitionNode
-  extends ObjectModelDefinitionNode {
+  extends ObjectModelDefinitionNode, DocumentedNode {
   modelName: ModelTypeName;
 }
 
@@ -160,7 +157,7 @@ export interface NamedObjectModelDefinitionNode
  * `field ident: type | type | ...`
  */
 export interface NamedUnionModelDefinitionNode
-  extends UnionModelDefinitionNode {
+  extends UnionModelDefinitionNode, DocumentedNode {
   modelName: ModelTypeName;
 }
 
@@ -168,7 +165,7 @@ export interface NamedUnionModelDefinitionNode
  * Construct of form:
  * `enum ident { values ... }`
  */
-export interface NamedEnumModelDefinitionNode extends EnumModelDefinitionNode {
+export interface NamedEnumModelDefinitionNode extends EnumModelDefinitionNode, DocumentedNode {
   modelName: ModelTypeName;
 }
 
