@@ -8,11 +8,11 @@ import {
   MapDocumentNode,
   MapExpressionDefinitionNode,
   MapNode,
+  MapProfileIdNode,
   NetworkOperationDefinitionNode,
   OperationCallDefinitionNode,
   OperationDefinitionNode,
   OutcomeDefinitionNode,
-  ProfileIdNode,
   ProviderNode,
   StepDefinitionNode,
   VariableExpressionDefinitionNode,
@@ -90,9 +90,9 @@ export function assertIsOperationDefinitionNode(
   checkNode(node, 'OperationDefinition');
 }
 
-export function assertIsProfileIdNode(
+export function assertIsMapProfileIdNode(
   node: MapASTNode
-): asserts node is ProfileIdNode {
+): asserts node is MapProfileIdNode {
   checkNode(node, 'ProfileId');
 }
 
@@ -182,7 +182,7 @@ export function isOperationDefinitionNode(
   return node.kind === 'OperationDefinition';
 }
 
-export function isProfileIdNode(node: MapASTNode): node is ProfileIdNode {
+export function isProfileIdNode(node: MapASTNode): node is MapProfileIdNode {
   return node.kind === 'ProfileId';
 }
 

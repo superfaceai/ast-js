@@ -1,159 +1,92 @@
-export type ScalarTypeName = 'boolean' | 'number' | 'string';
+import { Location, Span } from './source';
 
-export interface ModelTypeName extends ProfileASTNodeBase {
-  kind: 'ModelTypeName';
-  name: string;
-}
-
-export interface ObjectModelTypeName extends ProfileASTNodeBase {
-  kind: 'ObjectModelTypeName';
-  name: string;
-}
+// BASE //
 
 export type ProfileNodeKind =
-  | 'ProfileDocument'
-  | 'Profile'
-  | 'ProfileId'
-  | 'UseCaseDefinition'
-  | 'FieldDefinition'
-  | 'ScalarModelDefinition'
+  // TYPES
+  | 'ScalarTypeName'
   | 'ObjectModelDefinition'
+  | 'FieldDefinition'
   | 'UnionModelDefinition'
   | 'EnumModelDefinition'
   | 'EnumValueDefinition'
-  | 'NamedType'
+  | 'ModelTypeName'
   | 'ListType'
   | 'NonNullType'
-  | 'ModelTypeName'
-  | 'ObjectModelTypeName';
+  // MODELS
+  | 'ScalarModelDefinition'
+  // USECASE
+  | 'UseCaseDefinition'
+  // DOCUMENT
+  | 'ProfileId'
+  | 'Profile'
+  | 'ProfileDocument';
 
-// TODO: Same as in Map AST -> reuse?
-export interface Location {
-  start: number;
-  end: number;
-}
-
-// TODO: Similar as in Map AST -> reuse?
 export interface ProfileASTNodeBase {
   kind: ProfileNodeKind;
-  loc?: Location;
+  span?: Span;
+  location?: Location;
 }
 
-// TODO: Same as in Map AST -> reuse?
-export interface ProfileIdNode extends ProfileASTNodeBase {
-  kind: 'ProfileId';
-  profileId: string;
-}
-
+/** Node preceded by documenting string literal */
 export interface DocumentedNode {
   title?: string;
   description?: string;
 }
 
-export interface ProfileNode extends ProfileASTNodeBase, DocumentedNode {
-  kind: 'Profile';
-  profileId: ProfileIdNode;
+// TYPES //
+
+/** From keywords: `Boolean`, `Number` and `String` */
+export interface ScalarTypeName extends ProfileASTNodeBase {
+  kind: 'ScalarTypeName';
+  name: 'boolean' | 'number' | 'string';
 }
 
-export interface ProfileDocumentNode extends ProfileASTNodeBase {
-  kind: 'ProfileDocument';
-  profile: ProfileNode;
-  definitions: DocumentDefinition[];
-}
-
-export enum ProfileUseCaseSafety {
-  safe = 'safe',
-  unsafe = 'unsafe',
-  idempotent = 'idempotent',
-}
-
-export interface NamedType extends ProfileASTNodeBase {
-  kind: 'NamedType';
-  type: ModelTypeName | ScalarTypeName;
-}
-
-export interface ListType extends ProfileASTNodeBase {
-  kind: 'ListType';
-  type: Type;
-}
-
-export interface NonNullType extends ProfileASTNodeBase {
-  kind: 'NonNullType';
-  type: NamedType | ListType | AnonymousModelDefinitionNode;
-}
-
-export type Type =
-  | NamedType
-  | ListType
-  | NonNullType
-  | AnonymousModelDefinitionNode;
-
-export interface FieldDefinition extends ProfileASTNodeBase, DocumentedNode {
-  kind: 'FieldDefinition';
-  fieldName: string;
-  type: Type;
-  exampleValue?: string;
-}
-
-export interface ProfileUseCaseDefinitionNode
-  extends ProfileASTNodeBase,
-    DocumentedNode {
-  kind: 'UseCaseDefinition';
-  useCaseName: string;
-  safety: ProfileUseCaseSafety;
-  input?: ObjectModelDefinitionNode | ObjectModelTypeName;
-  result: ObjectModelDefinitionNode | ObjectModelTypeName;
-  errors?: ObjectModelTypeName[];
-}
-
-export interface NamedScalarModelDefinitionNode
-  extends ProfileASTNodeBase,
-    DocumentedNode {
-  kind: 'ScalarModelDefinition';
-  modelName: ModelTypeName;
-  baseType: ScalarTypeName;
-}
-
+/**
+ * Construct of form:
+ * `{ fields... }`
+ */
 export interface ObjectModelDefinitionNode
-  extends ProfileASTNodeBase,
-    DocumentedNode {
+  extends ProfileASTNodeBase {
   kind: 'ObjectModelDefinition';
   fields: FieldDefinition[];
 }
-
-export interface NamedObjectModelDefinitionNode
-  extends ObjectModelDefinitionNode {
-  modelName: ObjectModelTypeName;
+/**
+ * Construct of form:
+ * `ident: type` or `ident`
+ * that appear inside object model definitions
+ */
+export interface FieldDefinition extends ProfileASTNodeBase, DocumentedNode {
+  kind: 'FieldDefinition';
+  fieldName: string;
+  type?: Type;
 }
-
+/**
+ * Construct of form:
+ * `type | type | ...`
+ */
 export interface UnionModelDefinitionNode
-  extends ProfileASTNodeBase,
-    DocumentedNode {
+  extends ProfileASTNodeBase {
   kind: 'UnionModelDefinition';
-  modelName: ModelTypeName;
+  types: Type[];
 }
-
-export interface NamedUnionModelDefinitionNode
-  extends UnionModelDefinitionNode {
-  modelName: ModelTypeName;
-}
-
+/**
+ * Construct of form:
+ * `enum { values... }`
+ */
 export interface EnumModelDefinitionNode
-  extends ProfileASTNodeBase,
-    DocumentedNode {
+  extends ProfileASTNodeBase {
   kind: 'EnumModelDefinition';
   enumValues: EnumValueDefinition[];
 }
-
-export interface NamedEnumModelDefinitionNode extends EnumModelDefinitionNode {
-  modelName: ModelTypeName;
-}
-
-export interface EnumValueDefinition
-  extends ProfileASTNodeBase,
-    DocumentedNode {
+/**
+ * Variant of an enum definition.
+ *
+ * These are either string or number literals
+ */
+export interface EnumValueDefinition extends ProfileASTNodeBase {
   kind: 'EnumValueDefinition';
-  enumValue: string | number;
+  enumValue: string | number | boolean;
 }
 
 export type AnonymousModelDefinitionNode =
@@ -161,12 +94,141 @@ export type AnonymousModelDefinitionNode =
   | UnionModelDefinitionNode
   | EnumModelDefinitionNode;
 
+/**
+ * Name of a model type parsed from identifiers.
+ *
+ * This is the name of a user defined type.
+ */
+export interface ModelTypeName extends ProfileASTNodeBase {
+  kind: 'ModelTypeName';
+  name: string;
+}
+
+/** Array type: `[type]` */
+export interface ListType extends ProfileASTNodeBase {
+  kind: 'ListType';
+  type: Type;
+}
+/** Non-null assertion operator: `type!` */
+export interface NonNullType extends ProfileASTNodeBase {
+  kind: 'NonNullType';
+  type:
+    | ScalarTypeName
+    | ModelTypeName
+    | ListType
+    | AnonymousModelDefinitionNode;
+}
+
+export type Type =
+  | ScalarTypeName
+  | AnonymousModelDefinitionNode
+  | ModelTypeName
+  | ListType
+  | NonNullType;
+
+// MODELS //
+
+/**
+ * Construct of form:
+ * `field ident: ScalarType` or `field ident: ModelType`
+ *
+ * This is basically a type alias.
+ */
+export interface NamedScalarModelDefinitionNode
+  extends ProfileASTNodeBase,
+    DocumentedNode {
+  kind: 'ScalarModelDefinition';
+  modelName: ModelTypeName;
+  baseType: ScalarTypeName | ModelTypeName;
+}
+
+/**
+ * Construct of form:
+ * `model ident { fields... }`
+ */
+export interface NamedObjectModelDefinitionNode
+  extends ObjectModelDefinitionNode, DocumentedNode {
+  modelName: ModelTypeName;
+}
+
+/**
+ * Construct of form:
+ * `field ident: type | type | ...`
+ */
+export interface NamedUnionModelDefinitionNode
+  extends UnionModelDefinitionNode, DocumentedNode {
+  modelName: ModelTypeName;
+}
+
+/**
+ * Construct of form:
+ * `enum ident { values ... }`
+ */
+export interface NamedEnumModelDefinitionNode extends EnumModelDefinitionNode, DocumentedNode {
+  modelName: ModelTypeName;
+}
+
 export type ProfileModelDefinitionNode =
   | NamedScalarModelDefinitionNode
   | NamedObjectModelDefinitionNode
   | NamedUnionModelDefinitionNode
   | NamedEnumModelDefinitionNode;
 
+// USECASE //
+
+/** Usecase safety indicator, corresponds to decorators */
+export enum ProfileUseCaseSafety {
+  safe = 'safe',
+  unsafe = 'unsafe',
+  idempotent = 'idempotent',
+}
+
+/**
+* Construct of form:
+```
+usecase ident @deco {
+  input: type
+  result: type
+  errors: [
+    type
+    type
+    ...
+  ]
+}
+```
+*/
+export interface ProfileUseCaseDefinitionNode
+  extends ProfileASTNodeBase,
+    DocumentedNode {
+  kind: 'UseCaseDefinition';
+  useCaseName: string;
+  safety: ProfileUseCaseSafety;
+  input?: Type;
+  result: Type;
+  asyncResult: boolean;
+  errors?: Type[];
+}
+
+// DOCUMENT //
+
+/** `profile: string` */
+export interface ProfileProfileIdNode extends ProfileASTNodeBase {
+  kind: 'ProfileId';
+  profileId: string;
+}
+/**
+ * The node containing document information at the top of the document.
+ */
+export interface ProfileNode extends ProfileASTNodeBase, DocumentedNode {
+  kind: 'Profile';
+  profileId: ProfileProfileIdNode;
+}
+/** Node enclosing the whole document */
+export interface ProfileDocumentNode extends ProfileASTNodeBase {
+  kind: 'ProfileDocument';
+  profile: ProfileNode;
+  definitions: DocumentDefinition[];
+}
 export type DocumentDefinition =
   | ProfileUseCaseDefinitionNode
   | ProfileModelDefinitionNode;
