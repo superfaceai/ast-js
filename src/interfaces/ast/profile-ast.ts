@@ -133,7 +133,7 @@ export interface ReusableFieldDefinitionNode
     DocumentedNode {
   kind: 'ReusableFieldDefinitionNode';
   fieldName: FieldNameNode;
-  type: Type;
+  type?: Type;
 }
 
 // MODEL //
@@ -151,7 +151,7 @@ export interface NamedModelDefinitionNode
     DocumentedNode {
   kind: 'NamedModelDefinitionNode';
   modelName: ModelTypeNode;
-  type: Type;
+  type?: Type;
 }
 
 // USECASE //
