@@ -1,6 +1,6 @@
 /**
  * Human-readable location of a token inside source code.
- * 
+ *
  * Both `line` and `column` are indexed from 1.
  */
 export type Location = {
