@@ -5,16 +5,15 @@ import { Location, Span } from './source';
 export type ProfileNodeKind =
   // TYPES
   | 'ScalarTypeNode'
-  | 'EnumTypeNode'
-  | 'ModelTypeNode'
-  | 'ObjectTypeNode'
+  | 'EnumModelDefinitionNode'
+  | 'ModelReferenceNode'
+  | 'ObjectModelDefinitionNode'
   | 'ListTypeNode'
   | 'NonNullTypeNode'
-  | 'UnionTypeNode'
+  | 'UnionModelDefinitionNode'
   // FIELDS
-  | 'FieldNameNode'
   | 'FieldDefinitionNode'
-  | 'ReusableFieldDefinitionNode'
+  | 'NamedFieldDefinitionNode'
   // MODELS
   | 'NamedModelDefinitionNode'
   // USECASE
@@ -50,20 +49,20 @@ export interface ScalarTypeNode extends ProfileASTNodeBase {
  *
  * This is the name of a user defined type (model).
  */
-export interface ModelTypeNode extends ProfileASTNodeBase {
-  kind: 'ModelTypeNode';
+export interface ModelReferenceNode extends ProfileASTNodeBase {
+  kind: 'ModelReferenceNode';
   name: string;
 }
 
 /** Construct of form: `enum { values... }` */
-export interface EnumTypeNode extends ProfileASTNodeBase {
-  kind: 'EnumTypeNode';
+export interface EnumModelDefinitionNode extends ProfileASTNodeBase {
+  kind: 'EnumModelDefinitionNode';
   enumValues: (string | number | boolean)[];
 }
 
 /** Construct of form: `{ fields... }` */
-export interface ObjectTypeNode extends ProfileASTNodeBase {
-  kind: 'ObjectTypeNode';
+export interface ObjectModelDefinitionNode extends ProfileASTNodeBase {
+  kind: 'ObjectModelDefinitionNode';
   fields: FieldDefinitionNode[];
 }
 
@@ -83,34 +82,33 @@ export interface NonNullTypeNode extends ProfileASTNodeBase {
   // Should be `Exclude<Type, NonNullTypeNode | UnionTypeNode>` but it produces a TS(2502) error
   type:
     | ScalarTypeNode
-    | EnumTypeNode
-    | ModelTypeNode
-    | ObjectTypeNode
+    | EnumModelDefinitionNode
+    | ModelReferenceNode
+    | ObjectModelDefinitionNode
     | ListTypeNode;
 }
 
 /** Construct of form: `type | type | ...` */
-export interface UnionTypeNode extends ProfileASTNodeBase {
-  kind: 'UnionTypeNode';
-  types: Exclude<Type, UnionTypeNode>[];
+export interface UnionModelDefinitionNode extends ProfileASTNodeBase {
+  kind: 'UnionModelDefinitionNode';
+  types: Exclude<Type, UnionModelDefinitionNode>[];
 }
 
+export type ModelDefinitionNode = 
+  | UnionModelDefinitionNode
+  | EnumModelDefinitionNode
+  | ObjectModelDefinitionNode
+;
+
 export type Type =
-  | UnionTypeNode
+  | ModelDefinitionNode
   | ScalarTypeNode
-  | EnumTypeNode
-  | ModelTypeNode
-  | ObjectTypeNode
+  | ModelReferenceNode
   | ListTypeNode
   | NonNullTypeNode;
 
 // FIELDS //
 
-/** Name of a field inside `FieldDefinitionNode`. */
-export interface FieldNameNode extends ProfileASTNodeBase {
-  kind: 'FieldNameNode';
-  fieldName: string;
-}
 /**
  * Construct of form: `ident: type` or `ident` that appear inside object model definitions
  */
@@ -118,7 +116,7 @@ export interface FieldDefinitionNode
   extends ProfileASTNodeBase,
     DocumentedNode {
   kind: 'FieldDefinitionNode';
-  fieldName: FieldNameNode;
+  fieldName: string;
   type?: Type;
 }
 
@@ -128,11 +126,11 @@ export interface FieldDefinitionNode
  * This assigns the name of `ident` to a type. All fields in the documents with the same name
  * will then share this type.
  */
-export interface ReusableFieldDefinitionNode
+export interface NamedFieldDefinitionNode
   extends ProfileASTNodeBase,
     DocumentedNode {
-  kind: 'ReusableFieldDefinitionNode';
-  fieldName: FieldNameNode;
+  kind: 'NamedFieldDefinitionNode';
+  fieldName: string;
   type?: Type;
 }
 
@@ -150,7 +148,7 @@ export interface NamedModelDefinitionNode
   extends ProfileASTNodeBase,
     DocumentedNode {
   kind: 'NamedModelDefinitionNode';
-  modelName: ModelTypeNode;
+  modelName: ModelReferenceNode;
   type?: Type;
 }
 
@@ -205,5 +203,5 @@ export interface ProfileDocumentNode extends ProfileASTNodeBase {
 }
 export type DocumentDefinition =
   | ProfileUseCaseDefinitionNode
-  | ReusableFieldDefinitionNode
+  | NamedFieldDefinitionNode
   | NamedModelDefinitionNode;
