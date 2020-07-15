@@ -61,6 +61,7 @@ export interface HTTPOperationDefinitionNode extends MapASTNodeBase {
   url: string;
   variableExpressionsDefinition: VariableExpressionDefinitionNode[];
   requestDefinition: {
+    contentType: string;
     security: 'basic' | 'bearer' | 'other';
     headers: VariableExpressionDefinitionNode[];
     body: MapExpressionDefinitionNode[];
