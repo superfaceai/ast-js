@@ -4,14 +4,15 @@ import { Location, Span } from './source';
 
 export type ProfileNodeKind =
   // TYPES
-  | 'PrimitiveType'
-  | 'ModelReference'
+  | 'PrimitiveTypeName'
+  | 'ModelTypeName'
   | 'EnumDefinition'
   | 'ObjectDefinition'
   | 'ListDefinition'
   | 'NonNullDefinition'
   | 'UnionDefinition'
   // FIELDS
+  | 'EnumValue'
   | 'FieldDefinition'
   | 'NamedFieldDefinition'
   // MODELS
@@ -39,8 +40,8 @@ export interface DocumentedNode {
 // TYPES //
 
 /** From keywords: `Boolean`, `Number` and `String` */
-export interface PrimitiveTypeNode extends ProfileASTNodeBase {
-  kind: 'PrimitiveType';
+export interface PrimitiveTypeNameNode extends ProfileASTNodeBase {
+  kind: 'PrimitiveTypeName';
   name: 'boolean' | 'number' | 'string';
 }
 
@@ -49,16 +50,16 @@ export interface PrimitiveTypeNode extends ProfileASTNodeBase {
  *
  * This is the name of a user defined type (model).
  */
-export interface ModelReferenceNode extends ProfileASTNodeBase {
-  kind: 'ModelReference';
+export interface ModelTypeNameNode extends ProfileASTNodeBase {
+  kind: 'ModelTypeName';
   name: string;
 }
-export type TypeName = PrimitiveTypeNode | ModelReferenceNode;
+export type TypeName = PrimitiveTypeNameNode | ModelTypeNameNode;
 
 /** Construct of form: `Enum { values... }` */
 export interface EnumDefinitionNode extends ProfileASTNodeBase {
   kind: 'EnumDefinition';
-  values: (string | number | boolean)[];
+  values: EnumValueNode[];
 }
 
 /** Construct of form: `{ fields... }` */
@@ -104,6 +105,14 @@ export type TypeDefinition =
 export type Type = TypeName | TypeDefinition;
 
 // FIELDS //
+
+/**
+ * Construct found as enum value.
+ */
+export interface EnumValueNode extends ProfileASTNodeBase, DocumentedNode {
+  kind: 'EnumValue',
+  value: string | number | boolean
+}
 
 /**
  * Construct of form: `ident: type` or `ident` that appear inside object model definitions
@@ -171,15 +180,15 @@ export interface UseCaseDefinitionNode
   useCaseName: string;
   /** Usecase safety indicator */
   safety?: 'safe' | 'unsafe' | 'idempotent';
-  input?: Type;
+  input?: ObjectDefinitionNode;
   result: Type;
   asyncResult?: Type;
-  errors?: Type[];
+  error?: Type;
 }
 
 // DOCUMENT //
 
-/** `profile: string` */
+/** `profile = string` */
 export interface ProfileIdNode extends ProfileASTNodeBase {
   kind: 'ProfileId';
   profileId: string;
