@@ -39,7 +39,7 @@ export interface DocumentedNode {
 
 // TYPES //
 
-/** From keywords: `Boolean`, `Number` and `String` */
+/** From keywords: `boolean`, `number` and `string` */
 export interface PrimitiveTypeNameNode extends ProfileASTNodeBase {
   kind: 'PrimitiveTypeName';
   name: 'boolean' | 'number' | 'string';
@@ -56,7 +56,7 @@ export interface ModelTypeNameNode extends ProfileASTNodeBase {
 }
 export type TypeName = PrimitiveTypeNameNode | ModelTypeNameNode;
 
-/** Construct of form: `Enum { values... }` */
+/** Construct of form: `enum { values... }` */
 export interface EnumDefinitionNode extends ProfileASTNodeBase {
   kind: 'EnumDefinition';
   values: EnumValueNode[];
@@ -110,12 +110,12 @@ export type Type = TypeName | TypeDefinition;
  * Construct found as enum value.
  */
 export interface EnumValueNode extends ProfileASTNodeBase, DocumentedNode {
-  kind: 'EnumValue',
-  value: string | number | boolean
+  kind: 'EnumValue';
+  value: string | number | boolean;
 }
 
 /**
- * Construct of form: `ident: type` or `ident` that appear inside object model definitions
+ * Construct of form: `ident type` or `ident` that appear inside object model definitions
  */
 export interface FieldDefinitionNode
   extends ProfileASTNodeBase,
@@ -126,7 +126,7 @@ export interface FieldDefinitionNode
 }
 
 /**
- * Construct of form: `field ident: type`
+ * Construct of form: `field ident type`
  *
  * This assigns the name of `ident` to a type. All fields in the documents with the same name
  * will then share this type.
@@ -142,12 +142,12 @@ export interface NamedFieldDefinitionNode
 // MODEL //
 
 /**
- * Construct of form: `model ident: TYPE` or `model ident { fields... }`
+ * Construct of form: `model ident type` or `model ident { fields... }`
  *
  * This creates a new type in the document, which is assignable using the `ModelReferenceNode`.
  *
- * This can be used ranging from simple type alias `model Foo: String` to complex unions
- * and objects `model Bar: Foo! | Enum { 1, 2 } | { baz: Boolean }`
+ * This can be used ranging from simple type alias `model Foo string` to complex unions
+ * and objects `model Bar Foo! | enum { ONE = 1, TWO = 2 } | { baz boolean }`
  */
 export interface NamedModelDefinitionNode
   extends ProfileASTNodeBase,
@@ -162,14 +162,13 @@ export interface NamedModelDefinitionNode
 /**
 * Construct of form:
 ```
-usecase ident @deco {
-  input: type
-  result: type
-  errors: [
-    type
-    type
-    ...
-  ]
+usecase ident safety {
+  input {
+    ...fields
+  }
+  result type
+  async result type
+  error type
 }
 ```
 */
@@ -181,7 +180,7 @@ export interface UseCaseDefinitionNode
   /** Usecase safety indicator */
   safety?: 'safe' | 'unsafe' | 'idempotent';
   input?: ObjectDefinitionNode;
-  result: Type;
+  result?: Type;
   asyncResult?: Type;
   error?: Type;
 }
