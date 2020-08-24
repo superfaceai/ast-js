@@ -209,3 +209,20 @@ export type DocumentDefinition =
   | UseCaseDefinitionNode
   | NamedFieldDefinitionNode
   | NamedModelDefinitionNode;
+
+export type ProfileASTNode =
+  | EnumDefinitionNode
+  | EnumValueNode
+  | FieldDefinitionNode
+  | ListDefinitionNode
+  | ModelTypeNameNode
+  | NamedFieldDefinitionNode
+  | NamedModelDefinitionNode
+  | NonNullDefinitionNode
+  | ObjectDefinitionNode
+  | PrimitiveTypeNameNode
+  | ProfileDocumentNode
+  | ProfileIdNode
+  | ProfileNode
+  | UnionDefinitionNode
+  | UseCaseDefinitionNode;
