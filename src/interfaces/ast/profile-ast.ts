@@ -18,6 +18,7 @@ export type ProfileNodeKind =
   // MODELS
   | 'NamedModelDefinition'
   // USECASE
+  | 'UseCaseSlotDefinition'
   | 'UseCaseDefinition'
   // DOCUMENT
   | 'ProfileId'
@@ -122,6 +123,8 @@ export interface FieldDefinitionNode
     DocumentedNode {
   kind: 'FieldDefinition';
   fieldName: string;
+  /** Non-required fields don't have to be present at all */
+  required: boolean;
   type?: Type;
 }
 
@@ -160,6 +163,18 @@ export interface NamedModelDefinitionNode
 // USECASE //
 
 /**
+ * Named slot definition for usecases.
+ *
+ * The point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation.
+ */
+export interface UseCaseSlotDefinitionNode<T extends Type = Type>
+  extends ProfileASTNodeBase,
+    DocumentedNode {
+  kind: 'UseCaseSlotDefinition';
+  type?: T;
+}
+
+/**
 * Construct of form:
 ```
 usecase ident safety {
@@ -179,10 +194,10 @@ export interface UseCaseDefinitionNode
   useCaseName: string;
   /** Usecase safety indicator */
   safety?: 'safe' | 'unsafe' | 'idempotent';
-  input?: ObjectDefinitionNode;
-  result?: Type;
-  asyncResult?: Type;
-  error?: Type;
+  input?: UseCaseSlotDefinitionNode<ObjectDefinitionNode>;
+  result?: UseCaseSlotDefinitionNode;
+  asyncResult?: UseCaseSlotDefinitionNode;
+  error?: UseCaseSlotDefinitionNode;
 }
 
 // DOCUMENT //
