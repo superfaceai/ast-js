@@ -1,22 +1,32 @@
 import { Location, Span } from './source';
 
 export type MapNodeKind =
-  | 'EvalDefinition'
-  | 'HTTPOperationDefinition'
-  | 'IterationDefinition'
-  | 'JSExpression'
-  | 'Map'
-  | 'MapDefinition'
-  | 'MapDocument'
-  | 'MapExpressionsDefinition'
-  | 'NetworkOperationDefinition'
-  | 'OperationCallDefinition'
-  | 'OperationDefinition'
-  | 'OutcomeDefinition'
-  | 'ProfileId'
-  | 'Provider'
-  | 'StepDefinition'
-  | 'VariableExpressionsDefinition';
+ // ATOMS  
+ | 'PrimitiveLiteral'
+ | 'ArrayLiteral'
+ | 'ObjectLiteral'
+ | 'JessieExpression'
+ | 'Assignment'
+ | 'StatementCondition'
+ // STATEMENTS
+ | 'SetStatement'
+ | 'ReturnStatement'
+ | 'FailStatement'
+ | 'MapResultStatement'
+ | 'MapErrorStatement'
+ // SCOPING STATEMENTS
+ | 'CallStatement'
+ | 'HttpResponseHandler'
+ | 'HttpCallStatement'
+ // DEFINITIONS
+ | 'MapDefinition'
+ | 'OperationDefinition'
+ // DOCUMENT
+ | 'ProfileId'
+ | 'Provider'
+ | 'Map'
+ | 'MapDocument'
+;
 
 export interface MapASTNodeBase {
   kind: MapNodeKind;
@@ -24,98 +34,177 @@ export interface MapASTNodeBase {
   location?: Location;
 }
 
-export interface JSExpressionNode extends MapASTNodeBase {
-  kind: 'JSExpression';
+// ATOMS
+
+/**
+ * Primitive literal atom like booleans, strings and numbers.
+ */
+export interface PrimitiveLiteralNode extends MapASTNodeBase {
+  kind: 'PrimitiveLiteral';
+  value: number | string | boolean;
+}
+
+/**
+ * Array literal atom.
+ */
+export interface ArrayLiteralNode extends MapASTNodeBase {
+  kind: 'ArrayLiteral';
+  elements: LiteralNode[];
+}
+
+/**
+ * Object literal node: `{ <...assignments> }`
+ */
+export interface ObjectLiteralNode extends MapASTNodeBase {
+  kind: 'ObjectLiteral';
+  fields: AssignmentNode[];
+}
+
+export interface JessieExpressionNode extends MapASTNodeBase {
+  kind: 'JessieExpression';
   expression: string;
   source?: string;
   sourceMap?: string;
 }
 
-export interface MapExpressionDefinitionNode extends MapASTNodeBase {
-  kind: 'MapExpressionsDefinition';
-  left: string;
-  right: JSExpressionNode;
+export type LiteralNode = ObjectLiteralNode | ArrayLiteralNode | PrimitiveLiteralNode | JessieExpressionNode;
+
+/**
+ * Assignment node: `key = <value>`
+ */
+export interface AssignmentNode extends MapASTNodeBase {
+  kind: 'Assignment';
+  key: string;
+  value: LiteralNode;
 }
 
-export interface VariableExpressionDefinitionNode extends MapASTNodeBase {
-  kind: 'VariableExpressionsDefinition';
-  left: string;
-  right: JSExpressionNode;
+/**
+ * Statement condition atom: `if (<jessie>)`
+ */
+export interface StatementConditionNode extends MapASTNodeBase {
+  kind: 'StatementCondition';
+  expression: JessieExpressionNode;
 }
 
-export interface OutcomeDefinitionNode extends MapASTNodeBase {
-  kind: 'OutcomeDefinition';
-  resultDefinition?: MapExpressionDefinitionNode[];
-  returnDefinition?: MapExpressionDefinitionNode[];
-  setDefinition?: VariableExpressionDefinitionNode[];
+// STATEMENTS
+
+/**
+ * Set statement, possibly with a condition: `set if (<jessie>) { <...assignments> }`
+ */
+export interface SetStatementNode extends MapASTNodeBase {
+  kind: 'SetStatement';
+  condition?: StatementConditionNode;
+  assignments: AssignmentNode[];
 }
 
-export interface EvalDefinitionNode extends MapASTNodeBase {
-  kind: 'EvalDefinition';
-  outcomeDefinition: OutcomeDefinitionNode;
+/**
+ * Return statement, possibly with a condition: `return if (<jessie>) <value>`
+ */
+export interface ReturnStatementNode extends MapASTNodeBase {
+  kind: 'ReturnStatement';
+  condition?: StatementConditionNode;
+  value: LiteralNode;
 }
 
-export interface HTTPOperationDefinitionNode extends MapASTNodeBase {
-  kind: 'HTTPOperationDefinition';
+/**
+ * Fail statement, possibly with a condition: `fail if (<jessie>) <value>`
+ */
+export interface FailStatementNode extends MapASTNodeBase {
+  kind: 'FailStatement';
+  condition?: StatementConditionNode;
+  value: LiteralNode;
+}
+
+/**
+ * Map result statement, possibly with a condition: `map result if (<jessie>) <value>`
+ */
+export interface MapResultStatementNode extends MapASTNodeBase {
+  kind: 'MapResultStatement';
+  condition?: StatementConditionNode;
+  value: LiteralNode;
+}
+
+/**
+ * Map result statement, possibly with a condition: `map error if (<jessie>) <value>`
+ */
+export interface MapErrorStatementNode extends MapASTNodeBase {
+  kind: 'MapErrorStatement';
+  condition?: StatementConditionNode;
+  value: LiteralNode;
+}
+
+// SCOPING STATEMENTS
+
+type OperationSubstatement = FailStatementNode | ReturnStatementNode;
+type MapSubstatement = MapResultStatementNode | MapErrorStatementNode;
+type SubstatementType = OperationSubstatement | MapSubstatement;
+
+/**
+ * Call statement, possibly with a condition: `call <op>(<...args>) { <...statements> }`
+ */
+export interface CallStatementNode<S extends SubstatementType> extends MapASTNodeBase {
+  kind: 'CallStatement';
+  condition?: StatementConditionNode;
+  operationName: string;
+  arguments: AssignmentNode[];
+  statements: (SetStatementNode | S)[];
+}
+
+/**
+ * Response handler for http: `response <statusCode> <contentType> <contentLanguage> { <...statements> }`
+ */
+export interface HttpResponseHandlerNode<S extends SubstatementType> extends MapASTNodeBase {
+  kind: 'HttpResponseHandler';
+  statusCode?: number;
+  contentType?: string;
+  contentLanguage?: string;
+  statements: (SetStatementNode | S)[];
+}
+
+export interface HttpCallStatementNode<S extends SubstatementType> extends MapASTNodeBase {
+  kind: 'HttpCallStatement';
   method: string;
   url: string;
-  variableExpressionsDefinition: VariableExpressionDefinitionNode[];
   requestDefinition: {
-    contentType: string;
-    contentLanguage?: string;
-    security: 'basic' | 'bearer' | 'other';
-    headers: VariableExpressionDefinitionNode[];
-    body: MapExpressionDefinitionNode[];
-    queryParametersDefinition: VariableExpressionDefinitionNode[];
+    queryParametersDefinition?: ObjectLiteralNode;
+    headers?: ObjectLiteralNode;
+    body?: LiteralNode;
   };
-  responseDefinition: {
-    statusCode: number;
-    contentType: string;
-    contentLanguage: string;
-    outcomeDefinition: OutcomeDefinitionNode;
-  };
+  responseHandlers: HttpResponseHandlerNode<S>[];
 }
 
-export interface NetworkOperationDefinitionNode extends MapASTNodeBase {
-  kind: 'NetworkOperationDefinition';
-  definition: HTTPOperationDefinitionNode;
+// DEFINITIONS
+
+export type MapStatement = SetStatementNode | MapResultStatementNode | MapErrorStatementNode | CallStatementNode<MapSubstatement> | HttpCallStatementNode<MapSubstatement>;
+
+export interface MapDefinitionNode extends MapASTNodeBase {
+  kind: 'MapDefinition';
+  name: string;
+  usecaseName: string;
+  statements: MapStatement[];
 }
 
-export interface OperationCallDefinitionNode extends MapASTNodeBase {
-  kind: 'OperationCallDefinition';
-  operationName: string;
-  arguments: VariableExpressionDefinitionNode[];
-  successOutcomeDefinition: OutcomeDefinitionNode;
-}
-
-export interface IterationDefinitionNode extends MapASTNodeBase {
-  kind: 'IterationDefinition';
-}
-
-export interface StepDefinitionNode extends MapASTNodeBase {
-  kind: 'StepDefinition';
-  stepName: string;
-  condition: JSExpressionNode;
-  iterationDefinition?: IterationDefinitionNode;
-  variableExpressionsDefinition: VariableExpressionDefinitionNode[];
-  run:
-    | EvalDefinitionNode
-    | NetworkOperationDefinitionNode
-    | OperationCallDefinitionNode;
-}
+export type OperationStatement = SetStatementNode | ReturnStatementNode | FailStatementNode | CallStatementNode<MapSubstatement> | HttpCallStatementNode<OperationSubstatement>;
 
 export interface OperationDefinitionNode extends MapASTNodeBase {
   kind: 'OperationDefinition';
-  operationName: string;
-  variableExpressionsDefinition: VariableExpressionDefinitionNode[];
-  stepsDefinition: StepDefinitionNode[];
+  name: string;
+  statements: OperationStatement[];
 }
 
+// DOCUMENT
+
+/**
+ * `profileId = <string>`
+ */
 export interface MapProfileIdNode extends MapASTNodeBase {
   kind: 'ProfileId';
   profileId: string;
 }
 
+/**
+ * `provider = <string>`
+ */
 export interface ProviderNode extends MapASTNodeBase {
   kind: 'Provider';
   providerId: string;
@@ -127,14 +216,6 @@ export interface MapNode extends MapASTNodeBase {
   provider: ProviderNode;
 }
 
-export interface MapDefinitionNode extends MapASTNodeBase {
-  kind: 'MapDefinition';
-  mapName: string;
-  usecaseName: string;
-  variableExpressionsDefinition: VariableExpressionDefinitionNode[];
-  stepsDefinition: StepDefinitionNode[];
-}
-
 export interface MapDocumentNode extends MapASTNodeBase {
   kind: 'MapDocument';
   map: MapNode;
@@ -142,19 +223,27 @@ export interface MapDocumentNode extends MapASTNodeBase {
 }
 
 export type MapASTNode =
-  | EvalDefinitionNode
-  | HTTPOperationDefinitionNode
-  | IterationDefinitionNode
-  | JSExpressionNode
-  | MapDefinitionNode
-  | MapDocumentNode
-  | MapExpressionDefinitionNode
-  | MapNode
-  | NetworkOperationDefinitionNode
-  | OperationCallDefinitionNode
-  | OperationDefinitionNode
-  | OutcomeDefinitionNode
-  | MapProfileIdNode
-  | ProviderNode
-  | StepDefinitionNode
-  | VariableExpressionDefinitionNode;
+ | PrimitiveLiteralNode
+ | ArrayLiteralNode
+ | ObjectLiteralNode
+ | JessieExpressionNode
+ | AssignmentNode
+ | StatementConditionNode
+ | SetStatementNode
+ | ReturnStatementNode
+ | FailStatementNode
+ | MapResultStatementNode
+ | MapErrorStatementNode
+ | CallStatementNode<MapSubstatement>
+ | CallStatementNode<OperationSubstatement>
+ | HttpResponseHandlerNode<MapSubstatement>
+ | HttpResponseHandlerNode<OperationSubstatement>
+ | HttpCallStatementNode<MapSubstatement>
+ | HttpCallStatementNode<OperationSubstatement>
+ | MapDefinitionNode
+ | OperationDefinitionNode
+ | MapProfileIdNode
+ | ProviderNode
+ | MapNode
+ | MapDocumentNode
+;
