@@ -70,11 +70,11 @@ export interface JessieExpressionNode extends MapASTNodeBase {
 export type LiteralNode = ObjectLiteralNode | ArrayLiteralNode | PrimitiveLiteralNode | JessieExpressionNode;
 
 /**
- * Assignment node: `key = <value>`
+ * Assignment node: `key."b.az".bar = <value>`
  */
 export interface AssignmentNode extends MapASTNodeBase {
   kind: 'Assignment';
-  key: string;
+  key: string[];
   value: LiteralNode;
 }
 
@@ -89,16 +89,7 @@ export interface StatementConditionNode extends MapASTNodeBase {
 // STATEMENTS
 
 /**
- * Set statement, possibly with a condition: `set if (<jessie>) { <...assignments> }`
- */
-export interface SetStatementNode extends MapASTNodeBase {
-  kind: 'SetStatement';
-  condition?: StatementConditionNode;
-  assignments: AssignmentNode[];
-}
-
-/**
- * Return statement, possibly with a condition: `return if (<jessie>) <value>`
+ * Return statement, possibly with a condition: `return <?condition> <value>`
  */
 export interface ReturnStatementNode extends MapASTNodeBase {
   kind: 'ReturnStatement';
@@ -107,7 +98,7 @@ export interface ReturnStatementNode extends MapASTNodeBase {
 }
 
 /**
- * Fail statement, possibly with a condition: `fail if (<jessie>) <value>`
+ * Fail statement, possibly with a condition: `fail <?condition> <value>`
  */
 export interface FailStatementNode extends MapASTNodeBase {
   kind: 'FailStatement';
@@ -116,7 +107,7 @@ export interface FailStatementNode extends MapASTNodeBase {
 }
 
 /**
- * Map result statement, possibly with a condition: `map result if (<jessie>) <value>`
+ * Map result statement, possibly with a condition: `map result <?condition> <value>`
  */
 export interface MapResultStatementNode extends MapASTNodeBase {
   kind: 'MapResultStatement';
@@ -125,7 +116,7 @@ export interface MapResultStatementNode extends MapASTNodeBase {
 }
 
 /**
- * Map result statement, possibly with a condition: `map error if (<jessie>) <value>`
+ * Map result statement, possibly with a condition: `map error <?condition> <value>`
  */
 export interface MapErrorStatementNode extends MapASTNodeBase {
   kind: 'MapErrorStatement';
@@ -135,12 +126,21 @@ export interface MapErrorStatementNode extends MapASTNodeBase {
 
 // SCOPING STATEMENTS
 
-type OperationSubstatement = FailStatementNode | ReturnStatementNode;
-type MapSubstatement = MapResultStatementNode | MapErrorStatementNode;
-type SubstatementType = OperationSubstatement | MapSubstatement;
+export type OperationSubstatement = FailStatementNode | ReturnStatementNode;
+export type MapSubstatement = MapResultStatementNode | MapErrorStatementNode;
+export type SubstatementType = OperationSubstatement | MapSubstatement;
 
 /**
- * Call statement, possibly with a condition: `call <op>(<...args>) { <...statements> }`
+ * Set statement, possibly with a condition: `set <?condition> { <...assignments> }`
+ */
+export interface SetStatementNode extends MapASTNodeBase {
+  kind: 'SetStatement';
+  condition?: StatementConditionNode;
+  assignments: AssignmentNode[];
+}
+
+/**
+ * Call statement, possibly with a condition: `call <op>(<...args>) <?condition> { <...statements> }`
  */
 export interface CallStatementNode<S extends SubstatementType> extends MapASTNodeBase {
   kind: 'CallStatement';
