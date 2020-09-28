@@ -14,7 +14,7 @@ export type MapNodeKind =
  | 'FailStatement'
  | 'MapResultStatement'
  | 'MapErrorStatement'
- // SCOPING STATEMENTS
+ // CONTEXTUAL STATEMENTS
  | 'CallStatement'
  | 'HttpResponseHandler'
  | 'HttpCallStatement'
@@ -166,7 +166,7 @@ export interface HttpCallStatementNode<S extends SubstatementType> extends MapAS
   method: string;
   url: string;
   requestDefinition: {
-    queryParametersDefinition?: ObjectLiteralNode;
+    queryParameters?: ObjectLiteralNode;
     headers?: ObjectLiteralNode;
     body?: LiteralNode;
   };
@@ -184,7 +184,7 @@ export interface MapDefinitionNode extends MapASTNodeBase {
   statements: MapStatement[];
 }
 
-export type OperationStatement = SetStatementNode | ReturnStatementNode | FailStatementNode | CallStatementNode<MapSubstatement> | HttpCallStatementNode<OperationSubstatement>;
+export type OperationStatement = SetStatementNode | ReturnStatementNode | FailStatementNode | CallStatementNode<OperationSubstatement> | HttpCallStatementNode<OperationSubstatement>;
 
 export interface OperationDefinitionNode extends MapASTNodeBase {
   kind: 'OperationDefinition';
