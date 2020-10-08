@@ -3,9 +3,9 @@ import { Location, Span } from './source';
 export type MapNodeKind =
  // ATOMS  
  | 'PrimitiveLiteral'
- | 'ArrayLiteral'
  | 'ObjectLiteral'
  | 'JessieExpression'
+ | 'InlineCall'
  | 'Assignment'
  | 'StatementCondition'
  // STATEMENTS
@@ -45,14 +45,6 @@ export interface PrimitiveLiteralNode extends MapASTNodeBase {
 }
 
 /**
- * Array literal atom.
- */
-export interface ArrayLiteralNode extends MapASTNodeBase {
-  kind: 'ArrayLiteral';
-  elements: LiteralNode[];
-}
-
-/**
  * Object literal node: `{ <...assignments> }`
  */
 export interface ObjectLiteralNode extends MapASTNodeBase {
@@ -67,7 +59,16 @@ export interface JessieExpressionNode extends MapASTNodeBase {
   sourceMap?: string;
 }
 
-export type LiteralNode = ObjectLiteralNode | ArrayLiteralNode | PrimitiveLiteralNode | JessieExpressionNode;
+/**
+ * Inline call, can appear on rhs in assignment.
+ */
+export interface InlineCallNode extends MapASTNodeBase {
+  kind: 'InlineCall';
+  operationName: string;
+  arguments: AssignmentNode[];
+}
+
+export type LiteralNode = ObjectLiteralNode | InlineCallNode | PrimitiveLiteralNode | JessieExpressionNode;
 
 /**
  * Assignment node: `key."b.az".bar = <value>`
@@ -224,7 +225,6 @@ export interface MapDocumentNode extends MapASTNodeBase {
 
 export type MapASTNode =
  | PrimitiveLiteralNode
- | ArrayLiteralNode
  | ObjectLiteralNode
  | JessieExpressionNode
  | AssignmentNode
@@ -234,12 +234,9 @@ export type MapASTNode =
  | FailStatementNode
  | MapResultStatementNode
  | MapErrorStatementNode
- | CallStatementNode<MapSubstatement>
- | CallStatementNode<OperationSubstatement>
- | HttpResponseHandlerNode<MapSubstatement>
- | HttpResponseHandlerNode<OperationSubstatement>
- | HttpCallStatementNode<MapSubstatement>
- | HttpCallStatementNode<OperationSubstatement>
+ | CallStatementNode<SubstatementType>
+ | HttpResponseHandlerNode<SubstatementType>
+ | HttpCallStatementNode<SubstatementType>
  | MapDefinitionNode
  | OperationDefinitionNode
  | MapProfileIdNode
