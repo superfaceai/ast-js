@@ -10,12 +10,10 @@ export type MapNodeKind =
  | 'StatementCondition'
  // STATEMENTS
  | 'SetStatement'
- | 'ReturnStatement'
- | 'FailStatement'
- | 'MapResultStatement'
- | 'MapErrorStatement'
+ | 'OutcomeStatement'
  // CONTEXTUAL STATEMENTS
  | 'CallStatement'
+ | 'HttpRequest'
  | 'HttpResponseHandler'
  | 'HttpCallStatement'
  // DEFINITIONS
@@ -90,46 +88,19 @@ export interface StatementConditionNode extends MapASTNodeBase {
 // STATEMENTS
 
 /**
- * Return statement, possibly with a condition: `return <?condition> <value>`
+ * Outcome node, specifying what value to return and whether to terminate the flow immediately:
+ * `return/fail <?condition> <value>`
+ * `map result/error <?condition> <value>`
  */
-export interface ReturnStatementNode extends MapASTNodeBase {
-  kind: 'ReturnStatement';
+export interface OutcomeStatementNode extends MapASTNodeBase {
+  kind: 'OutcomeStatement';
   condition?: StatementConditionNode;
-  value: LiteralNode;
-}
-
-/**
- * Fail statement, possibly with a condition: `fail <?condition> <value>`
- */
-export interface FailStatementNode extends MapASTNodeBase {
-  kind: 'FailStatement';
-  condition?: StatementConditionNode;
-  value: LiteralNode;
-}
-
-/**
- * Map result statement, possibly with a condition: `map result <?condition> <value>`
- */
-export interface MapResultStatementNode extends MapASTNodeBase {
-  kind: 'MapResultStatement';
-  condition?: StatementConditionNode;
-  value: LiteralNode;
-}
-
-/**
- * Map result statement, possibly with a condition: `map error <?condition> <value>`
- */
-export interface MapErrorStatementNode extends MapASTNodeBase {
-  kind: 'MapErrorStatement';
-  condition?: StatementConditionNode;
+  isError: boolean;
+  terminateFlow: boolean;
   value: LiteralNode;
 }
 
 // SCOPING STATEMENTS
-
-export type OperationSubstatement = FailStatementNode | ReturnStatementNode;
-export type MapSubstatement = MapResultStatementNode | MapErrorStatementNode;
-export type SubstatementType = OperationSubstatement | MapSubstatement;
 
 /**
  * Set statement, possibly with a condition: `set <?condition> { <...assignments> }`
@@ -143,54 +114,61 @@ export interface SetStatementNode extends MapASTNodeBase {
 /**
  * Call statement, possibly with a condition: `call <op>(<...args>) <?condition> { <...statements> }`
  */
-export interface CallStatementNode<S extends SubstatementType> extends MapASTNodeBase {
+export interface CallStatementNode extends MapASTNodeBase {
   kind: 'CallStatement';
   condition?: StatementConditionNode;
   operationName: string;
   arguments: AssignmentNode[];
-  statements: (SetStatementNode | S)[];
+  statements: (SetStatementNode | OutcomeStatementNode)[];
 }
 
 /**
- * Response handler for http: `response <statusCode> <contentType> <contentLanguage> { <...statements> }`
+ * Request definition for http:
+ * `request <?contentType> <?contentLanguage> { <?query> <?headers? <?body> }`
  */
-export interface HttpResponseHandlerNode<S extends SubstatementType> extends MapASTNodeBase {
+export interface HttpRequestNode extends MapASTNodeBase {
+  kind: 'HttpRequest';
+  contentType?: string;
+  contentLanguage?: string;
+  query?: ObjectLiteralNode;
+  headers?: ObjectLiteralNode;
+  body?: LiteralNode;
+}
+
+/**
+ * Response handler for http: `response <?statusCode> <?contentType> <?contentLanguage> { <...statements> }`
+ */
+export interface HttpResponseHandlerNode extends MapASTNodeBase {
   kind: 'HttpResponseHandler';
   statusCode?: number;
   contentType?: string;
   contentLanguage?: string;
-  statements: (SetStatementNode | S)[];
+  statements: (SetStatementNode | OutcomeStatementNode)[];
 }
 
-export interface HttpCallStatementNode<S extends SubstatementType> extends MapASTNodeBase {
+export interface HttpCallStatementNode extends MapASTNodeBase {
   kind: 'HttpCallStatement';
   method: string;
   url: string;
-  requestDefinition: {
-    queryParameters?: ObjectLiteralNode;
-    headers?: ObjectLiteralNode;
-    body?: LiteralNode;
-  };
-  responseHandlers: HttpResponseHandlerNode<S>[];
+  request?: HttpRequestNode;
+  responseHandlers: HttpResponseHandlerNode[];
 }
 
 // DEFINITIONS
 
-export type MapStatement = SetStatementNode | MapResultStatementNode | MapErrorStatementNode | CallStatementNode<MapSubstatement> | HttpCallStatementNode<MapSubstatement>;
+export type Substatement = SetStatementNode | OutcomeStatementNode | CallStatementNode | HttpCallStatementNode;
 
 export interface MapDefinitionNode extends MapASTNodeBase {
   kind: 'MapDefinition';
   name: string;
   usecaseName: string;
-  statements: MapStatement[];
+  statements: Substatement[];
 }
-
-export type OperationStatement = SetStatementNode | ReturnStatementNode | FailStatementNode | CallStatementNode<OperationSubstatement> | HttpCallStatementNode<OperationSubstatement>;
 
 export interface OperationDefinitionNode extends MapASTNodeBase {
   kind: 'OperationDefinition';
   name: string;
-  statements: OperationStatement[];
+  statements: Substatement[];
 }
 
 // DOCUMENT
@@ -230,13 +208,11 @@ export type MapASTNode =
  | AssignmentNode
  | StatementConditionNode
  | SetStatementNode
- | ReturnStatementNode
- | FailStatementNode
- | MapResultStatementNode
- | MapErrorStatementNode
- | CallStatementNode<SubstatementType>
- | HttpResponseHandlerNode<SubstatementType>
- | HttpCallStatementNode<SubstatementType>
+ | OutcomeStatementNode
+ | CallStatementNode
+ | HttpRequestNode
+ | HttpResponseHandlerNode
+ | HttpCallStatementNode
  | MapDefinitionNode
  | OperationDefinitionNode
  | MapProfileIdNode
