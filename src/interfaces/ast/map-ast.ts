@@ -1,30 +1,29 @@
 import { Location, Span } from './source';
 
 export type MapNodeKind =
- // ATOMS  
- | 'PrimitiveLiteral'
- | 'ObjectLiteral'
- | 'JessieExpression'
- | 'InlineCall'
- | 'Assignment'
- | 'StatementCondition'
- // STATEMENTS
- | 'SetStatement'
- | 'OutcomeStatement'
- // CONTEXTUAL STATEMENTS
- | 'CallStatement'
- | 'HttpRequest'
- | 'HttpResponseHandler'
- | 'HttpCallStatement'
- // DEFINITIONS
- | 'MapDefinition'
- | 'OperationDefinition'
- // DOCUMENT
- | 'ProfileId'
- | 'Provider'
- | 'Map'
- | 'MapDocument'
-;
+  // ATOMS
+  | 'PrimitiveLiteral'
+  | 'ObjectLiteral'
+  | 'JessieExpression'
+  | 'InlineCall'
+  | 'Assignment'
+  | 'StatementCondition'
+  // STATEMENTS
+  | 'SetStatement'
+  | 'OutcomeStatement'
+  // CONTEXTUAL STATEMENTS
+  | 'CallStatement'
+  | 'HttpRequest'
+  | 'HttpResponseHandler'
+  | 'HttpCallStatement'
+  // DEFINITIONS
+  | 'MapDefinition'
+  | 'OperationDefinition'
+  // DOCUMENT
+  | 'ProfileId'
+  | 'Provider'
+  | 'Map'
+  | 'MapDocument';
 
 export interface MapASTNodeBase {
   kind: MapNodeKind;
@@ -66,7 +65,11 @@ export interface InlineCallNode extends MapASTNodeBase {
   arguments: AssignmentNode[];
 }
 
-export type LiteralNode = ObjectLiteralNode | InlineCallNode | PrimitiveLiteralNode | JessieExpressionNode;
+export type LiteralNode =
+  | ObjectLiteralNode
+  | InlineCallNode
+  | PrimitiveLiteralNode
+  | JessieExpressionNode;
 
 /**
  * Assignment node: `key."b.az".bar = <value>`
@@ -133,6 +136,14 @@ export interface HttpRequestNode extends MapASTNodeBase {
   query?: ObjectLiteralNode;
   headers?: ObjectLiteralNode;
   body?: LiteralNode;
+  security?:
+    | { scheme: 'basic' }
+    | { scheme: 'bearer' }
+    | {
+        scheme: 'apikey';
+        placement: 'query' | 'header';
+        name: string;
+      };
 }
 
 /**
@@ -156,7 +167,11 @@ export interface HttpCallStatementNode extends MapASTNodeBase {
 
 // DEFINITIONS
 
-export type Substatement = SetStatementNode | OutcomeStatementNode | CallStatementNode | HttpCallStatementNode;
+export type Substatement =
+  | SetStatementNode
+  | OutcomeStatementNode
+  | CallStatementNode
+  | HttpCallStatementNode;
 
 export interface MapDefinitionNode extends MapASTNodeBase {
   kind: 'MapDefinition';
@@ -202,21 +217,20 @@ export interface MapDocumentNode extends MapASTNodeBase {
 }
 
 export type MapASTNode =
- | PrimitiveLiteralNode
- | ObjectLiteralNode
- | JessieExpressionNode
- | AssignmentNode
- | StatementConditionNode
- | SetStatementNode
- | OutcomeStatementNode
- | CallStatementNode
- | HttpRequestNode
- | HttpResponseHandlerNode
- | HttpCallStatementNode
- | MapDefinitionNode
- | OperationDefinitionNode
- | MapProfileIdNode
- | ProviderNode
- | MapNode
- | MapDocumentNode
-;
+  | PrimitiveLiteralNode
+  | ObjectLiteralNode
+  | JessieExpressionNode
+  | AssignmentNode
+  | StatementConditionNode
+  | SetStatementNode
+  | OutcomeStatementNode
+  | CallStatementNode
+  | HttpRequestNode
+  | HttpResponseHandlerNode
+  | HttpCallStatementNode
+  | MapDefinitionNode
+  | OperationDefinitionNode
+  | MapProfileIdNode
+  | ProviderNode
+  | MapNode
+  | MapDocumentNode;
