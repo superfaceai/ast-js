@@ -137,6 +137,7 @@ export interface HttpRequestNode extends MapASTNodeBase {
   headers?: ObjectLiteralNode;
   body?: LiteralNode;
   security?:
+    | { scheme: 'none' }
     | { scheme: 'basic' }
     | { scheme: 'bearer' }
     | {

@@ -320,7 +320,7 @@
                   "properties": {
                     "scheme": {
                       "type": "string",
-                      "enum": ["bearer", "basic", "apikey"]
+                      "enum": ["apikey", "basic", "bearer", "none"]
                     }
                   },
                   "required": ["scheme"]
