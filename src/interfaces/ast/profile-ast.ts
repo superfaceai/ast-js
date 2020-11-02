@@ -240,4 +240,5 @@ export type ProfileASTNode =
   | ProfileIdNode
   | ProfileNode
   | UnionDefinitionNode
-  | UseCaseDefinitionNode;
+  | UseCaseDefinitionNode
+  | UseCaseSlotDefinitionNode;
