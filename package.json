@@ -1,5 +1,5 @@
 {
-  "name": "@superindustries/language",
+  "name": "@superfaceai/language",
   "version": "0.2.0",
   "description": "Superface profile and map language ASTs, https://superface.ai",
   "main": "dist/language.js",
@@ -8,7 +8,7 @@
   "unpkg": "dist/language.umd.js",
   "browser": "dist/language.umd.js",
   "types": "dist/index.d.ts",
-  "repository": "https://github.com/superindustries/language.git",
+  "repository": "https://github.com/superfaceai/language.git",
   "files": [
     "dist/**/*"
   ],
