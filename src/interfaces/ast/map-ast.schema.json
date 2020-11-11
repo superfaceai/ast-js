@@ -1,0 +1,610 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "$id": "https://example.com/slang-map-ast",
+  "definitions": {
+    "MapASTNodeBase": {
+      "type": "object",
+      "properties": {
+        "kind": {
+          "type": "string"
+        },
+        "span": {
+          "type": "object",
+          "properties": {
+            "start": {
+              "type": "number"
+            },
+            "end": {
+              "type": "number"
+            }
+          },
+          "required": ["start", "end"]
+        },
+        "location": {
+          "type": "object",
+          "properties": {
+            "line": {
+              "type": "number"
+            },
+            "column": {
+              "type": "number"
+            }
+          },
+          "required": ["kind", "line", "column"]
+        }
+      },
+      "required": ["kind"]
+    },
+    "PrimitiveLiteralNode": {
+      "allOf": [
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "PrimitiveLiteral"
+            },
+            "value": {
+              "oneOf": [
+                {
+                  "type": "number"
+                },
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "boolean"
+                }
+              ]
+            }
+          },
+          "required": ["kind", "value"]
+        },
+        {
+          "$ref": "#/definitions/MapASTNodeBase"
+        }
+      ]
+    },
+    "ObjectLiteralNode": {
+      "allOf": [
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "ObjectLiteral"
+            },
+            "fields": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AssignmentNode"
+              }
+            }
+          },
+          "required": ["kind", "fields"]
+        },
+        {
+          "$ref": "#/definitions/MapASTNodeBase"
+        }
+      ]
+    },
+    "JessieExpressionNode": {
+      "allOf": [
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "JessieExpression"
+            },
+            "expression": {
+              "type": "string"
+            },
+            "source": {
+              "type": "string"
+            },
+            "sourceMap": {
+              "type": "string"
+            }
+          },
+          "required": ["kind", "expression"]
+        },
+        {
+          "$ref": "#/definitions/MapASTNodeBase"
+        }
+      ]
+    },
+    "InlineCallNode": {
+      "allOf": [
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "InlineCall"
+            },
+            "operationName": {
+              "type": "string"
+            },
+            "arguments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AssignmentNode"
+              }
+            }
+          },
+          "required": ["kind", "operationName", "arguments"]
+        },
+        {
+          "$ref": "#/definitions/MapASTNodeBase"
+        }
+      ]
+    },
+    "LiteralNode": {
+      "oneOf": [
+        {
+          "$ref": "#/definitions/ObjectLiteralNode"
+        },
+        {
+          "$ref": "#/definitions/InlineCallNode"
+        },
+        {
+          "$ref": "#/definitions/PrimitiveLiteralNode"
+        },
+        {
+          "$ref": "#/definitions/JessieExpressionNode"
+        }
+      ]
+    },
+    "AssignmentNode": {
+      "allOf": [
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "Assignment"
+            },
+            "key": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "value": {
+              "$ref": "#/definitions/LiteralNode"
+            }
+          },
+          "required": ["kind", "key", "value"]
+        },
+        {
+          "$ref": "#/definitions/MapASTNodeBase"
+        }
+      ]
+    },
+    "StatementConditionNode": {
+      "allOf": [
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "StatementCondition"
+            },
+            "expression": {
+              "$ref": "#/definitions/JessieExpressionNode"
+            }
+          },
+          "required": ["kind", "expression"]
+        },
+        {
+          "$ref": "#/definitions/MapASTNodeBase"
+        }
+      ]
+    },
+    "OutcomeStatementNode": {
+      "allOf": [
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "OutcomeStatement"
+            },
+            "condition": {
+              "$ref": "#/definitions/StatementConditionNode"
+            },
+            "isError": {
+              "type": "boolean"
+            },
+            "terminateFlow": {
+              "type": "boolean"
+            },
+            "value": {
+              "$ref": "#/definitions/LiteralNode"
+            }
+          },
+          "required": ["kind", "isError", "terminateFlow", "value"]
+        },
+        {
+          "$ref": "#/definitions/MapASTNodeBase"
+        }
+      ]
+    },
+    "SetStatementNode": {
+      "allOf": [
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "SetStatement"
+            },
+            "condition": {
+              "$ref": "#/definitions/StatementConditionNode"
+            },
+            "assignments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AssignmentNode"
+              }
+            }
+          },
+          "required": ["kind", "assignments"]
+        },
+        {
+          "$ref": "#/definitions/MapASTNodeBase"
+        }
+      ]
+    },
+    "CallStatementNode": {
+      "allOf": [
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "CallStatement"
+            },
+            "condition": {
+              "$ref": "#/definitions/StatementConditionNode"
+            },
+            "operationName": {
+              "type": "string"
+            },
+            "arguments": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/AssignmentNode"
+              }
+            },
+            "statements": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "$ref": "#/definitions/SetStatementNode"
+                  },
+                  {
+                    "$ref": "#/definitions/OutcomeStatementNode"
+                  }
+                ]
+              }
+            }
+          },
+          "required": ["kind", "operationName", "arguments", "statements"]
+        },
+        {
+          "$ref": "#/definitions/MapASTNodeBase"
+        }
+      ]
+    },
+    "HttpRequestNode": {
+      "allOf": [
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "HttpRequest"
+            },
+            "contentType": {
+              "type": "string"
+            },
+            "contentLanguage": {
+              "type": "string"
+            },
+            "query": {
+              "$ref": "#/definitions/ObjectLiteralNode"
+            },
+            "headers": {
+              "$ref": "#/definitions/ObjectLiteralNode"
+            },
+            "body": {
+              "$ref": "#/definitions/LiteralNode"
+            },
+            "security": {
+              "allOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "scheme": {
+                      "type": "string",
+                      "enum": ["apikey", "basic", "bearer", "none"]
+                    }
+                  },
+                  "required": ["scheme"]
+                },
+                {
+                  "oneOf": [
+                    {
+                      "properties": {
+                        "scheme": {
+                          "const": "basic"
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "scheme": {
+                          "const": "bearer"
+                        }
+                      }
+                    },
+                    {
+                      "properties": {
+                        "scheme": {
+                          "const": "apikey"
+                        },
+                        "placement": {
+                          "type": "string",
+                          "enum": ["query", "header"]
+                        },
+                        "name": {
+                          "type": "string"
+                        }
+                      },
+                      "required": ["scheme", "placement", "name"]
+                    }
+                  ]
+                }
+              ]
+            }
+          },
+          "required": ["kind"]
+        },
+        {
+          "$ref": "#/definitions/MapASTNodeBase"
+        }
+      ]
+    },
+    "HttpResponseHandlerNode": {
+      "allOf": [
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "HttpResponseHandler"
+            },
+            "statusCode": {
+              "type": "number"
+            },
+            "contentType": {
+              "type": "string"
+            },
+            "contentLanguage": {
+              "type": "string"
+            },
+            "statements": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "$ref": "#/definitions/SetStatementNode"
+                  },
+                  {
+                    "$ref": "#/definitions/OutcomeStatementNode"
+                  }
+                ]
+              }
+            }
+          },
+          "required": ["kind", "statements"]
+        },
+        {
+          "$ref": "#/definitions/MapASTNodeBase"
+        }
+      ]
+    },
+    "HttpCallStatementNode": {
+      "allOf": [
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "HttpCallStatement"
+            },
+            "method": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            },
+            "request": {
+              "$ref": "#/definitions/HttpRequestNode"
+            },
+            "responseHandlers": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/HttpResponseHandlerNode"
+              }
+            }
+          },
+          "required": ["kind", "method", "url", "request", "responseHandlers"]
+        },
+        {
+          "$ref": "#/definitions/MapASTNodeBase"
+        }
+      ]
+    },
+    "MapDefinitionNode": {
+      "allOf": [
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "MapDefinition"
+            },
+            "name": {
+              "type": "string"
+            },
+            "usecaseName": {
+              "type": "string"
+            },
+            "statements": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "$ref": "#/definitions/SetStatementNode"
+                  },
+                  {
+                    "$ref": "#/definitions/OutcomeStatementNode"
+                  },
+                  {
+                    "$ref": "#/definitions/CallStatementNode"
+                  },
+                  {
+                    "$ref": "#/definitions/HttpCallStatementNode"
+                  }
+                ]
+              }
+            }
+          },
+          "required": ["kind", "name", "usecaseName", "statements"]
+        },
+        {
+          "$ref": "#/definitions/MapASTNodeBase"
+        }
+      ]
+    },
+    "OperationDefinitionNode": {
+      "allOf": [
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "OperationDefinition"
+            },
+            "name": {
+              "type": "string"
+            },
+            "statements": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "$ref": "#/definitions/SetStatementNode"
+                  },
+                  {
+                    "$ref": "#/definitions/OutcomeStatementNode"
+                  },
+                  {
+                    "$ref": "#/definitions/CallStatementNode"
+                  },
+                  {
+                    "$ref": "#/definitions/HttpCallStatementNode"
+                  }
+                ]
+              }
+            }
+          },
+          "required": ["kind", "name", "statements"]
+        },
+        {
+          "$ref": "#/definitions/MapASTNodeBase"
+        }
+      ]
+    },
+    "MapProfileIdNode": {
+      "allOf": [
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "ProfileId"
+            },
+            "profileId": {
+              "type": "string"
+            }
+          },
+          "required": ["kind", "profileId"]
+        },
+        {
+          "$ref": "#/definitions/MapASTNodeBase"
+        }
+      ]
+    },
+    "ProviderNode": {
+      "allOf": [
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "Provider"
+            },
+            "providerId": {
+              "type": "string"
+            }
+          },
+          "required": ["kind", "providerId"]
+        },
+        {
+          "$ref": "#/definitions/MapASTNodeBase"
+        }
+      ]
+    },
+    "MapNode": {
+      "allOf": [
+        {
+          "properties": {
+            "kind": {
+              "type": "string",
+              "const": "Map"
+            },
+            "profileId": {
+              "$ref": "#/definitions/MapProfileIdNode"
+            },
+            "provider": {
+              "$ref": "#/definitions/ProviderNode"
+            }
+          },
+          "required": ["kind", "profileId", "provider"]
+        },
+        {
+          "$ref": "#/definitions/MapASTNodeBase"
+        }
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "properties": {
+        "kind": {
+          "type": "string",
+          "const": "MapDocument"
+        },
+        "map": {
+          "$ref": "#/definitions/MapNode"
+        },
+        "definitions": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/MapDefinitionNode"
+              },
+              {
+                "$ref": "#/definitions/OperationDefinitionNode"
+              }
+            ]
+          }
+        }
+      },
+      "required": ["kind", "map", "definitions"]
+    },
+    {
+      "$ref": "#/definitions/MapASTNodeBase"
+    }
+  ]
+}
