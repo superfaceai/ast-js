@@ -1,4 +1,4 @@
-# language
+# Superface AST for JS/TS
 
 ## Install
 
@@ -17,18 +17,18 @@ npm login --registry=https://npm.pkg.github.com
 After doing this, you shuold be able to install the package by calling:
 
 ```
-yarn add @superfaceai/language
+yarn add @superfaceai/ast-js
 ```
 
 ## Publishing a new version
 
 Package publishing is done through GitHub release functionality.
 
-[Draft a new release](https://github.com/superfaceai/language/releases/new) to publish a new version of the package.
+[Draft a new release](https://github.com/superfaceai/ast-js/releases/new) to publish a new version of the package.
 
 Use semver for the version tag. It must be in format of `v<major>.<minor>.<patch>`.
 
-Github Actions workflow will pick up the release and publish it as one of the [packages](https://github.com/superfaceai/language/packages).
+Github Actions workflow will pick up the release and publish it as one of the [packages](https://github.com/superfaceai/ast-js/packages).
 
 ## Licensing
 
