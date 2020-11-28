@@ -125,6 +125,12 @@ export interface CallStatementNode extends MapASTNodeBase {
   statements: (SetStatementNode | OutcomeStatementNode)[];
 }
 
+export type HttpSecurity =
+  | { scheme: 'none' }
+  | { scheme: 'basic' }
+  | { scheme: 'bearer' }
+  | { scheme: 'apikey'; placement: 'query' | 'header'; name: string };
+
 /**
  * Request definition for http:
  * `request <?contentType> <?contentLanguage> { <?query> <?headers? <?body> }`
@@ -136,15 +142,7 @@ export interface HttpRequestNode extends MapASTNodeBase {
   query?: ObjectLiteralNode;
   headers?: ObjectLiteralNode;
   body?: LiteralNode;
-  security?:
-    | { scheme: 'none' }
-    | { scheme: 'basic' }
-    | { scheme: 'bearer' }
-    | {
-        scheme: 'apikey';
-        placement: 'query' | 'header';
-        name: string;
-      };
+  security?: HttpSecurity;
 }
 
 /**
@@ -234,4 +232,5 @@ export type MapASTNode =
   | MapProfileIdNode
   | ProviderNode
   | MapNode
-  | MapDocumentNode;
+  | MapDocumentNode
+  | InlineCallNode;
