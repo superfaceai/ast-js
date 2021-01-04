@@ -32,10 +32,6 @@ export function isOperationDefinitionNode(
   return node.kind === 'OperationDefinition';
 }
 
-export function isProfileIdNode(node: MapASTNode): node is MapProfileIdNode {
-  return node.kind === 'ProfileId';
-}
-
 export function isProviderNode(node: MapASTNode): node is ProviderNode {
   return node.kind === 'Provider';
 }
