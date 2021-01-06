@@ -12,8 +12,7 @@ import {
   PrimitiveTypeNameNode,
   ProfileASTNode,
   ProfileDocumentNode,
-  ProfileIdNode,
-  ProfileNode,
+  ProfileHeaderNode,
   Type,
   TypeDefinition,
   TypeName,
@@ -116,12 +115,10 @@ export function isUseCaseDefinitionNode(
   return node.kind === 'UseCaseDefinition';
 }
 
-export function isProfileIdNode(node: ProfileASTNode): node is ProfileIdNode {
-  return node.kind === 'ProfileId';
-}
-
-export function isProfileNode(node: ProfileASTNode): node is ProfileNode {
-  return node.kind === 'Profile';
+export function isProfileHeaderNode(
+  node: ProfileASTNode
+): node is ProfileHeaderNode {
+  return node.kind === 'ProfileHeader';
 }
 
 export function isProfileDocumentNode(

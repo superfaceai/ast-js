@@ -191,9 +191,9 @@ export interface MapHeaderNode extends MapASTNodeBase {
     scope?: string;
     name: string;
     version: {
-      major: number,
-      minor: number,
-      patch: number
+      major: number;
+      minor: number;
+      patch: number;
     };
   };
   provider: string;

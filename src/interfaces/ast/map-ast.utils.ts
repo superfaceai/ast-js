@@ -9,13 +9,11 @@ import {
   MapASTNode,
   MapDefinitionNode,
   MapDocumentNode,
-  MapNode,
-  MapProfileIdNode,
+  MapHeaderNode,
   ObjectLiteralNode,
   OperationDefinitionNode,
   OutcomeStatementNode,
   PrimitiveLiteralNode,
-  ProviderNode,
   SetStatementNode,
   StatementConditionNode,
 } from './map-ast';
@@ -32,16 +30,12 @@ export function isOperationDefinitionNode(
   return node.kind === 'OperationDefinition';
 }
 
-export function isProviderNode(node: MapASTNode): node is ProviderNode {
-  return node.kind === 'Provider';
-}
-
 export function isSetStatementNode(node: MapASTNode): node is SetStatementNode {
   return node.kind === 'SetStatement';
 }
 
-export function isMapNode(node: MapASTNode): node is MapNode {
-  return node.kind === 'Map';
+export function isMapHeaderNode(node: MapASTNode): node is MapHeaderNode {
+  return node.kind === 'MapHeader';
 }
 
 export function isMapDefinitionNode(
@@ -102,10 +96,6 @@ export function isHttpCallStatementNode(
   node: MapASTNode
 ): node is HttpCallStatementNode {
   return node.kind === 'HttpCallStatement';
-}
-
-export function isMapProfileIdNode(node: MapASTNode): node is MapProfileIdNode {
-  return node.kind === 'ProfileId';
 }
 
 export function isInlineCallNode(node: MapASTNode): node is InlineCallNode {

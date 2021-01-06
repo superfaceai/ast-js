@@ -209,9 +209,9 @@ export interface ProfileHeaderNode extends ProfileASTNodeBase, DocumentedNode {
   scope?: string;
   name: string;
   version: {
-    major: number,
-    minor: number,
-    patch: number
+    major: number;
+    minor: number;
+    patch: number;
   };
 }
 /** Node enclosing the whole document */
