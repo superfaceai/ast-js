@@ -21,8 +21,7 @@ export type ProfileNodeKind =
   | 'UseCaseSlotDefinition'
   | 'UseCaseDefinition'
   // DOCUMENT
-  | 'ProfileId'
-  | 'Profile'
+  | 'ProfileHeader'
   | 'ProfileDocument';
 
 export interface ProfileASTNodeBase {
@@ -202,22 +201,23 @@ export interface UseCaseDefinitionNode
 
 // DOCUMENT //
 
-/** `profile = string` */
-export interface ProfileIdNode extends ProfileASTNodeBase {
-  kind: 'ProfileId';
-  profileId: string;
-}
 /**
- * The node containing document information at the top of the document.
+ * The node containing document information.
  */
-export interface ProfileNode extends ProfileASTNodeBase, DocumentedNode {
-  kind: 'Profile';
-  profileId: ProfileIdNode;
+export interface ProfileHeaderNode extends ProfileASTNodeBase, DocumentedNode {
+  kind: 'ProfileHeader';
+  scope?: string;
+  name: string;
+  version: {
+    major: number;
+    minor: number;
+    patch: number;
+  };
 }
 /** Node enclosing the whole document */
 export interface ProfileDocumentNode extends ProfileASTNodeBase {
   kind: 'ProfileDocument';
-  profile: ProfileNode;
+  header: ProfileHeaderNode;
   definitions: DocumentDefinition[];
 }
 export type DocumentDefinition =
@@ -237,8 +237,7 @@ export type ProfileASTNode =
   | ObjectDefinitionNode
   | PrimitiveTypeNameNode
   | ProfileDocumentNode
-  | ProfileIdNode
-  | ProfileNode
+  | ProfileHeaderNode
   | UnionDefinitionNode
   | UseCaseDefinitionNode
   | UseCaseSlotDefinitionNode;

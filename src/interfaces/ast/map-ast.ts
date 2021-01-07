@@ -20,9 +20,7 @@ export type MapNodeKind =
   | 'MapDefinition'
   | 'OperationDefinition'
   // DOCUMENT
-  | 'ProfileId'
-  | 'Provider'
-  | 'Map'
+  | 'MapHeader'
   | 'MapDocument';
 
 export interface MapASTNodeBase {
@@ -187,31 +185,24 @@ export interface OperationDefinitionNode extends MapASTNodeBase {
 
 // DOCUMENT
 
-/**
- * `profileId = <string>`
- */
-export interface MapProfileIdNode extends MapASTNodeBase {
-  kind: 'ProfileId';
-  profileId: string;
-}
-
-/**
- * `provider = <string>`
- */
-export interface ProviderNode extends MapASTNodeBase {
-  kind: 'Provider';
-  providerId: string;
-}
-
-export interface MapNode extends MapASTNodeBase {
-  kind: 'Map';
-  profileId: MapProfileIdNode;
-  provider: ProviderNode;
+export interface MapHeaderNode extends MapASTNodeBase {
+  kind: 'MapHeader';
+  profile: {
+    scope?: string;
+    name: string;
+    version: {
+      major: number;
+      minor: number;
+      patch: number;
+    };
+  };
+  provider: string;
+  variant?: string;
 }
 
 export interface MapDocumentNode extends MapASTNodeBase {
   kind: 'MapDocument';
-  map: MapNode;
+  header: MapHeaderNode;
   definitions: (MapDefinitionNode | OperationDefinitionNode)[];
 }
 
@@ -229,8 +220,6 @@ export type MapASTNode =
   | HttpCallStatementNode
   | MapDefinitionNode
   | OperationDefinitionNode
-  | MapProfileIdNode
-  | ProviderNode
-  | MapNode
+  | MapHeaderNode
   | MapDocumentNode
   | InlineCallNode;
