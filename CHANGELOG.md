@@ -1,5 +1,25 @@
 ## [Unreleased]
 
+## [0.0.20] - 2021-01-11
+
+### Added
+* `ProfileHeaderNode` to the exported `ProfileASTNode` union
+* `MapHeaderNode` to the exported `MapASTNode` union
+* Their subsequent utils
+
+### Changed
+* Start using header node inside `ProfileDocumentNode` and `MapDocumentNode`
+
+### Removed
+* `MapProfileIdNode`, `ProviderNode` and `MapNode` from the exported `MapASTNode` union
+* `ProfileIdNode` and `ProfileNode` from the exported `ProfileASTNode` union
+* Their subsequent utils
+
+## [0.0.19] - 2021-01-04
+
+### Added
+* Profile AST utils
+
 ## [0.0.18] - 2020-11-28
 
 ### Added
@@ -73,6 +93,8 @@
 * Github workflow publishing
 
 [Unreleased]: https://github.com/superfaceai/ast-js/compare/v0.0.18...HEAD
+[0.0.20]: http://github.com/superfaceai/ast-js/compare/v0.0.19...v0.0.20
+[0.0.19]: http://github.com/superfaceai/ast-js/compare/v0.0.18...v0.0.19
 [0.0.18]: https://github.com/superfaceai/ast-js/compare/v0.0.16...v0.0.18
 [0.0.16]: https://github.com/superfaceai/ast-js/compare/v0.0.15...v0.0.16
 [0.0.15]: https://github.com/superfaceai/ast-js/compare/v0.0.14...v0.0.15
