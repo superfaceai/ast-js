@@ -212,6 +212,7 @@ export interface ProfileHeaderNode extends ProfileASTNodeBase, DocumentedNode {
     major: number;
     minor: number;
     patch: number;
+    label?: string;
   };
 }
 /** Node enclosing the whole document */

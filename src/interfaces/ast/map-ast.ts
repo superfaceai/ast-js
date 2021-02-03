@@ -193,7 +193,8 @@ export interface MapHeaderNode extends MapASTNodeBase {
     version: {
       major: number;
       minor: number;
-      patch: number;
+      patch?: number;
+      label?: string;
     };
   };
   provider: string;
