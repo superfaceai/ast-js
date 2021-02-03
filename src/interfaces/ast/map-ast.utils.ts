@@ -1,10 +1,12 @@
 import {
   AssignmentNode,
   CallStatementNode,
+  ConditionAtomNode,
   HttpCallStatementNode,
   HttpRequestNode,
   HttpResponseHandlerNode,
   InlineCallNode,
+  IterationAtomNode,
   JessieExpressionNode,
   MapASTNode,
   MapDefinitionNode,
@@ -15,8 +17,6 @@ import {
   OutcomeStatementNode,
   PrimitiveLiteralNode,
   SetStatementNode,
-  ConditionAtomNode,
-  IterationAtomNode
 } from './map-ast';
 
 export function isOutcomeStatementNode(
