@@ -7,7 +7,8 @@ export type MapNodeKind =
   | 'JessieExpression'
   | 'InlineCall'
   | 'Assignment'
-  | 'StatementCondition'
+  | 'ConditionAtom'
+  | 'IterationAtom'
   // STATEMENTS
   | 'SetStatement'
   | 'OutcomeStatement'
@@ -55,10 +56,12 @@ export interface JessieExpressionNode extends MapASTNodeBase {
 }
 
 /**
- * Inline call, can appear on rhs in assignment.
+ * Inline call, can appear on rhs in assignment: `call <?iteration> <op>(<...args>) <?condition>`
  */
 export interface InlineCallNode extends MapASTNodeBase {
   kind: 'InlineCall';
+  condition?: ConditionAtomNode;
+  iteration?: IterationAtomNode;
   operationName: string;
   arguments: AssignmentNode[];
 }
@@ -81,9 +84,18 @@ export interface AssignmentNode extends MapASTNodeBase {
 /**
  * Statement condition atom: `if (<jessie>)`
  */
-export interface StatementConditionNode extends MapASTNodeBase {
-  kind: 'StatementCondition';
+export interface ConditionAtomNode extends MapASTNodeBase {
+  kind: 'ConditionAtom';
   expression: JessieExpressionNode;
+}
+
+/**
+ * Iteration atom: `foreach (<iterationVariable> of <iterable>)`
+ */
+export interface IterationAtomNode extends MapASTNodeBase {
+  kind: 'IterationAtom';
+  iterationVariable: string;
+  iterable: JessieExpressionNode;
 }
 
 // STATEMENTS
@@ -95,7 +107,7 @@ export interface StatementConditionNode extends MapASTNodeBase {
  */
 export interface OutcomeStatementNode extends MapASTNodeBase {
   kind: 'OutcomeStatement';
-  condition?: StatementConditionNode;
+  condition?: ConditionAtomNode;
   isError: boolean;
   terminateFlow: boolean;
   value: LiteralNode;
@@ -108,16 +120,17 @@ export interface OutcomeStatementNode extends MapASTNodeBase {
  */
 export interface SetStatementNode extends MapASTNodeBase {
   kind: 'SetStatement';
-  condition?: StatementConditionNode;
+  condition?: ConditionAtomNode;
   assignments: AssignmentNode[];
 }
 
 /**
- * Call statement, possibly with a condition: `call <op>(<...args>) <?condition> { <...statements> }`
+ * Call statement, possibly with a condition and iteration: `call <?iteration> <op>(<...args>) <?condition> { <...statements> }`
  */
 export interface CallStatementNode extends MapASTNodeBase {
   kind: 'CallStatement';
-  condition?: StatementConditionNode;
+  iteration?: IterationAtomNode;
+  condition?: ConditionAtomNode;
   operationName: string;
   arguments: AssignmentNode[];
   statements: (SetStatementNode | OutcomeStatementNode)[];
@@ -211,7 +224,8 @@ export type MapASTNode =
   | ObjectLiteralNode
   | JessieExpressionNode
   | AssignmentNode
-  | StatementConditionNode
+  | ConditionAtomNode
+  | IterationAtomNode
   | SetStatementNode
   | OutcomeStatementNode
   | CallStatementNode
