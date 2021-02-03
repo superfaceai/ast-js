@@ -109,7 +109,7 @@ export function isInlineCallNode(node: MapASTNode): node is InlineCallNode {
   return node.kind === 'InlineCall';
 }
 
-export interface MapVisitor<R = unknown> {
+export interface MapAstVisitor<R = unknown> {
   visit(node: MapASTNode): R;
 
   visitPrimitiveLiteralNode(node: PrimitiveLiteralNode): R;
