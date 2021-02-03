@@ -8,6 +8,8 @@
 * Their subsequent utils
 
 ### Changed
+* `ProfileNode` -> `ProfileHeaderNode`
+* `MapNode` -> `MapHeaderNode`
 * Start using header node inside `ProfileDocumentNode` and `MapDocumentNode`
 
 ### Removed
@@ -92,7 +94,7 @@
 * First AST
 * Github workflow publishing
 
-[Unreleased]: https://github.com/superfaceai/ast-js/compare/v0.0.18...HEAD
+[Unreleased]: https://github.com/superfaceai/ast-js/compare/v0.0.20...HEAD
 [0.0.20]: http://github.com/superfaceai/ast-js/compare/v0.0.19...v0.0.20
 [0.0.19]: http://github.com/superfaceai/ast-js/compare/v0.0.18...v0.0.19
 [0.0.18]: https://github.com/superfaceai/ast-js/compare/v0.0.16...v0.0.18
