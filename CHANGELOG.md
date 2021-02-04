@@ -4,6 +4,7 @@
 * Added `IterationAtomNode`
 * Added `IterationAtomNode` to `CallStatementNode` and `InlineCallNode`
 * Added `ConditionAtomNode` to `InlineCallNode`
+* Moved `ProfileAstVisitor` and `MapAstVisitor` from sdk package
 
 ### Changed
 * Renamed `StatementConditionNode` to `ConditionAtomNode`

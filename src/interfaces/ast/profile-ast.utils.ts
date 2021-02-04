@@ -136,3 +136,54 @@ export function isDocumentDefinition(
     isNamedModelDefinitionNode(node)
   );
 }
+
+export interface ProfileAstVisitor<R = unknown> {
+  visit(node: ProfileASTNode, ...parameters: unknown[]): R;
+  visitEnumDefinitionNode(
+    node: EnumDefinitionNode,
+    ...parameters: unknown[]
+  ): R;
+  visitEnumValueNode(node: EnumValueNode, ...parameters: unknown[]): R;
+  visitFieldDefinitionNode(
+    node: FieldDefinitionNode,
+    ...parameters: unknown[]
+  ): R;
+  visitListDefinitionNode(
+    node: ListDefinitionNode,
+    ...parameters: unknown[]
+  ): R;
+  visitModelTypeNameNode(node: ModelTypeNameNode, ...parameters: unknown[]): R;
+  visitNamedFieldDefinitionNode(
+    node: NamedFieldDefinitionNode,
+    ...parameters: unknown[]
+  ): R;
+  visitNamedModelDefinitionNode(
+    node: NamedModelDefinitionNode,
+    ...parameters: unknown[]
+  ): R;
+  visitNonNullDefinitionNode(
+    node: NonNullDefinitionNode,
+    ...parameters: unknown[]
+  ): R;
+  visitObjectDefinitionNode(
+    node: ObjectDefinitionNode,
+    ...parameters: unknown[]
+  ): R;
+  visitPrimitiveTypeNameNode(
+    node: PrimitiveTypeNameNode,
+    ...parameters: unknown[]
+  ): R;
+  visitProfileDocumentNode(
+    node: ProfileDocumentNode,
+    ...parameters: unknown[]
+  ): R;
+  visitProfileHeaderNode(node: ProfileHeaderNode, ...parameters: unknown[]): R;
+  visitUnionDefinitionNode(
+    node: UnionDefinitionNode,
+    ...parameters: unknown[]
+  ): R;
+  visitUseCaseDefinitionNode(
+    node: UseCaseDefinitionNode,
+    ...parameters: unknown[]
+  ): R;
+}

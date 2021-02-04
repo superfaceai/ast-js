@@ -108,3 +108,24 @@ export function isHttpCallStatementNode(
 export function isInlineCallNode(node: MapASTNode): node is InlineCallNode {
   return node.kind === 'InlineCall';
 }
+
+export interface MapAstVisitor<R = unknown> {
+  visit(node: MapASTNode): R;
+
+  visitPrimitiveLiteralNode(node: PrimitiveLiteralNode): R;
+  visitObjectLiteralNode(node: ObjectLiteralNode): R;
+  visitJessieExpressionNode(node: JessieExpressionNode): R;
+  visitAssignmentNode(node: AssignmentNode): R;
+  visitConditionAtomNode(node: ConditionAtomNode): R;
+  visitIterationAtomNode(node: IterationAtomNode): R;
+  visitSetStatementNode(node: SetStatementNode): R;
+  visitCallStatementNode(node: CallStatementNode): R;
+  visitHttpResponseHandlerNode(node: HttpResponseHandlerNode): R;
+  visitHttpCallStatementNode(node: HttpCallStatementNode): R;
+  visitMapDefinitionNode(node: MapDefinitionNode): R;
+  visitMapHeaderNode(node: MapHeaderNode): R;
+  visitOperationDefinitionNode(node: OperationDefinitionNode): R;
+  visitOutcomeStatementNode(node: OutcomeStatementNode): R;
+  visitInlineCallNode(node: InlineCallNode): R;
+  visitMapDocumentNode(node: MapDocumentNode): R;
+}
