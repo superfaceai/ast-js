@@ -1,5 +1,13 @@
 ## [Unreleased]
 
+### Added
+* Added `IterationAtomNode`
+* Added `IterationAtomNode` to `CallStatementNode` and `InlineCallNode`
+* Added `ConditionAtomNode` to `InlineCallNode`
+
+### Changed
+* Renamed `StatementConditionNode` to `ConditionAtomNode`
+
 ## [0.0.20] - 2021-01-11
 
 ### Added

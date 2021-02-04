@@ -1,10 +1,12 @@
 import {
   AssignmentNode,
   CallStatementNode,
+  ConditionAtomNode,
   HttpCallStatementNode,
   HttpRequestNode,
   HttpResponseHandlerNode,
   InlineCallNode,
+  IterationAtomNode,
   JessieExpressionNode,
   MapASTNode,
   MapDefinitionNode,
@@ -15,7 +17,6 @@ import {
   OutcomeStatementNode,
   PrimitiveLiteralNode,
   SetStatementNode,
-  StatementConditionNode,
 } from './map-ast';
 
 export function isOutcomeStatementNode(
@@ -70,10 +71,16 @@ export function isAssignmentNode(node: MapASTNode): node is AssignmentNode {
   return node.kind === 'Assignment';
 }
 
-export function isStatementConditionNode(
+export function isConditionAtomNode(
   node: MapASTNode
-): node is StatementConditionNode {
-  return node.kind === 'StatementCondition';
+): node is ConditionAtomNode {
+  return node.kind === 'ConditionAtom';
+}
+
+export function isIterationAtomNode(
+  node: MapASTNode
+): node is IterationAtomNode {
+  return node.kind === 'IterationAtom';
 }
 
 export function isCallStatementNode(
