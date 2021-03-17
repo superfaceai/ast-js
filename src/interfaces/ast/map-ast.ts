@@ -123,11 +123,11 @@ export interface CallStatementNode extends MapASTNodeBase {
   statements: (SetStatementNode | OutcomeStatementNode)[];
 }
 
-export type HttpSecurity =
-  | { scheme: 'none' }
-  | { scheme: 'basic' }
-  | { scheme: 'bearer' }
-  | { scheme: 'apikey'; placement: 'query' | 'header'; name: string };
+export type HttpSecurityRequirement = {
+  id: string;
+  /** Optional scheme information. */
+  scheme?: 'apikey' | 'basic' | 'bearer';
+};
 
 /**
  * Request definition for http:
@@ -140,7 +140,7 @@ export interface HttpRequestNode extends MapASTNodeBase {
   query?: ObjectLiteralNode;
   headers?: ObjectLiteralNode;
   body?: LiteralNode;
-  security?: HttpSecurity;
+  security: HttpSecurityRequirement[];
 }
 
 /**
