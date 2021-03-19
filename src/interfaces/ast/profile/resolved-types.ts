@@ -1,5 +1,5 @@
-import { ModelTypeNameNode, Type } from './ast';
 import { RecursiveTransform } from '../common';
+import { ModelTypeNameNode, Type } from './ast';
 
 /**
  * Recursive sentinel node that marks circular reference detected while resolving reference type.
