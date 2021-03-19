@@ -19,7 +19,7 @@ import {
   UnionDefinitionNode,
   UseCaseDefinitionNode,
   UseCaseSlotDefinitionNode,
-} from './profile-ast';
+} from './ast';
 
 export function isPrimitiveTypeNameNode(
   node: ProfileASTNode

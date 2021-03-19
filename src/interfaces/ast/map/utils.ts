@@ -17,7 +17,7 @@ import {
   OutcomeStatementNode,
   PrimitiveLiteralNode,
   SetStatementNode,
-} from './map-ast';
+} from './ast';
 
 export function isOutcomeStatementNode(
   node: MapASTNode

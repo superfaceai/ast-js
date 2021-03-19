@@ -1,4 +1,4 @@
-import { Location, Span } from './source';
+import { Location, Span } from '../source';
 
 // BASE //
 
