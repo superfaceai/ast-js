@@ -45,3 +45,8 @@ Licenses of node_modules are checked during CI/CD for every commit. Only the fol
 - CC0-1.0
 - Unlicense
 - UNLICENSED
+
+## License
+
+The Superface SDK is licensed under the [MIT](LICENSE).
+© 2021 Superface
