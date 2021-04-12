@@ -24,6 +24,7 @@
     "prebuild": "yarn clean",
     "test": "jest",
     "lint": "eslint src/",
+    "lint:fix": "yarn lint --fix",
     "format": "prettier -c src/",
     "format:fix": "prettier --write src/"
   },
