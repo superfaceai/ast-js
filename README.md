@@ -1,4 +1,6 @@
-# Superface AST for JS/TS
+# Ast-js
+
+![superface logo](https://github.com/superfaceai/ast-js/blob/master/docs/LogoGreen.svg)
 
 Superface AST definitions for Javascript/Typescript. The types in this repository define the common language that the Superface parser produces and the Superface SDK interprets.
 
@@ -6,6 +8,7 @@ Superface AST definitions for Javascript/Typescript. The types in this repositor
 
 - [Install](#install)
 - [Usage](#usage)
+- [Support](#support)
 - [Development](#development)
 - [Publishing](#publishing)
 - [Maintainers](#maintainers)
@@ -41,7 +44,6 @@ usecase Test {}
 const source = new Source(content);
 const result: ProfileDocumentNode = parseProfile(source);
 ```
-
 ## Development
 
 When developing, start with cloning the repository using `git clone https://github.com/superfaceai/ast-js.git` (or `git clone git@github.com:superfaceai/ast-js.git` if you have repository access).
@@ -57,6 +59,10 @@ The `package.json` also contains scripts (runnable by calling `yarn <script-name
 - `prepush` - run `test`, `lint` and `format` checks. This should run without errors before you push anything to git.
 
 Lastly, to build a local artifact run `yarn build` or `npm run build`.
+
+## Support
+
+If you need any additional support, have any questions or you just want to talk you can do that through our [documentation page](https://developer.superface.dev). 
 
 ## Publishing
 
