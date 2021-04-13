@@ -1,6 +1,6 @@
 # Ast-js
 
-![superface logo](https://github.com/superfaceai/ast-js/blob/chore/add-banner/docs/LogoGreen.svg)
+![superface logo](https://github.com/superfaceai/ast-js/blob/master/docs/LogoGreen.svg)
 
 ## Install
 
