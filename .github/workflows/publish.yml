@@ -15,17 +15,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2.3.4
       - name: Setup Node.js environment
-        uses: actions/setup-node@v1.4.4
+        uses: actions/setup-node@v2
         with:
-          registry-url: "https://npm.pkg.github.com"
+          # registry-url: "https://npm.pkg.github.com"
           # Defaults to the user or organization that owns the workflow file
           scope: "@superfaceai"
+          node-version: "14"
+
       - name: Install dependencies
         run: yarn install
       - name: Test
         run: yarn test
       - name: Build
         run: yarn build
+
       - name: Publish Git preparation
         run: |
           echo Publishing as version ${GITHUB_REF##*/v}
@@ -36,4 +39,4 @@ jobs:
       - name: Publish
         run: yarn publish --new-version ${GITHUB_REF##*/v} --verbose
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPMJS_BOT_PAT }}

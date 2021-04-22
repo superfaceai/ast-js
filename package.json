@@ -12,9 +12,6 @@
   "files": [
     "dist/**/*"
   ],
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "author": "Superface Team",
   "license": "MIT",
   "scripts": {
