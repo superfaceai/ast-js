@@ -31,13 +31,7 @@ Superface AST definitions for Javascript/Typescript. The types in this repositor
 
 ## Install
 
-To install this package, first add the github superface repository to your npm config. Use your github name as your login and generate a personal access token with at least the `repo` and `read:packages` permissions in Github to use as password:
-
-```shell
-npm login --scope=@superfaceai --registry=https://npm.pkg.github.com
-```
-
-Then install the ast into one of your projects:
+Install the ast into one of your projects:
 
 ```shell
 yarn add @superfaceai/ast-js
@@ -93,7 +87,7 @@ Package publishing is done through GitHub release functionality.
 
 Use semver for the version tag. It must be in format of `v<major>.<minor>.<patch>`.
 
-Github Actions workflow will pick up the release and publish it as one of the [packages](https://github.com/superfaceai/ast-js/packages).
+Github Actions workflow will pick up the release and publish it as one of the [packages](https://www.npmjs.com/package/@superfaceai/ast).
 
 ## Maintainers
 
