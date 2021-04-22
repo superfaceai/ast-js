@@ -1,6 +1,6 @@
 # Ast-js
 
-![superface logo](https://github.com/superfaceai/ast-js/blob/master/docs/LogoGreen.svg)
+<img src="https://github.com/superfaceai/ast-js/blob/master/docs/LogoGreen.png" alt="superface logo" width="150" height="150">
 
 Superface AST definitions for Javascript/Typescript. The types in this repository define the common language that the Superface parser produces and the Superface SDK interprets.
 
