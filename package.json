@@ -1,6 +1,6 @@
 {
   "name": "@superfaceai/ast",
-  "version": "0.2.0",
+  "version": "0.0.23",
   "description": "Superface profile and map language ASTs, https://superface.ai",
   "main": "dist/language.js",
   "source": "src/index.ts",
@@ -12,9 +12,6 @@
   "files": [
     "dist/**/*"
   ],
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/"
-  },
   "author": "Superface Team",
   "license": "MIT",
   "scripts": {
