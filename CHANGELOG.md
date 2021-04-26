@@ -1,5 +1,17 @@
 ## [Unreleased]
 
+## [0.0.23] - 2021-04-26
+
+### Changed
+* Publish to npm
+
+## [0.0.22] - 2021-03-21
+
+### Changed
+* Map security requirements
+
+## [0.0.21] - 2021-02-04
+
 ### Added
 * Added `IterationAtomNode`
 * Added `IterationAtomNode` to `CallStatementNode` and `InlineCallNode`
