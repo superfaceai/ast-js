@@ -26,7 +26,7 @@ Superface AST definitions for Javascript/Typescript. The types in this repositor
 
  Motivation behind Superface is nicely described in this [video](https://www.youtube.com/watch?v=BCvq3NXFb94) from APIdays conference.
 
- You can get more information at https://superface.ai and https://developer.superface.dev.
+ You can get more information at https://superface.ai and https://docs.superface.ai.
 Superface AST definitions for Javascript/Typescript. The types in this repository define the common language that the Superface parser produces and the Superface SDK interprets.
 
 ## Install
