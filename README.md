@@ -1,5 +1,7 @@
 # Ast-js
 
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/superfaceai/ast-js/CI)
+
 <img src="https://github.com/superfaceai/ast-js/blob/main/docs/LogoGreen.png" alt="superface logo" width="150" height="150">
 
 Superface AST definitions for Javascript/Typescript. The types in this repository define the common language that the Superface parser produces and the Superface SDK interprets.
