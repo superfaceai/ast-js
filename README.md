@@ -1,6 +1,6 @@
 # Ast-js
 
-<img src="https://github.com/superfaceai/ast-js/blob/master/docs/LogoGreen.png" alt="superface logo" width="150" height="150">
+<img src="https://github.com/superfaceai/ast-js/blob/main/docs/LogoGreen.png" alt="superface logo" width="150" height="150">
 
 Superface AST definitions for Javascript/Typescript. The types in this repository define the common language that the Superface parser produces and the Superface SDK interprets.
 
@@ -57,7 +57,7 @@ const result: ProfileDocumentNode = parseProfile(source);
 
 Superface is not man-in-the-middle so it does not require any access to secrets that are needed to communicate with provider API. Superface CLI only prepares super.json file with authorization fields in form of environment variable. You just set correct variables and communicate directly with provider API.
 
-You can find more information in [SDK repository](https://github.com/superfaceai/sdk-js/blob/master/SECURITY.md).
+You can find more information in [SDK repository](https://github.com/superfaceai/one-sdk-js/blob/main/SECURITY.md).
 
 ## Support
 
