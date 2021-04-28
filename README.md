@@ -38,7 +38,7 @@ Superface AST definitions for Javascript/Typescript. The types in this repositor
 Install the ast into one of your projects:
 
 ```shell
-yarn add @superfaceai/ast-js
+yarn add @superfaceai/ast
 ```
 
 ## Usage
