@@ -1,6 +1,9 @@
 # Ast-js
 
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/superfaceai/ast-js/CI)
+![NPM](https://img.shields.io/npm/v/@superfaceai/ast)
+[![NPM](https://img.shields.io/npm/l/@superfaceai/ast)](LICENSE)
+![TypeScript](https://img.shields.io/badge/%3C%2F%3E-Typescript-blue)
 
 <img src="https://github.com/superfaceai/ast-js/blob/main/docs/LogoGreen.png" alt="superface logo" width="150" height="150">
 
