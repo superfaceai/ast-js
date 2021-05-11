@@ -61,6 +61,9 @@ export function isValidVersionString(version: string): boolean {
  * ```
  */
 export function extractVersionString(input: string): string {
+  if (input === '') {
+    throw new Error('Invalid empty version string');
+  }
   const [, version] = splitLimit(input, '@', 1);
   if (!isValidVersionString(version)) {
     throw new Error(`Invalid version string in "${input}"`);
@@ -117,6 +120,12 @@ export function extractVersion(
   let patch = undefined;
   if (patchStr !== undefined) {
     patch = parseVersionNumber(patchStr);
+  }
+
+  if (label !== undefined) {
+    if (!isValidDocumentName(label)) {
+      throw new Error(`Invalid version label "${label}"`);
+    }
   }
 
   return { major, minor, patch, label };
