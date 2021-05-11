@@ -17,6 +17,15 @@ export function isValidProviderName(input: string): boolean {
   return PROVIDER_NAME_RE.test(input);
 }
 
+/**
+ * Checks if input string is valid version string.
+ *
+ * Example:
+ * ```
+ * isValidVersionString('1.2.3') // true
+ * isValidVersionString('1.2.3-test') // true
+ * ```
+ */
 export function isValidVersionString(version: string): boolean {
   const [restVersion, label] = splitLimit(version, '-', 1);
   const [majorStr, minorStr, patchStr] = splitLimit(restVersion, '.', 2);
@@ -41,4 +50,74 @@ export function isValidVersionString(version: string): boolean {
   }
 
   return true;
+}
+
+/**
+ * Tries to extract valid version string from input string contining @.
+ *
+ * Example:
+ * ```
+ * extractVersionString('test/test@1.2.3') // '1.2.3'
+ * ```
+ */
+export function extractVersionString(input: string): string {
+  const [, version] = splitLimit(input, '@', 1);
+  if (!isValidVersionString(version)) {
+    throw new Error(`Invalid version string in "${input}"`);
+  }
+
+  return version;
+}
+
+/**
+ * Tries to parse numeric string (0-9) to number.
+ *
+ * Example:
+ * ```
+ * parseVersionNumber('3') // 3
+ * parseVersionNumber(' 3 ') // 3
+ * ```
+ */
+export function parseVersionNumber(str: string): number {
+  const value = str.trim();
+  if (!VERSION_NUMBER_RE.test(value)) {
+    throw new Error(`Unable to parse version string "${str}"`);
+  }
+
+  return parseInt(value, 10);
+}
+
+/**
+ * Tries to extract version object from version string.
+ *
+ * Example:
+ * ```
+ * parseVersionNumber('1.2.3') // {major: 1, minor: 2, patch: 3}
+ * parseVersionNumber('1.2.3-test') // {major: 1, minor: 2, patch: 3, label: 'test'}
+ * ```
+ */
+export function extractVersion(
+  versionString: string
+): {
+  major: number;
+  minor?: number;
+  patch?: number;
+  label?: string;
+} {
+  const [version, label] = splitLimit(versionString, '-', 1);
+  const [majorStr, minorStr, patchStr] = splitLimit(version, '.', 2);
+
+  const major = parseVersionNumber(majorStr);
+
+  let minor = undefined;
+  if (minorStr !== undefined) {
+    minor = parseVersionNumber(minorStr);
+  }
+
+  let patch = undefined;
+  if (patchStr !== undefined) {
+    patch = parseVersionNumber(patchStr);
+  }
+
+  return { major, minor, patch, label };
 }
