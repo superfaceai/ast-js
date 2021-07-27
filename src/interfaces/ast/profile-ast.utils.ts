@@ -1,3 +1,5 @@
+import { createIs } from 'typescript-is';
+
 import {
   DocumentDefinition,
   EnumDefinitionNode,
@@ -20,122 +22,62 @@ import {
   UseCaseDefinitionNode,
   UseCaseSlotDefinitionNode,
 } from './profile-ast';
+import { Guard } from './utils';
 
-export function isPrimitiveTypeNameNode(
-  node: ProfileASTNode
-): node is PrimitiveTypeNameNode {
-  return node.kind === 'PrimitiveTypeName';
-}
-
-export function isModelTypeNameNode(
-  node: ProfileASTNode
-): node is ModelTypeNameNode {
-  return node.kind === 'ModelTypeName';
-}
-
-export function isTypeName(node: ProfileASTNode): node is TypeName {
-  return isPrimitiveTypeNameNode(node) || isModelTypeNameNode(node);
-}
-
-export function isEnumDefinitionNode(
-  node: ProfileASTNode
-): node is EnumDefinitionNode {
-  return node.kind === 'EnumDefinition';
-}
-
-export function isObjectDefinitionNode(
-  node: ProfileASTNode
-): node is ObjectDefinitionNode {
-  return node.kind === 'ObjectDefinition';
-}
-
-export function isListDefinitionNode(
-  node: ProfileASTNode
-): node is ListDefinitionNode {
-  return node.kind === 'ListDefinition';
-}
-
-export function isNonNullDefinitionNode(
-  node: ProfileASTNode
-): node is NonNullDefinitionNode {
-  return node.kind === 'NonNullDefinition';
-}
-
-export function isUnionDefinitionNode(
-  node: ProfileASTNode
-): node is UnionDefinitionNode {
-  return node.kind === 'UnionDefinition';
-}
-
-export function isTypeDefinition(node: ProfileASTNode): node is TypeDefinition {
-  return (
-    isObjectDefinitionNode(node) ||
-    isEnumDefinitionNode(node) ||
-    isUnionDefinitionNode(node) ||
-    isListDefinitionNode(node) ||
-    isNonNullDefinitionNode(node)
-  );
-}
-
-export function isType(node: ProfileASTNode): node is Type {
-  return isTypeName(node) || isTypeDefinition(node);
-}
-
-export function isEnumValueNode(node: ProfileASTNode): node is EnumValueNode {
-  return node.kind === 'EnumValue';
-}
-
-export function isFieldDefinitionNode(
-  node: ProfileASTNode
-): node is FieldDefinitionNode {
-  return node.kind === 'FieldDefinition';
-}
-
-export function isNamedFieldDefinitionNode(
-  node: ProfileASTNode
-): node is NamedFieldDefinitionNode {
-  return node.kind === 'NamedFieldDefinition';
-}
-
-export function isNamedModelDefinitionNode(
-  node: ProfileASTNode
-): node is NamedModelDefinitionNode {
-  return node.kind === 'NamedModelDefinition';
-}
-
-export function isUseCaseSlotDefinitionNode(
-  node: ProfileASTNode
-): node is UseCaseSlotDefinitionNode {
-  return node.kind === 'UseCaseSlotDefinition';
-}
-
-export function isUseCaseDefinitionNode(
-  node: ProfileASTNode
-): node is UseCaseDefinitionNode {
-  return node.kind === 'UseCaseDefinition';
-}
-
-export function isProfileHeaderNode(
-  node: ProfileASTNode
-): node is ProfileHeaderNode {
-  return node.kind === 'ProfileHeader';
-}
-
-export function isProfileDocumentNode(
-  node: ProfileASTNode
-): node is ProfileDocumentNode {
-  return node.kind === 'ProfileDocument';
-}
-
-export function isDocumentDefinition(
-  node: ProfileASTNode
-): node is DocumentDefinition {
-  return (
-    isUseCaseDefinitionNode(node) ||
-    isNamedFieldDefinitionNode(node) ||
-    isNamedModelDefinitionNode(node)
-  );
-}
+export const isDocumentDefinition: Guard<DocumentDefinition> = createIs<
+  DocumentDefinition
+>();
+export const isEnumDefinitionNode: Guard<EnumDefinitionNode> = createIs<
+  EnumDefinitionNode
+>();
+export const isEnumValueNode: Guard<EnumValueNode> = createIs<EnumValueNode>();
+export const isFieldDefinitionNode: Guard<FieldDefinitionNode> = createIs<
+  FieldDefinitionNode
+>();
+export const isListDefinitionNode: Guard<ListDefinitionNode> = createIs<
+  ListDefinitionNode
+>();
+export const isModelTypeNameNode: Guard<ModelTypeNameNode> = createIs<
+  ModelTypeNameNode
+>();
+export const isNamedFieldDefinitionNode: Guard<NamedFieldDefinitionNode> = createIs<
+  NamedFieldDefinitionNode
+>();
+export const isNamedModelDefinitionNode: Guard<NamedModelDefinitionNode> = createIs<
+  NamedModelDefinitionNode
+>();
+export const isNonNullDefinitionNode: Guard<NonNullDefinitionNode> = createIs<
+  NonNullDefinitionNode
+>();
+export const isObjectDefinitionNode: Guard<ObjectDefinitionNode> = createIs<
+  ObjectDefinitionNode
+>();
+export const isPrimitiveTypeNameNode: Guard<PrimitiveTypeNameNode> = createIs<
+  PrimitiveTypeNameNode
+>();
+export const isProfileASTNode: Guard<ProfileASTNode> = createIs<
+  ProfileASTNode
+>();
+export const isProfileDocumentNode: Guard<ProfileDocumentNode> = createIs<
+  ProfileDocumentNode
+>();
+export const isProfileHeaderNode: Guard<ProfileHeaderNode> = createIs<
+  ProfileHeaderNode
+>();
+export const isType: Guard<Type> = createIs<Type>();
+export const isTypeDefinition: Guard<TypeDefinition> = createIs<
+  TypeDefinition
+>();
+export const isTypeName: Guard<TypeName> = createIs<TypeName>();
+export const isUnionDefinitionNode: Guard<UnionDefinitionNode> = createIs<
+  UnionDefinitionNode
+>();
+export const isUseCaseDefinitionNode: Guard<UseCaseDefinitionNode> = createIs<
+  UseCaseDefinitionNode
+>();
+export const isUseCaseSlotDefinitionNode: Guard<UseCaseSlotDefinitionNode> = createIs<
+  UseCaseSlotDefinitionNode
+>();
 
 export interface ProfileAstVisitor<R = unknown> {
   visit(node: ProfileASTNode, ...parameters: unknown[]): R;

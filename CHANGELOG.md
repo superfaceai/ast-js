@@ -1,5 +1,11 @@
 ## [Unreleased]
 
+### Added
+* Map and Profile AST validation with `typescript-is`
+* Compile time transformation with `ttypescript`
+* JSON Schema generation with `typescript-json-schema`
+* Husky for a pre-commit hook
+
 ## [0.0.23] - 2021-04-26
 
 ### Changed

@@ -170,6 +170,9 @@ export interface HttpResponseHandlerNode extends MapASTNodeBase {
 export interface HttpCallStatementNode extends MapASTNodeBase {
   kind: 'HttpCallStatement';
   method: string;
+  /**
+   * @format uri
+   **/
   url: string;
   request?: HttpRequestNode;
   responseHandlers: HttpResponseHandlerNode[];
@@ -210,6 +213,10 @@ export interface MapHeaderNode extends MapASTNodeBase {
       label?: string;
     };
   };
+
+  /**
+   * @pattern ^[a-z][_\-0-9a-z]*$
+   **/
   provider: string;
   variant?: string;
 }

@@ -1,0 +1,22 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+STAGED=`git diff --cached --name-only --diff-filter=d`
+GENERATED=0
+
+if grep -q src/interfaces/ast/map-ast.ts <<< "$STAGED" && ! grep -q src/interfaces/ast/map-ast.schema.json <<< "$STAGED" ; then
+  yarn run --silent generate_map_schema
+  GENERATED=1
+fi
+
+if grep -q src/interfaces/ast/profile-ast.ts <<< $STAGED && ! grep -q src/interfaces/ast/profile-ast.schema.json <<< $STAGED ; then
+  yarn run --silent generate_profile_schema 
+  GENERATED=1
+fi
+
+if [ $GENERATED -eq 1 ]; then
+  echo "Some TypeScript schemas were modified. Their corresponding JSON schemas were attempted to be regenerated automatically."
+  echo "Don't forget to commit them."
+  echo "If you are sure you don't need to update the schemas, run 'git commit --no-verify'. "
+  exit 1
+fi

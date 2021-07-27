@@ -1,18 +1,12 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
     "definitions": {
-        "AssignmentNode": {
-            "description": "Assignment node: `key.\"b.az\".bar = <value>`",
+        "EnumDefinitionNode": {
+            "description": "Construct of form: `enum { values... }`",
             "properties": {
-                "key": {
-                    "items": {
-                        "type": "string"
-                    },
-                    "type": "array"
-                },
                 "kind": {
                     "enum": [
-                        "Assignment"
+                        "EnumDefinition"
                     ],
                     "type": "string"
                 },
@@ -40,249 +34,24 @@
                     },
                     "type": "object"
                 },
-                "value": {
-                    "$ref": "#/definitions/LiteralNode"
-                }
-            },
-            "type": "object"
-        },
-        "CallStatementNode": {
-            "description": "Call statement, possibly with a condition and iteration: `call <?iteration> <op>(<...args>) <?condition> { <...statements> }`",
-            "properties": {
-                "arguments": {
+                "values": {
                     "items": {
-                        "$ref": "#/definitions/AssignmentNode"
-                    },
-                    "type": "array"
-                },
-                "condition": {
-                    "$ref": "#/definitions/ConditionAtomNode"
-                },
-                "iteration": {
-                    "$ref": "#/definitions/IterationAtomNode"
-                },
-                "kind": {
-                    "enum": [
-                        "CallStatement"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "operationName": {
-                    "type": "string"
-                },
-                "span": {
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "statements": {
-                    "items": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/definitions/OutcomeStatementNode"
-                            },
-                            {
-                                "$ref": "#/definitions/SetStatementNode"
-                            }
-                        ]
+                        "$ref": "#/definitions/EnumValueNode"
                     },
                     "type": "array"
                 }
             },
             "type": "object"
         },
-        "ConditionAtomNode": {
-            "description": "Statement condition atom: `if (<jessie>)`",
+        "EnumValueNode": {
+            "description": "Construct found as enum value.",
             "properties": {
-                "expression": {
-                    "$ref": "#/definitions/JessieExpressionNode"
-                },
-                "kind": {
-                    "enum": [
-                        "ConditionAtom"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "span": {
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                }
-            },
-            "type": "object"
-        },
-        "HttpCallStatementNode": {
-            "properties": {
-                "kind": {
-                    "enum": [
-                        "HttpCallStatement"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "method": {
-                    "type": "string"
-                },
-                "request": {
-                    "$ref": "#/definitions/HttpRequestNode"
-                },
-                "responseHandlers": {
-                    "items": {
-                        "$ref": "#/definitions/HttpResponseHandlerNode"
-                    },
-                    "type": "array"
-                },
-                "span": {
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "url": {
-                    "format": "uri",
-                    "type": "string"
-                }
-            },
-            "type": "object"
-        },
-        "HttpRequestNode": {
-            "description": "Request definition for http:\n`request <?contentType> <?contentLanguage> { <?query> <?headers? <?body> }`",
-            "properties": {
-                "body": {
-                    "$ref": "#/definitions/LiteralNode"
-                },
-                "contentLanguage": {
-                    "type": "string"
-                },
-                "contentType": {
-                    "type": "string"
-                },
-                "headers": {
-                    "$ref": "#/definitions/ObjectLiteralNode"
-                },
-                "kind": {
-                    "enum": [
-                        "HttpRequest"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "query": {
-                    "$ref": "#/definitions/ObjectLiteralNode"
-                },
-                "security": {
-                    "items": {
-                        "properties": {
-                            "id": {
-                                "type": "string"
-                            },
-                            "scheme": {
-                                "description": "Optional scheme information.",
-                                "enum": [
-                                    "apikey",
-                                    "basic",
-                                    "bearer"
-                                ],
-                                "type": "string"
-                            }
-                        },
-                        "type": "object"
-                    },
-                    "type": "array"
-                },
-                "span": {
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                }
-            },
-            "type": "object"
-        },
-        "HttpResponseHandlerNode": {
-            "description": "Response handler for http: `response <?statusCode> <?contentType> <?contentLanguage> { <...statements> }`",
-            "properties": {
-                "contentLanguage": {
-                    "type": "string"
-                },
-                "contentType": {
+                "description": {
                     "type": "string"
                 },
                 "kind": {
                     "enum": [
-                        "HttpResponseHandler"
+                        "EnumValue"
                     ],
                     "type": "string"
                 },
@@ -310,487 +79,8 @@
                     },
                     "type": "object"
                 },
-                "statements": {
-                    "items": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/definitions/OutcomeStatementNode"
-                            },
-                            {
-                                "$ref": "#/definitions/SetStatementNode"
-                            }
-                        ]
-                    },
-                    "type": "array"
-                },
-                "statusCode": {
-                    "type": "number"
-                }
-            },
-            "type": "object"
-        },
-        "InlineCallNode": {
-            "description": "Inline call, can appear on rhs in assignment: `call <?iteration> <op>(<...args>) <?condition>`",
-            "properties": {
-                "arguments": {
-                    "items": {
-                        "$ref": "#/definitions/AssignmentNode"
-                    },
-                    "type": "array"
-                },
-                "condition": {
-                    "$ref": "#/definitions/ConditionAtomNode"
-                },
-                "iteration": {
-                    "$ref": "#/definitions/IterationAtomNode"
-                },
-                "kind": {
-                    "enum": [
-                        "InlineCall"
-                    ],
+                "title": {
                     "type": "string"
-                },
-                "location": {
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "operationName": {
-                    "type": "string"
-                },
-                "span": {
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                }
-            },
-            "type": "object"
-        },
-        "IterationAtomNode": {
-            "description": "Iteration atom: `foreach (<iterationVariable> of <iterable>)`",
-            "properties": {
-                "iterable": {
-                    "$ref": "#/definitions/JessieExpressionNode"
-                },
-                "iterationVariable": {
-                    "type": "string"
-                },
-                "kind": {
-                    "enum": [
-                        "IterationAtom"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "span": {
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                }
-            },
-            "type": "object"
-        },
-        "JessieExpressionNode": {
-            "properties": {
-                "expression": {
-                    "type": "string"
-                },
-                "kind": {
-                    "enum": [
-                        "JessieExpression"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "source": {
-                    "type": "string"
-                },
-                "sourceMap": {
-                    "type": "string"
-                },
-                "span": {
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                }
-            },
-            "type": "object"
-        },
-        "LiteralNode": {
-            "anyOf": [
-                {
-                    "$ref": "#/definitions/PrimitiveLiteralNode"
-                },
-                {
-                    "$ref": "#/definitions/ObjectLiteralNode"
-                },
-                {
-                    "$ref": "#/definitions/JessieExpressionNode"
-                },
-                {
-                    "$ref": "#/definitions/InlineCallNode"
-                }
-            ]
-        },
-        "MapDefinitionNode": {
-            "properties": {
-                "kind": {
-                    "enum": [
-                        "MapDefinition"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "span": {
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "statements": {
-                    "items": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/definitions/OutcomeStatementNode"
-                            },
-                            {
-                                "$ref": "#/definitions/SetStatementNode"
-                            },
-                            {
-                                "$ref": "#/definitions/CallStatementNode"
-                            },
-                            {
-                                "$ref": "#/definitions/HttpCallStatementNode"
-                            }
-                        ]
-                    },
-                    "type": "array"
-                },
-                "usecaseName": {
-                    "type": "string"
-                }
-            },
-            "type": "object"
-        },
-        "MapHeaderNode": {
-            "properties": {
-                "kind": {
-                    "enum": [
-                        "MapHeader"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "profile": {
-                    "properties": {
-                        "name": {
-                            "type": "string"
-                        },
-                        "scope": {
-                            "type": "string"
-                        },
-                        "version": {
-                            "properties": {
-                                "label": {
-                                    "type": "string"
-                                },
-                                "major": {
-                                    "type": "number"
-                                },
-                                "minor": {
-                                    "type": "number"
-                                },
-                                "patch": {
-                                    "type": "number"
-                                }
-                            },
-                            "type": "object"
-                        }
-                    },
-                    "type": "object"
-                },
-                "provider": {
-                    "pattern": "^[a-z][_\\-0-9a-z]*$",
-                    "type": "string"
-                },
-                "span": {
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "variant": {
-                    "type": "string"
-                }
-            },
-            "type": "object"
-        },
-        "ObjectLiteralNode": {
-            "description": "Object literal node: `{ <...assignments> }`",
-            "properties": {
-                "fields": {
-                    "items": {
-                        "$ref": "#/definitions/AssignmentNode"
-                    },
-                    "type": "array"
-                },
-                "kind": {
-                    "enum": [
-                        "ObjectLiteral"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "span": {
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                }
-            },
-            "type": "object"
-        },
-        "OperationDefinitionNode": {
-            "properties": {
-                "kind": {
-                    "enum": [
-                        "OperationDefinition"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "name": {
-                    "type": "string"
-                },
-                "span": {
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "statements": {
-                    "items": {
-                        "anyOf": [
-                            {
-                                "$ref": "#/definitions/OutcomeStatementNode"
-                            },
-                            {
-                                "$ref": "#/definitions/SetStatementNode"
-                            },
-                            {
-                                "$ref": "#/definitions/CallStatementNode"
-                            },
-                            {
-                                "$ref": "#/definitions/HttpCallStatementNode"
-                            }
-                        ]
-                    },
-                    "type": "array"
-                }
-            },
-            "type": "object"
-        },
-        "OutcomeStatementNode": {
-            "description": "Outcome node, specifying what value to return and whether to terminate the flow immediately:\n`return/fail <?condition> <value>`\n`map result/error <?condition> <value>`",
-            "properties": {
-                "condition": {
-                    "$ref": "#/definitions/ConditionAtomNode"
-                },
-                "isError": {
-                    "type": "boolean"
-                },
-                "kind": {
-                    "enum": [
-                        "OutcomeStatement"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "span": {
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "terminateFlow": {
-                    "type": "boolean"
-                },
-                "value": {
-                    "$ref": "#/definitions/LiteralNode"
-                }
-            },
-            "type": "object"
-        },
-        "PrimitiveLiteralNode": {
-            "description": "Primitive literal atom like booleans, strings and numbers.",
-            "properties": {
-                "kind": {
-                    "enum": [
-                        "PrimitiveLiteral"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
-                },
-                "span": {
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "type": "object"
                 },
                 "value": {
                     "type": [
@@ -802,21 +92,67 @@
             },
             "type": "object"
         },
-        "SetStatementNode": {
-            "description": "Set statement, possibly with a condition: `set <?condition> { <...assignments> }`",
+        "FieldDefinitionNode": {
+            "description": "Construct of form: `ident type` or `ident` that appear inside object model definitions",
             "properties": {
-                "assignments": {
-                    "items": {
-                        "$ref": "#/definitions/AssignmentNode"
-                    },
-                    "type": "array"
+                "description": {
+                    "type": "string"
                 },
-                "condition": {
-                    "$ref": "#/definitions/ConditionAtomNode"
+                "fieldName": {
+                    "type": "string"
                 },
                 "kind": {
                     "enum": [
-                        "SetStatement"
+                        "FieldDefinition"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "required": {
+                    "description": "Non-required fields don't have to be present at all",
+                    "type": "boolean"
+                },
+                "span": {
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/Type"
+                }
+            },
+            "type": "object"
+        },
+        "ListDefinitionNode": {
+            "description": "Array type: `[type]`",
+            "properties": {
+                "elementType": {
+                    "$ref": "#/definitions/Type"
+                },
+                "kind": {
+                    "enum": [
+                        "ListDefinition"
                     ],
                     "type": "string"
                 },
@@ -846,28 +182,615 @@
                 }
             },
             "type": "object"
+        },
+        "ModelTypeNameNode": {
+            "description": "Name of a model type parsed from identifiers.\n\nThis is the name of a user defined type (model).",
+            "properties": {
+                "kind": {
+                    "enum": [
+                        "ModelTypeName"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "span": {
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "NamedFieldDefinitionNode": {
+            "description": "Construct of form: `field ident type`\n\nThis assigns the name of `ident` to a type. All fields in the documents with the same name\nwill then share this type.",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "fieldName": {
+                    "type": "string"
+                },
+                "kind": {
+                    "enum": [
+                        "NamedFieldDefinition"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "span": {
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/Type"
+                }
+            },
+            "type": "object"
+        },
+        "NamedModelDefinitionNode": {
+            "description": "Construct of form: `model ident type` or `model ident { fields... }`\n\nThis creates a new type in the document, which is assignable using the `ModelReferenceNode`.\n\nThis can be used ranging from simple type alias `model Foo string` to complex unions\nand objects `model Bar Foo! | enum { ONE = 1, TWO = 2 } | { baz boolean }`",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "kind": {
+                    "enum": [
+                        "NamedModelDefinition"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "modelName": {
+                    "type": "string"
+                },
+                "span": {
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/Type"
+                }
+            },
+            "type": "object"
+        },
+        "NonNullDefinitionNode": {
+            "description": "Non-null assertion operator: `type!`\n\nCannot be used on unions, but can be used on type aliases or on all union subtypes.",
+            "properties": {
+                "kind": {
+                    "enum": [
+                        "NonNullDefinition"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "span": {
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "type": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/PrimitiveTypeNameNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ModelTypeNameNode"
+                        },
+                        {
+                            "$ref": "#/definitions/EnumDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ObjectDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ListDefinitionNode"
+                        }
+                    ]
+                }
+            },
+            "type": "object"
+        },
+        "ObjectDefinitionNode": {
+            "description": "Construct of form: `{ fields... }`",
+            "properties": {
+                "fields": {
+                    "items": {
+                        "$ref": "#/definitions/FieldDefinitionNode"
+                    },
+                    "type": "array"
+                },
+                "kind": {
+                    "enum": [
+                        "ObjectDefinition"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "span": {
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "PrimitiveTypeNameNode": {
+            "description": "From keywords: `boolean`, `number` and `string`",
+            "properties": {
+                "kind": {
+                    "enum": [
+                        "PrimitiveTypeName"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "name": {
+                    "enum": [
+                        "boolean",
+                        "number",
+                        "string"
+                    ],
+                    "type": "string"
+                },
+                "span": {
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "ProfileHeaderNode": {
+            "description": "The node containing document information.",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "kind": {
+                    "enum": [
+                        "ProfileHeader"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "scope": {
+                    "type": "string"
+                },
+                "span": {
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "version": {
+                    "properties": {
+                        "label": {
+                            "type": "string"
+                        },
+                        "major": {
+                            "type": "number"
+                        },
+                        "minor": {
+                            "type": "number"
+                        },
+                        "patch": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        },
+        "Type": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/PrimitiveTypeNameNode"
+                },
+                {
+                    "$ref": "#/definitions/ModelTypeNameNode"
+                },
+                {
+                    "$ref": "#/definitions/EnumDefinitionNode"
+                },
+                {
+                    "$ref": "#/definitions/ObjectDefinitionNode"
+                },
+                {
+                    "$ref": "#/definitions/ListDefinitionNode"
+                },
+                {
+                    "$ref": "#/definitions/NonNullDefinitionNode"
+                },
+                {
+                    "$ref": "#/definitions/UnionDefinitionNode"
+                }
+            ]
+        },
+        "UnionDefinitionNode": {
+            "description": "Construct of form: `type | type | ...`",
+            "properties": {
+                "kind": {
+                    "enum": [
+                        "UnionDefinition"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "span": {
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "types": {
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/definitions/PrimitiveTypeNameNode"
+                            },
+                            {
+                                "$ref": "#/definitions/ModelTypeNameNode"
+                            },
+                            {
+                                "$ref": "#/definitions/EnumDefinitionNode"
+                            },
+                            {
+                                "$ref": "#/definitions/ObjectDefinitionNode"
+                            },
+                            {
+                                "$ref": "#/definitions/ListDefinitionNode"
+                            },
+                            {
+                                "$ref": "#/definitions/NonNullDefinitionNode"
+                            }
+                        ]
+                    },
+                    "type": "array"
+                }
+            },
+            "type": "object"
+        },
+        "UseCaseDefinitionNode": {
+            "description": "Construct of form:\n```\nusecase ident safety {\ninput {\n  ...fields\n}\nresult type\nasync result type\nerror type\n}\n```",
+            "properties": {
+                "asyncResult": {
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>"
+                },
+                "description": {
+                    "type": "string"
+                },
+                "error": {
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>"
+                },
+                "input": {
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<ObjectDefinitionNode>"
+                },
+                "kind": {
+                    "enum": [
+                        "UseCaseDefinition"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "result": {
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>"
+                },
+                "safety": {
+                    "description": "Usecase safety indicator",
+                    "enum": [
+                        "idempotent",
+                        "safe",
+                        "unsafe"
+                    ],
+                    "type": "string"
+                },
+                "span": {
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "useCaseName": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
+        "UseCaseSlotDefinitionNode<ObjectDefinitionNode>": {
+            "description": "Named slot definition for usecases.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation.",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "kind": {
+                    "enum": [
+                        "UseCaseSlotDefinition"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "span": {
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/ObjectDefinitionNode"
+                }
+            },
+            "type": "object"
+        },
+        "UseCaseSlotDefinitionNode<Type>": {
+            "description": "Named slot definition for usecases.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation.",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "kind": {
+                    "enum": [
+                        "UseCaseSlotDefinition"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "span": {
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "type": "object"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "type": {
+                    "$ref": "#/definitions/Type"
+                }
+            },
+            "type": "object"
         }
     },
+    "description": "Node enclosing the whole document",
     "properties": {
         "definitions": {
             "items": {
                 "anyOf": [
                     {
-                        "$ref": "#/definitions/MapDefinitionNode"
+                        "$ref": "#/definitions/NamedFieldDefinitionNode"
                     },
                     {
-                        "$ref": "#/definitions/OperationDefinitionNode"
+                        "$ref": "#/definitions/NamedModelDefinitionNode"
+                    },
+                    {
+                        "$ref": "#/definitions/UseCaseDefinitionNode"
                     }
                 ]
             },
             "type": "array"
         },
         "header": {
-            "$ref": "#/definitions/MapHeaderNode"
+            "$ref": "#/definitions/ProfileHeaderNode"
         },
         "kind": {
             "enum": [
-                "MapDocument"
+                "ProfileDocument"
             ],
             "type": "string"
         },

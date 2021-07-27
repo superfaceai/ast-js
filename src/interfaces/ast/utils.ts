@@ -17,6 +17,8 @@ export function isValidProviderName(input: string): boolean {
   return PROVIDER_NAME_RE.test(input);
 }
 
+export type Guard<T> = (input: unknown) => input is T;
+
 /**
  * Checks if input string is valid version string.
  *

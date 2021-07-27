@@ -215,12 +215,14 @@ export interface ProfileHeaderNode extends ProfileASTNodeBase, DocumentedNode {
     label?: string;
   };
 }
+
 /** Node enclosing the whole document */
 export interface ProfileDocumentNode extends ProfileASTNodeBase {
   kind: 'ProfileDocument';
   header: ProfileHeaderNode;
   definitions: DocumentDefinition[];
 }
+
 export type DocumentDefinition =
   | UseCaseDefinitionNode
   | NamedFieldDefinitionNode

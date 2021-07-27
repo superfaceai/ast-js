@@ -11,6 +11,11 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "plugins": [
+      {
+        "transform": "typescript-is/lib/transform-inline/transformer"
+      }
+    ],
     "sourceMap": true,
     "strict": true,
     "strictPropertyInitialization": true,
