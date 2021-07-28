@@ -4,12 +4,15 @@
 STAGED=`git diff --cached --name-only --diff-filter=d`
 GENERATED=0
 
-if grep -q src/interfaces/ast/map-ast.ts <<< "$STAGED" && ! grep -q src/interfaces/ast/map-ast.schema.json <<< "$STAGED" ; then
+MAP_AST_CHANGED=$(expr `stat -c %Y src/interfaces/ast/map-ast.ts` - `stat -c %Y src/interfaces/ast/map-ast.schema.json`)
+PROFILE_AST_CHANGED=$(expr `stat -c %Y src/interfaces/ast/profile-ast.ts` - `stat -c %Y src/interfaces/ast/profile-ast.schema.json`)
+
+if [ $MAP_AST_CHANGED -gt 0 ]; then
   yarn run --silent generate_map_schema
   GENERATED=1
 fi
 
-if grep -q src/interfaces/ast/profile-ast.ts <<< $STAGED && ! grep -q src/interfaces/ast/profile-ast.schema.json <<< $STAGED ; then
+if [ $PROFILE_AST_CHANGED -gt 0 ]; then
   yarn run --silent generate_profile_schema 
   GENERATED=1
 fi
