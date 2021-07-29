@@ -172,27 +172,19 @@ export interface HttpResponseHandlerNode extends MapASTNodeBase {
   statements: (SetStatementNode | OutcomeStatementNode)[];
 }
 
+export type HttpMethod =
+  | 'GET'
+  | 'HEAD'
+  | 'POST'
+  | 'PUT'
+  | 'DELETE'
+  | 'CONNECT'
+  | 'OPTIONS'
+  | 'TRACE'
+  | 'PATCH';
 export interface HttpCallStatementNode extends MapASTNodeBase {
   kind: 'HttpCallStatement';
-  method:
-    | 'GET'
-    | 'HEAD'
-    | 'POST'
-    | 'PUT'
-    | 'DELETE'
-    | 'CONNECT'
-    | 'OPTIONS'
-    | 'TRACE'
-    | 'PATCH'
-    | 'get'
-    | 'head'
-    | 'post'
-    | 'put'
-    | 'delete'
-    | 'connect'
-    | 'options'
-    | 'trace'
-    | 'patch';
+  method: HttpMethod | Lowercase<HttpMethod>;
   /**
    * @format uri
    **/
