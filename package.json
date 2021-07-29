@@ -15,7 +15,7 @@
   "author": "Superface Team",
   "license": "MIT",
   "scripts": {
-    "build": "microbundle --tsconfig tsconfig.release.json",
+    "build": "tsc --tsconfig tsconfig.release.json",
     "watch": "yarn build --watch",
     "clean": "rimraf dist/",
     "prebuild": "yarn clean",
@@ -36,9 +36,9 @@
     "eslint-plugin-jest": "^23.11.0",
     "eslint-plugin-simple-import-sort": "^5.0.3",
     "jest": "^26.0.1",
-    "microbundle": "^0.12.0",
     "prettier": "^2.0.5",
     "rimraf": "^3.0.2",
-    "ts-jest": "^26.1.0"
+    "ts-jest": "^26.1.0",
+    "typescript": "^4.3.5"
   }
 }
