@@ -15,7 +15,6 @@
   "author": "Superface Team",
   "license": "MIT",
   "scripts": {
-    "build_bundle": "microbundle --tsconfig tsconfig.release.json",
     "build": "ttsc -p tsconfig.release.json --outDir dist",
     "watch": "yarn build --watch",
     "clean": "rimraf dist/",
