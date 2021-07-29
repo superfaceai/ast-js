@@ -251,7 +251,7 @@ export interface MapHeaderNode extends MapASTNodeBase {
   };
 
   /**
-   * @pattern require("./utils.ts").PROVIDER_NAME_RE_SOURCE
+   * @pattern require("./utils.ts").DOCUMENT_NAME_RE_SOURCE
    **/
   provider: string;
   /**

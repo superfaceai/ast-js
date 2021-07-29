@@ -801,7 +801,7 @@
                     "type": "object"
                 },
                 "provider": {
-                    "pattern": "^[a-z][_\\-0-9a-z]*$",
+                    "pattern": "^[a-z][a-z0-9_-]*$",
                     "type": "string"
                 },
                 "span": {
