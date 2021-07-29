@@ -1,11 +1,10 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
-set +e
 
 GENERATED=0
 
-MAP_AST_CHANGED=$(expr `stat -c %Y src/interfaces/ast/map-ast.ts` - `stat -c %Y src/interfaces/ast/map-ast.schema.json`)
-PROFILE_AST_CHANGED=$(expr `stat -c %Y src/interfaces/ast/profile-ast.ts` - `stat -c %Y src/interfaces/ast/profile-ast.schema.json`)
+MAP_AST_CHANGED=$((`stat -c %Y src/interfaces/ast/map-ast.ts` - `stat -c %Y src/interfaces/ast/map-ast.schema.json`))
+PROFILE_AST_CHANGED=$((`stat -c %Y src/interfaces/ast/profile-ast.ts` - `stat -c %Y src/interfaces/ast/profile-ast.schema.json`))
 
 if [ $MAP_AST_CHANGED -gt 0 ]; then
   yarn run --silent generate_map_schema
