@@ -1,7 +1,9 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
     "definitions": {
         "AssignmentNode": {
+            "additionalProperties": false,
             "description": "Assignment node: `key.\"b.az\".bar = <value>`",
             "properties": {
                 "key": {
@@ -17,6 +19,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -26,9 +29,14 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -38,15 +46,25 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "value": {
                     "$ref": "#/definitions/LiteralNode"
                 }
             },
+            "required": [
+                "key",
+                "kind",
+                "value"
+            ],
             "type": "object"
         },
         "CallStatementNode": {
+            "additionalProperties": false,
             "description": "Call statement, possibly with a condition and iteration: `call <?iteration> <op>(<...args>) <?condition> { <...statements> }`",
             "properties": {
                 "arguments": {
@@ -56,10 +74,12 @@
                     "type": "array"
                 },
                 "condition": {
-                    "$ref": "#/definitions/ConditionAtomNode"
+                    "$ref": "#/definitions/ConditionAtomNode",
+                    "description": "Statement condition atom: `if (<jessie>)`"
                 },
                 "iteration": {
-                    "$ref": "#/definitions/IterationAtomNode"
+                    "$ref": "#/definitions/IterationAtomNode",
+                    "description": "Iteration atom: `foreach (<iterationVariable> of <iterable>)`"
                 },
                 "kind": {
                     "enum": [
@@ -68,6 +88,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -77,12 +98,17 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "operationName": {
                     "type": "string"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -92,6 +118,10 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "statements": {
@@ -108,9 +138,16 @@
                     "type": "array"
                 }
             },
+            "required": [
+                "arguments",
+                "kind",
+                "operationName",
+                "statements"
+            ],
             "type": "object"
         },
         "ConditionAtomNode": {
+            "additionalProperties": false,
             "description": "Statement condition atom: `if (<jessie>)`",
             "properties": {
                 "expression": {
@@ -123,6 +160,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -132,9 +170,14 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -144,12 +187,21 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 }
             },
+            "required": [
+                "expression",
+                "kind"
+            ],
             "type": "object"
         },
         "HttpCallStatementNode": {
+            "additionalProperties": false,
             "properties": {
                 "kind": {
                     "enum": [
@@ -158,6 +210,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -167,13 +220,38 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "method": {
+                    "enum": [
+                        "CONNECT",
+                        "DELETE",
+                        "GET",
+                        "HEAD",
+                        "OPTIONS",
+                        "PATCH",
+                        "POST",
+                        "PUT",
+                        "TRACE",
+                        "connect",
+                        "delete",
+                        "get",
+                        "head",
+                        "options",
+                        "patch",
+                        "post",
+                        "put",
+                        "trace"
+                    ],
                     "type": "string"
                 },
                 "request": {
-                    "$ref": "#/definitions/HttpRequestNode"
+                    "$ref": "#/definitions/HttpRequestNode",
+                    "description": "Request definition for http:\n`request <?contentType> <?contentLanguage> { <?query> <?headers? <?body> }`"
                 },
                 "responseHandlers": {
                     "items": {
@@ -182,6 +260,7 @@
                     "type": "array"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -191,6 +270,10 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "url": {
@@ -198,13 +281,33 @@
                     "type": "string"
                 }
             },
+            "required": [
+                "kind",
+                "method",
+                "responseHandlers",
+                "url"
+            ],
             "type": "object"
         },
         "HttpRequestNode": {
+            "additionalProperties": false,
             "description": "Request definition for http:\n`request <?contentType> <?contentLanguage> { <?query> <?headers? <?body> }`",
             "properties": {
                 "body": {
-                    "$ref": "#/definitions/LiteralNode"
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/PrimitiveLiteralNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ObjectLiteralNode"
+                        },
+                        {
+                            "$ref": "#/definitions/JessieExpressionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/InlineCallNode"
+                        }
+                    ]
                 },
                 "contentLanguage": {
                     "type": "string"
@@ -213,7 +316,8 @@
                     "type": "string"
                 },
                 "headers": {
-                    "$ref": "#/definitions/ObjectLiteralNode"
+                    "$ref": "#/definitions/ObjectLiteralNode",
+                    "description": "Object literal node: `{ <...assignments> }`"
                 },
                 "kind": {
                     "enum": [
@@ -222,6 +326,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -231,13 +336,19 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "query": {
-                    "$ref": "#/definitions/ObjectLiteralNode"
+                    "$ref": "#/definitions/ObjectLiteralNode",
+                    "description": "Object literal node: `{ <...assignments> }`"
                 },
                 "security": {
                     "items": {
+                        "additionalProperties": false,
                         "properties": {
                             "id": {
                                 "type": "string"
@@ -252,11 +363,15 @@
                                 "type": "string"
                             }
                         },
+                        "required": [
+                            "id"
+                        ],
                         "type": "object"
                     },
                     "type": "array"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -266,12 +381,21 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 }
             },
+            "required": [
+                "kind",
+                "security"
+            ],
             "type": "object"
         },
         "HttpResponseHandlerNode": {
+            "additionalProperties": false,
             "description": "Response handler for http: `response <?statusCode> <?contentType> <?contentLanguage> { <...statements> }`",
             "properties": {
                 "contentLanguage": {
@@ -287,6 +411,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -296,9 +421,14 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -308,6 +438,10 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "statements": {
@@ -324,12 +458,19 @@
                     "type": "array"
                 },
                 "statusCode": {
-                    "type": "number"
+                    "maximum": 599,
+                    "minimum": 200,
+                    "type": "integer"
                 }
             },
+            "required": [
+                "kind",
+                "statements"
+            ],
             "type": "object"
         },
         "InlineCallNode": {
+            "additionalProperties": false,
             "description": "Inline call, can appear on rhs in assignment: `call <?iteration> <op>(<...args>) <?condition>`",
             "properties": {
                 "arguments": {
@@ -339,10 +480,12 @@
                     "type": "array"
                 },
                 "condition": {
-                    "$ref": "#/definitions/ConditionAtomNode"
+                    "$ref": "#/definitions/ConditionAtomNode",
+                    "description": "Statement condition atom: `if (<jessie>)`"
                 },
                 "iteration": {
-                    "$ref": "#/definitions/IterationAtomNode"
+                    "$ref": "#/definitions/IterationAtomNode",
+                    "description": "Iteration atom: `foreach (<iterationVariable> of <iterable>)`"
                 },
                 "kind": {
                     "enum": [
@@ -351,6 +494,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -360,12 +504,17 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "operationName": {
                     "type": "string"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -375,12 +524,22 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 }
             },
+            "required": [
+                "arguments",
+                "kind",
+                "operationName"
+            ],
             "type": "object"
         },
         "IterationAtomNode": {
+            "additionalProperties": false,
             "description": "Iteration atom: `foreach (<iterationVariable> of <iterable>)`",
             "properties": {
                 "iterable": {
@@ -396,6 +555,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -405,9 +565,14 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -417,12 +582,22 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 }
             },
+            "required": [
+                "iterable",
+                "iterationVariable",
+                "kind"
+            ],
             "type": "object"
         },
         "JessieExpressionNode": {
+            "additionalProperties": false,
             "properties": {
                 "expression": {
                     "type": "string"
@@ -434,6 +609,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -443,6 +619,10 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "source": {
@@ -452,6 +632,7 @@
                     "type": "string"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -461,9 +642,17 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 }
             },
+            "required": [
+                "expression",
+                "kind"
+            ],
             "type": "object"
         },
         "LiteralNode": {
@@ -483,6 +672,7 @@
             ]
         },
         "MapDefinitionNode": {
+            "additionalProperties": false,
             "properties": {
                 "kind": {
                     "enum": [
@@ -491,6 +681,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -500,12 +691,18 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "name": {
+                    "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$",
                     "type": "string"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -515,6 +712,10 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "statements": {
@@ -537,12 +738,20 @@
                     "type": "array"
                 },
                 "usecaseName": {
+                    "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$",
                     "type": "string"
                 }
             },
+            "required": [
+                "kind",
+                "name",
+                "statements",
+                "usecaseName"
+            ],
             "type": "object"
         },
         "MapHeaderNode": {
+            "additionalProperties": false,
             "properties": {
                 "kind": {
                     "enum": [
@@ -551,6 +760,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -560,34 +770,54 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "profile": {
+                    "additionalProperties": false,
                     "properties": {
                         "name": {
+                            "pattern": "^[a-z][a-z0-9_-]*$",
                             "type": "string"
                         },
                         "scope": {
+                            "pattern": "^[a-z][a-z0-9_-]*$",
                             "type": "string"
                         },
                         "version": {
+                            "additionalProperties": false,
                             "properties": {
                                 "label": {
+                                    "pattern": "^[a-z][a-z0-9_-]*$",
                                     "type": "string"
                                 },
                                 "major": {
-                                    "type": "number"
+                                    "minimum": 0,
+                                    "type": "integer"
                                 },
                                 "minor": {
-                                    "type": "number"
+                                    "minimum": 0,
+                                    "type": "integer"
                                 },
                                 "patch": {
-                                    "type": "number"
+                                    "minimum": 0,
+                                    "type": "integer"
                                 }
                             },
+                            "required": [
+                                "major",
+                                "minor"
+                            ],
                             "type": "object"
                         }
                     },
+                    "required": [
+                        "name",
+                        "version"
+                    ],
                     "type": "object"
                 },
                 "provider": {
@@ -595,6 +825,7 @@
                     "type": "string"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -604,15 +835,26 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "variant": {
+                    "pattern": "^[a-z][a-z0-9_-]*$",
                     "type": "string"
                 }
             },
+            "required": [
+                "kind",
+                "profile",
+                "provider"
+            ],
             "type": "object"
         },
         "ObjectLiteralNode": {
+            "additionalProperties": false,
             "description": "Object literal node: `{ <...assignments> }`",
             "properties": {
                 "fields": {
@@ -628,6 +870,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -637,9 +880,14 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -649,12 +897,21 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 }
             },
+            "required": [
+                "fields",
+                "kind"
+            ],
             "type": "object"
         },
         "OperationDefinitionNode": {
+            "additionalProperties": false,
             "properties": {
                 "kind": {
                     "enum": [
@@ -663,6 +920,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -672,12 +930,18 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "name": {
+                    "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$",
                     "type": "string"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -687,6 +951,10 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "statements": {
@@ -709,13 +977,20 @@
                     "type": "array"
                 }
             },
+            "required": [
+                "kind",
+                "name",
+                "statements"
+            ],
             "type": "object"
         },
         "OutcomeStatementNode": {
+            "additionalProperties": false,
             "description": "Outcome node, specifying what value to return and whether to terminate the flow immediately:\n`return/fail <?condition> <value>`\n`map result/error <?condition> <value>`",
             "properties": {
                 "condition": {
-                    "$ref": "#/definitions/ConditionAtomNode"
+                    "$ref": "#/definitions/ConditionAtomNode",
+                    "description": "Statement condition atom: `if (<jessie>)`"
                 },
                 "isError": {
                     "type": "boolean"
@@ -727,6 +1002,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -736,9 +1012,14 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -748,6 +1029,10 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "terminateFlow": {
@@ -757,9 +1042,16 @@
                     "$ref": "#/definitions/LiteralNode"
                 }
             },
+            "required": [
+                "isError",
+                "kind",
+                "terminateFlow",
+                "value"
+            ],
             "type": "object"
         },
         "PrimitiveLiteralNode": {
+            "additionalProperties": false,
             "description": "Primitive literal atom like booleans, strings and numbers.",
             "properties": {
                 "kind": {
@@ -769,6 +1061,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -778,9 +1071,14 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -790,6 +1088,10 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "value": {
@@ -800,9 +1102,14 @@
                     ]
                 }
             },
+            "required": [
+                "kind",
+                "value"
+            ],
             "type": "object"
         },
         "SetStatementNode": {
+            "additionalProperties": false,
             "description": "Set statement, possibly with a condition: `set <?condition> { <...assignments> }`",
             "properties": {
                 "assignments": {
@@ -812,7 +1119,8 @@
                     "type": "array"
                 },
                 "condition": {
-                    "$ref": "#/definitions/ConditionAtomNode"
+                    "$ref": "#/definitions/ConditionAtomNode",
+                    "description": "Statement condition atom: `if (<jessie>)`"
                 },
                 "kind": {
                     "enum": [
@@ -821,6 +1129,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -830,9 +1139,14 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -842,9 +1156,17 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 }
             },
+            "required": [
+                "assignments",
+                "kind"
+            ],
             "type": "object"
         }
     },
@@ -872,6 +1194,7 @@
             "type": "string"
         },
         "location": {
+            "additionalProperties": false,
             "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
             "properties": {
                 "column": {
@@ -881,9 +1204,14 @@
                     "type": "number"
                 }
             },
+            "required": [
+                "column",
+                "line"
+            ],
             "type": "object"
         },
         "span": {
+            "additionalProperties": false,
             "description": "Span of one node inside source code.",
             "properties": {
                 "end": {
@@ -893,9 +1221,18 @@
                     "type": "number"
                 }
             },
+            "required": [
+                "end",
+                "start"
+            ],
             "type": "object"
         }
     },
+    "required": [
+        "definitions",
+        "header",
+        "kind"
+    ],
     "type": "object"
 }
 

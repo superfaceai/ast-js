@@ -1,8 +1,11 @@
 import { splitLimit } from './split';
 
 export const IDENTIFIER_RE = /^[_a-zA-Z][_a-zA-Z0-9]*$/;
+export const IDENTIFIER_RE_SOURCE = IDENTIFIER_RE.source;
 export const DOCUMENT_NAME_RE = /^[a-z][a-z0-9_-]*$/;
+export const DOCUMENT_NAME_RE_SOURCE = DOCUMENT_NAME_RE.source;
 export const PROVIDER_NAME_RE = /^[a-z][_\-0-9a-z]*$/;
+export const PROVIDER_NAME_RE_SOURCE = PROVIDER_NAME_RE.source;
 export const VERSION_NUMBER_RE = /^[0-9]+$/;
 
 export function isValidIdentifier(input: string): boolean {
@@ -101,9 +104,7 @@ export function parseVersionNumber(str: string): number {
  * parseVersionNumber('1.2.3-test') // {major: 1, minor: 2, patch: 3, label: 'test'}
  * ```
  */
-export function extractVersion(
-  versionString: string
-): {
+export function extractVersion(versionString: string): {
   major: number;
   minor?: number;
   patch?: number;

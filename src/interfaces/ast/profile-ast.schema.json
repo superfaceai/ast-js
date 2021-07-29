@@ -1,7 +1,9 @@
 {
     "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
     "definitions": {
         "EnumDefinitionNode": {
+            "additionalProperties": false,
             "description": "Construct of form: `enum { values... }`",
             "properties": {
                 "kind": {
@@ -11,6 +13,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -20,9 +23,14 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -32,6 +40,10 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "values": {
@@ -41,9 +53,14 @@
                     "type": "array"
                 }
             },
+            "required": [
+                "kind",
+                "values"
+            ],
             "type": "object"
         },
         "EnumValueNode": {
+            "additionalProperties": false,
             "description": "Construct found as enum value.",
             "properties": {
                 "description": {
@@ -56,6 +73,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -65,9 +83,14 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -77,6 +100,10 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "title": {
@@ -90,15 +117,21 @@
                     ]
                 }
             },
+            "required": [
+                "kind",
+                "value"
+            ],
             "type": "object"
         },
         "FieldDefinitionNode": {
+            "additionalProperties": false,
             "description": "Construct of form: `ident type` or `ident` that appear inside object model definitions",
             "properties": {
                 "description": {
                     "type": "string"
                 },
                 "fieldName": {
+                    "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$",
                     "type": "string"
                 },
                 "kind": {
@@ -108,6 +141,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -117,6 +151,10 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "required": {
@@ -124,6 +162,7 @@
                     "type": "boolean"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -133,22 +172,76 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "title": {
                     "type": "string"
                 },
                 "type": {
-                    "$ref": "#/definitions/Type"
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/PrimitiveTypeNameNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ModelTypeNameNode"
+                        },
+                        {
+                            "$ref": "#/definitions/EnumDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ObjectDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ListDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/NonNullDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/UnionDefinitionNode"
+                        }
+                    ]
                 }
             },
+            "required": [
+                "fieldName",
+                "kind",
+                "required"
+            ],
             "type": "object"
         },
         "ListDefinitionNode": {
+            "additionalProperties": false,
             "description": "Array type: `[type]`",
             "properties": {
                 "elementType": {
-                    "$ref": "#/definitions/Type"
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/PrimitiveTypeNameNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ModelTypeNameNode"
+                        },
+                        {
+                            "$ref": "#/definitions/EnumDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ObjectDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ListDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/NonNullDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/UnionDefinitionNode"
+                        }
+                    ]
                 },
                 "kind": {
                     "enum": [
@@ -157,6 +250,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -166,9 +260,14 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -178,12 +277,21 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 }
             },
+            "required": [
+                "elementType",
+                "kind"
+            ],
             "type": "object"
         },
         "ModelTypeNameNode": {
+            "additionalProperties": false,
             "description": "Name of a model type parsed from identifiers.\n\nThis is the name of a user defined type (model).",
             "properties": {
                 "kind": {
@@ -193,6 +301,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -202,12 +311,18 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "name": {
+                    "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$",
                     "type": "string"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -217,18 +332,28 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 }
             },
+            "required": [
+                "kind",
+                "name"
+            ],
             "type": "object"
         },
         "NamedFieldDefinitionNode": {
+            "additionalProperties": false,
             "description": "Construct of form: `field ident type`\n\nThis assigns the name of `ident` to a type. All fields in the documents with the same name\nwill then share this type.",
             "properties": {
                 "description": {
                     "type": "string"
                 },
                 "fieldName": {
+                    "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$",
                     "type": "string"
                 },
                 "kind": {
@@ -238,6 +363,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -247,9 +373,14 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -259,18 +390,49 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "title": {
                     "type": "string"
                 },
                 "type": {
-                    "$ref": "#/definitions/Type"
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/PrimitiveTypeNameNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ModelTypeNameNode"
+                        },
+                        {
+                            "$ref": "#/definitions/EnumDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ObjectDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ListDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/NonNullDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/UnionDefinitionNode"
+                        }
+                    ]
                 }
             },
+            "required": [
+                "fieldName",
+                "kind"
+            ],
             "type": "object"
         },
         "NamedModelDefinitionNode": {
+            "additionalProperties": false,
             "description": "Construct of form: `model ident type` or `model ident { fields... }`\n\nThis creates a new type in the document, which is assignable using the `ModelReferenceNode`.\n\nThis can be used ranging from simple type alias `model Foo string` to complex unions\nand objects `model Bar Foo! | enum { ONE = 1, TWO = 2 } | { baz boolean }`",
             "properties": {
                 "description": {
@@ -283,6 +445,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -292,12 +455,18 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "modelName": {
+                    "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$",
                     "type": "string"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -307,18 +476,49 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "title": {
                     "type": "string"
                 },
                 "type": {
-                    "$ref": "#/definitions/Type"
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/PrimitiveTypeNameNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ModelTypeNameNode"
+                        },
+                        {
+                            "$ref": "#/definitions/EnumDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ObjectDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ListDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/NonNullDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/UnionDefinitionNode"
+                        }
+                    ]
                 }
             },
+            "required": [
+                "kind",
+                "modelName"
+            ],
             "type": "object"
         },
         "NonNullDefinitionNode": {
+            "additionalProperties": false,
             "description": "Non-null assertion operator: `type!`\n\nCannot be used on unions, but can be used on type aliases or on all union subtypes.",
             "properties": {
                 "kind": {
@@ -328,6 +528,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -337,9 +538,14 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -349,6 +555,10 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "type": {
@@ -371,9 +581,14 @@
                     ]
                 }
             },
+            "required": [
+                "kind",
+                "type"
+            ],
             "type": "object"
         },
         "ObjectDefinitionNode": {
+            "additionalProperties": false,
             "description": "Construct of form: `{ fields... }`",
             "properties": {
                 "fields": {
@@ -389,6 +604,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -398,9 +614,14 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -410,12 +631,21 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 }
             },
+            "required": [
+                "fields",
+                "kind"
+            ],
             "type": "object"
         },
         "PrimitiveTypeNameNode": {
+            "additionalProperties": false,
             "description": "From keywords: `boolean`, `number` and `string`",
             "properties": {
                 "kind": {
@@ -425,6 +655,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -434,6 +665,10 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "name": {
@@ -445,6 +680,7 @@
                     "type": "string"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -454,12 +690,21 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 }
             },
+            "required": [
+                "kind",
+                "name"
+            ],
             "type": "object"
         },
         "ProfileHeaderNode": {
+            "additionalProperties": false,
             "description": "The node containing document information.",
             "properties": {
                 "description": {
@@ -472,6 +717,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -481,15 +727,22 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "name": {
+                    "pattern": "^[a-z][a-z0-9_-]*$",
                     "type": "string"
                 },
                 "scope": {
+                    "pattern": "^[a-z][a-z0-9_-]*$",
                     "type": "string"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -499,57 +752,52 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "title": {
                     "type": "string"
                 },
                 "version": {
+                    "additionalProperties": false,
                     "properties": {
                         "label": {
+                            "pattern": "^[a-z][a-z0-9_-]*$",
                             "type": "string"
                         },
                         "major": {
-                            "type": "number"
+                            "minimum": 0,
+                            "type": "integer"
                         },
                         "minor": {
-                            "type": "number"
+                            "minimum": 0,
+                            "type": "integer"
                         },
                         "patch": {
-                            "type": "number"
+                            "minimum": 0,
+                            "type": "integer"
                         }
                     },
+                    "required": [
+                        "major",
+                        "minor",
+                        "patch"
+                    ],
                     "type": "object"
                 }
             },
+            "required": [
+                "kind",
+                "name",
+                "version"
+            ],
             "type": "object"
         },
-        "Type": {
-            "anyOf": [
-                {
-                    "$ref": "#/definitions/PrimitiveTypeNameNode"
-                },
-                {
-                    "$ref": "#/definitions/ModelTypeNameNode"
-                },
-                {
-                    "$ref": "#/definitions/EnumDefinitionNode"
-                },
-                {
-                    "$ref": "#/definitions/ObjectDefinitionNode"
-                },
-                {
-                    "$ref": "#/definitions/ListDefinitionNode"
-                },
-                {
-                    "$ref": "#/definitions/NonNullDefinitionNode"
-                },
-                {
-                    "$ref": "#/definitions/UnionDefinitionNode"
-                }
-            ]
-        },
         "UnionDefinitionNode": {
+            "additionalProperties": false,
             "description": "Construct of form: `type | type | ...`",
             "properties": {
                 "kind": {
@@ -559,6 +807,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -568,9 +817,14 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -580,6 +834,10 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "types": {
@@ -608,22 +866,30 @@
                     "type": "array"
                 }
             },
+            "required": [
+                "kind",
+                "types"
+            ],
             "type": "object"
         },
         "UseCaseDefinitionNode": {
+            "additionalProperties": false,
             "description": "Construct of form:\n```\nusecase ident safety {\ninput {\n  ...fields\n}\nresult type\nasync result type\nerror type\n}\n```",
             "properties": {
                 "asyncResult": {
-                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>"
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>",
+                    "description": "Named slot definition for usecases.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation."
                 },
                 "description": {
                     "type": "string"
                 },
                 "error": {
-                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>"
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>",
+                    "description": "Named slot definition for usecases.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation."
                 },
                 "input": {
-                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<ObjectDefinitionNode>"
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<ObjectDefinitionNode>",
+                    "description": "Named slot definition for usecases.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation."
                 },
                 "kind": {
                     "enum": [
@@ -632,6 +898,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -641,10 +908,15 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "result": {
-                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>"
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>",
+                    "description": "Named slot definition for usecases.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation."
                 },
                 "safety": {
                     "description": "Usecase safety indicator",
@@ -656,6 +928,7 @@
                     "type": "string"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -665,18 +938,28 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "title": {
                     "type": "string"
                 },
                 "useCaseName": {
+                    "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$",
                     "type": "string"
                 }
             },
+            "required": [
+                "kind",
+                "useCaseName"
+            ],
             "type": "object"
         },
         "UseCaseSlotDefinitionNode<ObjectDefinitionNode>": {
+            "additionalProperties": false,
             "description": "Named slot definition for usecases.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation.",
             "properties": {
                 "description": {
@@ -689,6 +972,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -698,9 +982,14 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -710,6 +999,10 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "title": {
@@ -719,9 +1012,13 @@
                     "$ref": "#/definitions/ObjectDefinitionNode"
                 }
             },
+            "required": [
+                "kind"
+            ],
             "type": "object"
         },
         "UseCaseSlotDefinitionNode<Type>": {
+            "additionalProperties": false,
             "description": "Named slot definition for usecases.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation.",
             "properties": {
                 "description": {
@@ -734,6 +1031,7 @@
                     "type": "string"
                 },
                 "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -743,9 +1041,14 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
                     "type": "object"
                 },
                 "span": {
+                    "additionalProperties": false,
                     "description": "Span of one node inside source code.",
                     "properties": {
                         "end": {
@@ -755,15 +1058,44 @@
                             "type": "number"
                         }
                     },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
                     "type": "object"
                 },
                 "title": {
                     "type": "string"
                 },
                 "type": {
-                    "$ref": "#/definitions/Type"
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/PrimitiveTypeNameNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ModelTypeNameNode"
+                        },
+                        {
+                            "$ref": "#/definitions/EnumDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ObjectDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ListDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/NonNullDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/UnionDefinitionNode"
+                        }
+                    ]
                 }
             },
+            "required": [
+                "kind"
+            ],
             "type": "object"
         }
     },
@@ -795,6 +1127,7 @@
             "type": "string"
         },
         "location": {
+            "additionalProperties": false,
             "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
             "properties": {
                 "column": {
@@ -804,9 +1137,14 @@
                     "type": "number"
                 }
             },
+            "required": [
+                "column",
+                "line"
+            ],
             "type": "object"
         },
         "span": {
+            "additionalProperties": false,
             "description": "Span of one node inside source code.",
             "properties": {
                 "end": {
@@ -816,9 +1154,18 @@
                     "type": "number"
                 }
             },
+            "required": [
+                "end",
+                "start"
+            ],
             "type": "object"
         }
     },
+    "required": [
+        "definitions",
+        "header",
+        "kind"
+    ],
     "type": "object"
 }
 
