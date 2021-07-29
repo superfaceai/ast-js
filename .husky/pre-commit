@@ -1,7 +1,7 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
+set +e
 
-STAGED=`git diff --cached --name-only --diff-filter=d`
 GENERATED=0
 
 MAP_AST_CHANGED=$(expr `stat -c %Y src/interfaces/ast/map-ast.ts` - `stat -c %Y src/interfaces/ast/map-ast.schema.json`)
