@@ -161,6 +161,11 @@ export interface HttpRequestNode extends MapASTNodeBase {
  */
 export interface HttpResponseHandlerNode extends MapASTNodeBase {
   kind: 'HttpResponseHandler';
+  /**
+   * @TJS-type integer
+   * @TJS-minimum 200
+   * @TJS-maximum 599
+   **/
   statusCode?: number;
   contentType?: string;
   contentLanguage?: string;
@@ -170,6 +175,9 @@ export interface HttpResponseHandlerNode extends MapASTNodeBase {
 export interface HttpCallStatementNode extends MapASTNodeBase {
   kind: 'HttpCallStatement';
   method: string;
+  /**
+   * @format uri
+   **/
   url: string;
   request?: HttpRequestNode;
   responseHandlers: HttpResponseHandlerNode[];
@@ -185,13 +193,23 @@ export type Substatement =
 
 export interface MapDefinitionNode extends MapASTNodeBase {
   kind: 'MapDefinition';
+
+  /**
+   * @pattern require('./utils').IDENTIFIER_RE_SOURCE
+   */
   name: string;
+  /**
+   * @pattern require('./utils').IDENTIFIER_RE_SOURCE
+   */
   usecaseName: string;
   statements: Substatement[];
 }
 
 export interface OperationDefinitionNode extends MapASTNodeBase {
   kind: 'OperationDefinition';
+  /**
+   * @pattern require('./utils').IDENTIFIER_RE_SOURCE
+   */
   name: string;
   statements: Substatement[];
 }
@@ -201,16 +219,44 @@ export interface OperationDefinitionNode extends MapASTNodeBase {
 export interface MapHeaderNode extends MapASTNodeBase {
   kind: 'MapHeader';
   profile: {
+    /**
+     * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
+     **/
     scope?: string;
+    /**
+     * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
+     **/
     name: string;
     version: {
+      /**
+       * @TJS-minimum 0
+       * @TJS-type integer
+       **/
       major: number;
+      /**
+       * @TJS-minimum 0
+       * @TJS-type integer
+       **/
       minor: number;
+      /**
+       * @TJS-minimum 0
+       * @TJS-type integer
+       **/
       patch?: number;
+      /**
+       * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
+       **/
       label?: string;
     };
   };
+
+  /**
+   * @pattern require("./utils.ts").DOCUMENT_NAME_RE_SOURCE
+   **/
   provider: string;
+  /**
+   * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
+   **/
   variant?: string;
 }
 

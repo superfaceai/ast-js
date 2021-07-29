@@ -3,7 +3,6 @@ import {
   extractVersionString,
   isValidDocumentName,
   isValidIdentifier,
-  isValidProviderName,
   isValidVersionString,
   parseVersionNumber,
 } from './utils';
@@ -27,16 +26,6 @@ describe('utils', () => {
       expect(isValidDocumentName('test90')).toEqual(true);
       expect(isValidDocumentName('te-st')).toEqual(true);
       expect(isValidDocumentName('te_st')).toEqual(true);
-    });
-  });
-
-  describe('when validating provider name', () => {
-    it('validates name correctly', () => {
-      expect(isValidProviderName('')).toEqual(false);
-      expect(isValidProviderName('test')).toEqual(true);
-      expect(isValidProviderName('test90')).toEqual(true);
-      expect(isValidProviderName('te-st')).toEqual(true);
-      expect(isValidProviderName('te_st')).toEqual(true);
     });
   });
 

@@ -1,0 +1,24 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+GENERATED=0
+
+MAP_AST_CHANGED=$((`stat -c %Y src/interfaces/ast/map-ast.ts` - `stat -c %Y src/interfaces/ast/map-ast.schema.json`))
+PROFILE_AST_CHANGED=$((`stat -c %Y src/interfaces/ast/profile-ast.ts` - `stat -c %Y src/interfaces/ast/profile-ast.schema.json`))
+
+if [ $MAP_AST_CHANGED -gt 0 ]; then
+  yarn run --silent generate_map_schema
+  GENERATED=1
+fi
+
+if [ $PROFILE_AST_CHANGED -gt 0 ]; then
+  yarn run --silent generate_profile_schema 
+  GENERATED=1
+fi
+
+if [ $GENERATED -eq 1 ]; then
+  echo "Some TypeScript schemas were modified. Their corresponding JSON schemas were attempted to be regenerated automatically."
+  echo "Don't forget to commit them."
+  echo "If you are sure you don't need to update the schemas, run 'git commit --no-verify'. "
+  exit 1
+fi

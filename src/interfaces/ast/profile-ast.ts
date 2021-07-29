@@ -52,6 +52,9 @@ export interface PrimitiveTypeNameNode extends ProfileASTNodeBase {
  */
 export interface ModelTypeNameNode extends ProfileASTNodeBase {
   kind: 'ModelTypeName';
+  /**
+   * @pattern require('./utils').IDENTIFIER_RE_SOURCE
+   **/
   name: string;
 }
 export type TypeName = PrimitiveTypeNameNode | ModelTypeNameNode;
@@ -121,6 +124,9 @@ export interface FieldDefinitionNode
   extends ProfileASTNodeBase,
     DocumentedNode {
   kind: 'FieldDefinition';
+  /**
+   * @pattern require('./utils').IDENTIFIER_RE_SOURCE
+   **/
   fieldName: string;
   /** Non-required fields don't have to be present at all */
   required: boolean;
@@ -137,6 +143,9 @@ export interface NamedFieldDefinitionNode
   extends ProfileASTNodeBase,
     DocumentedNode {
   kind: 'NamedFieldDefinition';
+  /**
+   * @pattern require('./utils').IDENTIFIER_RE_SOURCE
+   **/
   fieldName: string;
   type?: Type;
 }
@@ -155,6 +164,9 @@ export interface NamedModelDefinitionNode
   extends ProfileASTNodeBase,
     DocumentedNode {
   kind: 'NamedModelDefinition';
+  /**
+   * @pattern require('./utils').IDENTIFIER_RE_SOURCE
+   **/
   modelName: string;
   type?: Type;
 }
@@ -190,6 +202,9 @@ export interface UseCaseDefinitionNode
   extends ProfileASTNodeBase,
     DocumentedNode {
   kind: 'UseCaseDefinition';
+  /**
+   * @pattern require('./utils').IDENTIFIER_RE_SOURCE
+   **/
   useCaseName: string;
   /** Usecase safety indicator */
   safety?: 'safe' | 'unsafe' | 'idempotent';
@@ -206,21 +221,44 @@ export interface UseCaseDefinitionNode
  */
 export interface ProfileHeaderNode extends ProfileASTNodeBase, DocumentedNode {
   kind: 'ProfileHeader';
+  /**
+   * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
+   **/
   scope?: string;
+  /**
+   * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
+   **/
   name: string;
   version: {
+    /**
+     * @TJS-minimum 0
+     * @TJS-type integer
+     **/
     major: number;
+    /**
+     * @TJS-minimum 0
+     * @TJS-type integer
+     **/
     minor: number;
+    /**
+     * @TJS-minimum 0
+     * @TJS-type integer
+     **/
     patch: number;
+    /**
+     * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
+     **/
     label?: string;
   };
 }
+
 /** Node enclosing the whole document */
 export interface ProfileDocumentNode extends ProfileASTNodeBase {
   kind: 'ProfileDocument';
   header: ProfileHeaderNode;
   definitions: DocumentDefinition[];
 }
+
 export type DocumentDefinition =
   | UseCaseDefinitionNode
   | NamedFieldDefinitionNode
