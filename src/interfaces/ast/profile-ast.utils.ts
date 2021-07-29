@@ -1,4 +1,4 @@
-import { createIs } from 'typescript-is';
+import { createAssertEquals, createIs } from 'typescript-is';
 
 import {
   DocumentDefinition,
@@ -24,60 +24,46 @@ import {
 } from './profile-ast';
 import { Guard } from './utils';
 
-export const isDocumentDefinition: Guard<DocumentDefinition> = createIs<
-  DocumentDefinition
->();
-export const isEnumDefinitionNode: Guard<EnumDefinitionNode> = createIs<
-  EnumDefinitionNode
->();
+export const isDocumentDefinition: Guard<DocumentDefinition> =
+  createIs<DocumentDefinition>();
+export const isEnumDefinitionNode: Guard<EnumDefinitionNode> =
+  createIs<EnumDefinitionNode>();
 export const isEnumValueNode: Guard<EnumValueNode> = createIs<EnumValueNode>();
-export const isFieldDefinitionNode: Guard<FieldDefinitionNode> = createIs<
-  FieldDefinitionNode
->();
-export const isListDefinitionNode: Guard<ListDefinitionNode> = createIs<
-  ListDefinitionNode
->();
-export const isModelTypeNameNode: Guard<ModelTypeNameNode> = createIs<
-  ModelTypeNameNode
->();
-export const isNamedFieldDefinitionNode: Guard<NamedFieldDefinitionNode> = createIs<
-  NamedFieldDefinitionNode
->();
-export const isNamedModelDefinitionNode: Guard<NamedModelDefinitionNode> = createIs<
-  NamedModelDefinitionNode
->();
-export const isNonNullDefinitionNode: Guard<NonNullDefinitionNode> = createIs<
-  NonNullDefinitionNode
->();
-export const isObjectDefinitionNode: Guard<ObjectDefinitionNode> = createIs<
-  ObjectDefinitionNode
->();
-export const isPrimitiveTypeNameNode: Guard<PrimitiveTypeNameNode> = createIs<
-  PrimitiveTypeNameNode
->();
-export const isProfileASTNode: Guard<ProfileASTNode> = createIs<
-  ProfileASTNode
->();
-export const isProfileDocumentNode: Guard<ProfileDocumentNode> = createIs<
-  ProfileDocumentNode
->();
-export const isProfileHeaderNode: Guard<ProfileHeaderNode> = createIs<
-  ProfileHeaderNode
->();
+export const isFieldDefinitionNode: Guard<FieldDefinitionNode> =
+  createIs<FieldDefinitionNode>();
+export const isListDefinitionNode: Guard<ListDefinitionNode> =
+  createIs<ListDefinitionNode>();
+export const isModelTypeNameNode: Guard<ModelTypeNameNode> =
+  createIs<ModelTypeNameNode>();
+export const isNamedFieldDefinitionNode: Guard<NamedFieldDefinitionNode> =
+  createIs<NamedFieldDefinitionNode>();
+export const isNamedModelDefinitionNode: Guard<NamedModelDefinitionNode> =
+  createIs<NamedModelDefinitionNode>();
+export const isNonNullDefinitionNode: Guard<NonNullDefinitionNode> =
+  createIs<NonNullDefinitionNode>();
+export const isObjectDefinitionNode: Guard<ObjectDefinitionNode> =
+  createIs<ObjectDefinitionNode>();
+export const isPrimitiveTypeNameNode: Guard<PrimitiveTypeNameNode> =
+  createIs<PrimitiveTypeNameNode>();
+export const isProfileASTNode: Guard<ProfileASTNode> =
+  createIs<ProfileASTNode>();
+export const isProfileDocumentNode: Guard<ProfileDocumentNode> =
+  createIs<ProfileDocumentNode>();
+export const isProfileHeaderNode: Guard<ProfileHeaderNode> =
+  createIs<ProfileHeaderNode>();
 export const isType: Guard<Type> = createIs<Type>();
-export const isTypeDefinition: Guard<TypeDefinition> = createIs<
-  TypeDefinition
->();
+export const isTypeDefinition: Guard<TypeDefinition> =
+  createIs<TypeDefinition>();
 export const isTypeName: Guard<TypeName> = createIs<TypeName>();
-export const isUnionDefinitionNode: Guard<UnionDefinitionNode> = createIs<
-  UnionDefinitionNode
->();
-export const isUseCaseDefinitionNode: Guard<UseCaseDefinitionNode> = createIs<
-  UseCaseDefinitionNode
->();
-export const isUseCaseSlotDefinitionNode: Guard<UseCaseSlotDefinitionNode> = createIs<
-  UseCaseSlotDefinitionNode
->();
+export const isUnionDefinitionNode: Guard<UnionDefinitionNode> =
+  createIs<UnionDefinitionNode>();
+export const isUseCaseDefinitionNode: Guard<UseCaseDefinitionNode> =
+  createIs<UseCaseDefinitionNode>();
+export const isUseCaseSlotDefinitionNode: Guard<UseCaseSlotDefinitionNode> =
+  createIs<UseCaseSlotDefinitionNode>();
+
+export const assertProfileDocumentNode: (node: unknown) => ProfileDocumentNode =
+  createAssertEquals<ProfileDocumentNode>();
 
 export interface ProfileAstVisitor<R = unknown> {
   visit(node: ProfileASTNode, ...parameters: unknown[]): R;
