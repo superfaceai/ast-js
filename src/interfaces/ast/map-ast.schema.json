@@ -227,26 +227,6 @@
                     "type": "object"
                 },
                 "method": {
-                    "enum": [
-                        "CONNECT",
-                        "DELETE",
-                        "GET",
-                        "HEAD",
-                        "OPTIONS",
-                        "PATCH",
-                        "POST",
-                        "PUT",
-                        "TRACE",
-                        "connect",
-                        "delete",
-                        "get",
-                        "head",
-                        "options",
-                        "patch",
-                        "post",
-                        "put",
-                        "trace"
-                    ],
                     "type": "string"
                 },
                 "request": {
