@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- `typescript-is` is a runtime dependency
+
 ## [0.0.26] - 2021-07-30
 ### Added
 - Map and Profile AST validation with `typescript-is`
