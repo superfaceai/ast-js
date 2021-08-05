@@ -647,6 +647,9 @@
         "MapDefinitionNode": {
             "additionalProperties": false,
             "properties": {
+                "description": {
+                    "type": "string"
+                },
                 "kind": {
                     "enum": [
                         "MapDefinition"
@@ -709,6 +712,9 @@
                         ]
                     },
                     "type": "array"
+                },
+                "title": {
+                    "type": "string"
                 },
                 "usecaseName": {
                     "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$",
@@ -886,6 +892,9 @@
         "OperationDefinitionNode": {
             "additionalProperties": false,
             "properties": {
+                "description": {
+                    "type": "string"
+                },
                 "kind": {
                     "enum": [
                         "OperationDefinition"
@@ -948,6 +957,9 @@
                         ]
                     },
                     "type": "array"
+                },
+                "title": {
+                    "type": "string"
                 }
             },
             "required": [

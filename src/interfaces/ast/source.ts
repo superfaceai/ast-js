@@ -15,3 +15,9 @@ export type Span = {
   start: number;
   end: number;
 };
+
+/** Node preceded by documenting string literal */
+export interface DocumentedNode {
+  title?: string | undefined;
+  description?: string | undefined;
+}

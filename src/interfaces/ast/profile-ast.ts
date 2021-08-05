@@ -1,4 +1,4 @@
-import { Location, Span } from './source';
+import { DocumentedNode, Location, Span } from './source';
 
 // BASE //
 
@@ -29,12 +29,6 @@ export interface ProfileASTNodeBase {
   // Span and Location are stripped during AST transfer, but not during parsing.
   span?: Span | undefined;
   location?: Location | undefined;
-}
-
-/** Node preceded by documenting string literal */
-export interface DocumentedNode {
-  title?: string | undefined;
-  description?: string | undefined;
 }
 
 // TYPES //

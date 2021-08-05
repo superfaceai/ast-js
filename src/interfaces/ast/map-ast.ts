@@ -1,4 +1,4 @@
-import { Location, Span } from './source';
+import { DocumentedNode, Location, Span } from './source';
 
 export type MapNodeKind =
   // ATOMS
@@ -191,7 +191,7 @@ export type Substatement =
   | CallStatementNode
   | HttpCallStatementNode;
 
-export interface MapDefinitionNode extends MapASTNodeBase {
+export interface MapDefinitionNode extends MapASTNodeBase, DocumentedNode {
   kind: 'MapDefinition';
 
   /**
@@ -205,7 +205,9 @@ export interface MapDefinitionNode extends MapASTNodeBase {
   statements: Substatement[];
 }
 
-export interface OperationDefinitionNode extends MapASTNodeBase {
+export interface OperationDefinitionNode
+  extends MapASTNodeBase,
+    DocumentedNode {
   kind: 'OperationDefinition';
   /**
    * @pattern require('./utils').IDENTIFIER_RE_SOURCE
