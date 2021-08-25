@@ -1,4 +1,4 @@
-import { Location, Span } from './source';
+import { DocumentedNode, Location, Span } from './source';
 
 export type MapNodeKind =
   // ATOMS
@@ -26,8 +26,8 @@ export type MapNodeKind =
 
 export interface MapASTNodeBase {
   kind: MapNodeKind;
-  span?: Span;
-  location?: Location;
+  span?: Span | undefined;
+  location?: Location | undefined;
 }
 
 // ATOMS
@@ -51,8 +51,8 @@ export interface ObjectLiteralNode extends MapASTNodeBase {
 export interface JessieExpressionNode extends MapASTNodeBase {
   kind: 'JessieExpression';
   expression: string;
-  source?: string;
-  sourceMap?: string;
+  source?: string | undefined;
+  sourceMap?: string | undefined;
 }
 
 /**
@@ -60,8 +60,8 @@ export interface JessieExpressionNode extends MapASTNodeBase {
  */
 export interface InlineCallNode extends MapASTNodeBase {
   kind: 'InlineCall';
-  condition?: ConditionAtomNode;
-  iteration?: IterationAtomNode;
+  condition?: ConditionAtomNode | undefined;
+  iteration?: IterationAtomNode | undefined;
   operationName: string;
   arguments: AssignmentNode[];
 }
@@ -107,7 +107,7 @@ export interface IterationAtomNode extends MapASTNodeBase {
  */
 export interface OutcomeStatementNode extends MapASTNodeBase {
   kind: 'OutcomeStatement';
-  condition?: ConditionAtomNode;
+  condition?: ConditionAtomNode | undefined;
   isError: boolean;
   terminateFlow: boolean;
   value: LiteralNode;
@@ -120,7 +120,7 @@ export interface OutcomeStatementNode extends MapASTNodeBase {
  */
 export interface SetStatementNode extends MapASTNodeBase {
   kind: 'SetStatement';
-  condition?: ConditionAtomNode;
+  condition?: ConditionAtomNode | undefined;
   assignments: AssignmentNode[];
 }
 
@@ -129,8 +129,8 @@ export interface SetStatementNode extends MapASTNodeBase {
  */
 export interface CallStatementNode extends MapASTNodeBase {
   kind: 'CallStatement';
-  iteration?: IterationAtomNode;
-  condition?: ConditionAtomNode;
+  iteration?: IterationAtomNode | undefined;
+  condition?: ConditionAtomNode | undefined;
   operationName: string;
   arguments: AssignmentNode[];
   statements: (SetStatementNode | OutcomeStatementNode)[];
@@ -139,7 +139,7 @@ export interface CallStatementNode extends MapASTNodeBase {
 export type HttpSecurityRequirement = {
   id: string;
   /** Optional scheme information. */
-  scheme?: 'apikey' | 'basic' | 'bearer';
+  scheme?: 'apikey' | 'basic' | 'bearer' | undefined;
 };
 
 /**
@@ -148,11 +148,11 @@ export type HttpSecurityRequirement = {
  */
 export interface HttpRequestNode extends MapASTNodeBase {
   kind: 'HttpRequest';
-  contentType?: string;
-  contentLanguage?: string;
-  query?: ObjectLiteralNode;
-  headers?: ObjectLiteralNode;
-  body?: LiteralNode;
+  contentType?: string | undefined;
+  contentLanguage?: string | undefined;
+  query?: ObjectLiteralNode | undefined;
+  headers?: ObjectLiteralNode | undefined;
+  body?: LiteralNode | undefined;
   security: HttpSecurityRequirement[];
 }
 
@@ -166,9 +166,9 @@ export interface HttpResponseHandlerNode extends MapASTNodeBase {
    * @TJS-minimum 200
    * @TJS-maximum 599
    **/
-  statusCode?: number;
-  contentType?: string;
-  contentLanguage?: string;
+  statusCode?: number | undefined;
+  contentType?: string | undefined;
+  contentLanguage?: string | undefined;
   statements: (SetStatementNode | OutcomeStatementNode)[];
 }
 
@@ -176,10 +176,10 @@ export interface HttpCallStatementNode extends MapASTNodeBase {
   kind: 'HttpCallStatement';
   method: string;
   /**
-   * @format uri
+   * @format uri-reference
    **/
   url: string;
-  request?: HttpRequestNode;
+  request?: HttpRequestNode | undefined;
   responseHandlers: HttpResponseHandlerNode[];
 }
 
@@ -191,7 +191,7 @@ export type Substatement =
   | CallStatementNode
   | HttpCallStatementNode;
 
-export interface MapDefinitionNode extends MapASTNodeBase {
+export interface MapDefinitionNode extends MapASTNodeBase, DocumentedNode {
   kind: 'MapDefinition';
 
   /**
@@ -205,7 +205,9 @@ export interface MapDefinitionNode extends MapASTNodeBase {
   statements: Substatement[];
 }
 
-export interface OperationDefinitionNode extends MapASTNodeBase {
+export interface OperationDefinitionNode
+  extends MapASTNodeBase,
+    DocumentedNode {
   kind: 'OperationDefinition';
   /**
    * @pattern require('./utils').IDENTIFIER_RE_SOURCE
@@ -222,7 +224,7 @@ export interface MapHeaderNode extends MapASTNodeBase {
     /**
      * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
      **/
-    scope?: string;
+    scope?: string | undefined;
     /**
      * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
      **/
@@ -242,11 +244,11 @@ export interface MapHeaderNode extends MapASTNodeBase {
        * @TJS-minimum 0
        * @TJS-type integer
        **/
-      patch?: number;
+      patch?: number | undefined;
       /**
        * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
        **/
-      label?: string;
+      label?: string | undefined;
     };
   };
 
@@ -257,7 +259,7 @@ export interface MapHeaderNode extends MapASTNodeBase {
   /**
    * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
    **/
-  variant?: string;
+  variant?: string | undefined;
 }
 
 export interface MapDocumentNode extends MapASTNodeBase {

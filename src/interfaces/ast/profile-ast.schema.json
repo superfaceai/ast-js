@@ -877,19 +877,16 @@
             "description": "Construct of form:\n```\nusecase ident safety {\ninput {\n  ...fields\n}\nresult type\nasync result type\nerror type\n}\n```",
             "properties": {
                 "asyncResult": {
-                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>",
-                    "description": "Named slot definition for usecases.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation."
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>"
                 },
                 "description": {
                     "type": "string"
                 },
                 "error": {
-                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>",
-                    "description": "Named slot definition for usecases.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation."
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>"
                 },
                 "input": {
-                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<ObjectDefinitionNode>",
-                    "description": "Named slot definition for usecases.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation."
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<ObjectDefinitionNode>"
                 },
                 "kind": {
                     "enum": [
@@ -915,8 +912,7 @@
                     "type": "object"
                 },
                 "result": {
-                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>",
-                    "description": "Named slot definition for usecases.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation."
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>"
                 },
                 "safety": {
                     "description": "Usecase safety indicator",

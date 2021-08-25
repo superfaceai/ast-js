@@ -1,4 +1,4 @@
-import { Location, Span } from './source';
+import { DocumentedNode, Location, Span } from './source';
 
 // BASE //
 
@@ -27,14 +27,8 @@ export type ProfileNodeKind =
 export interface ProfileASTNodeBase {
   kind: ProfileNodeKind;
   // Span and Location are stripped during AST transfer, but not during parsing.
-  span?: Span;
-  location?: Location;
-}
-
-/** Node preceded by documenting string literal */
-export interface DocumentedNode {
-  title?: string;
-  description?: string;
+  span?: Span | undefined;
+  location?: Location | undefined;
 }
 
 // TYPES //
@@ -130,7 +124,7 @@ export interface FieldDefinitionNode
   fieldName: string;
   /** Non-required fields don't have to be present at all */
   required: boolean;
-  type?: Type;
+  type?: Type | undefined;
 }
 
 /**
@@ -147,7 +141,7 @@ export interface NamedFieldDefinitionNode
    * @pattern require('./utils').IDENTIFIER_RE_SOURCE
    **/
   fieldName: string;
-  type?: Type;
+  type?: Type | undefined;
 }
 
 // MODEL //
@@ -168,7 +162,7 @@ export interface NamedModelDefinitionNode
    * @pattern require('./utils').IDENTIFIER_RE_SOURCE
    **/
   modelName: string;
-  type?: Type;
+  type?: Type | undefined;
 }
 
 // USECASE //
@@ -182,7 +176,7 @@ export interface UseCaseSlotDefinitionNode<T extends Type = Type>
   extends ProfileASTNodeBase,
     DocumentedNode {
   kind: 'UseCaseSlotDefinition';
-  type?: T;
+  type?: T | undefined;
 }
 
 /**
@@ -207,11 +201,11 @@ export interface UseCaseDefinitionNode
    **/
   useCaseName: string;
   /** Usecase safety indicator */
-  safety?: 'safe' | 'unsafe' | 'idempotent';
-  input?: UseCaseSlotDefinitionNode<ObjectDefinitionNode>;
-  result?: UseCaseSlotDefinitionNode;
-  asyncResult?: UseCaseSlotDefinitionNode;
-  error?: UseCaseSlotDefinitionNode;
+  safety?: 'safe' | 'unsafe' | 'idempotent' | undefined;
+  input?: UseCaseSlotDefinitionNode<ObjectDefinitionNode> | undefined;
+  result?: UseCaseSlotDefinitionNode | undefined;
+  asyncResult?: UseCaseSlotDefinitionNode | undefined;
+  error?: UseCaseSlotDefinitionNode | undefined;
 }
 
 // DOCUMENT //
@@ -224,7 +218,7 @@ export interface ProfileHeaderNode extends ProfileASTNodeBase, DocumentedNode {
   /**
    * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
    **/
-  scope?: string;
+  scope?: string | undefined;
   /**
    * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
    **/
@@ -248,7 +242,7 @@ export interface ProfileHeaderNode extends ProfileASTNodeBase, DocumentedNode {
     /**
      * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
      **/
-    label?: string;
+    label?: string | undefined;
   };
 }
 
