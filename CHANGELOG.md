@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.28] - 2021-08-25
+
 ## [0.0.27] - 2021-08-03
 ### Fixed
 - `typescript-is` is a runtime dependency
@@ -117,7 +119,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - First AST
 - Github workflow publishing
 
-[Unreleased]: https://github.com/superfaceai/ast-js/compare/v0.0.27...HEAD
+[Unreleased]: https://github.com/superfaceai/ast-js/compare/v0.0.28...HEAD
+[0.0.28]: https://github.com/superfaceai/ast-js/compare/v0.0.27...v0.0.28
 [0.0.27]: https://github.com/superfaceai/ast-js/compare/v0.0.26...v0.0.27
 [0.0.26]: https://github.com/superfaceai/ast-js/compare/v0.0.23...v0.0.26
 [0.0.23]: https://github.com/superfaceai/ast-js/compare/v0.0.22...v0.0.23
