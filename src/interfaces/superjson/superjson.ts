@@ -137,16 +137,17 @@ export type NormalizedProfileProviderDefaults = {
 /**
  * Provider settings for specific profile.
  */
-export type ProfileProviderSettings =
+export type ProfileProviderSettings = {
+  defaults?: ProfileProviderDefaults | undefined;
+} & (
   | {
       file: string;
-      defaults?: ProfileProviderDefaults | undefined;
     }
   | {
       mapVariant?: string | undefined;
       mapRevision?: string | undefined;
-      defaults?: ProfileProviderDefaults | undefined;
-    };
+    }
+);
 
 export type NormalizedProfileProviderSettings =
   | {
@@ -170,7 +171,9 @@ export type ProfileProviderEntry = UriPath | ProfileProviderSettings;
 export type ProfileSettings = {
   priority?: string[] | undefined;
   defaults?: UsecaseDefaults | undefined;
-  providers?: { [provider: string]: ProfileProviderEntry } | undefined;
+  providers?:
+    | { [provider: string]: UriPath | ProfileProviderEntry }
+    | undefined;
 } & (
   | {
       version: SemanticVersion;
