@@ -14,7 +14,7 @@ export const FILE_URI_REGEX_SOURCE = FILE_URI_REGEX.source;
 export type SemanticVersion = string;
 
 /**
- * @pattern require('.').SEMVER_REGEX_SOURCE
+ * @pattern require('.').FILE_URI_REGEX_SOURCE
  **/
 export type UriPath = string;
 
