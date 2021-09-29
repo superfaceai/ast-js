@@ -1,6 +1,6 @@
 {
   "name": "@superfaceai/ast",
-  "version": "0.0.30-beta.0",
+  "version": "0.0.31-beta.0",
   "description": "Superface profile and map language ASTs, https://superface.ai",
   "main": "dist/index.js",
   "source": "src/index.ts",
@@ -24,7 +24,8 @@
     "generate_schema": "typescript-json-schema --noExtraProps --required --strictNullChecks --tsNodeRegister",
     "generate_profile_schema": "yarn run generate_schema src/interfaces/ast/profile-ast.ts ProfileDocumentNode -o src/interfaces/ast/profile-ast.schema.json",
     "generate_map_schema": "yarn run generate_schema src/interfaces/ast/map-ast.ts MapDocumentNode -o src/interfaces/ast/map-ast.schema.json",
-    "generate_schemas": "yarn run generate_profile_schema && yarn run generate_map_schema",
+    "generate_superjson_schema": "yarn run generate_schema src/interfaces/superjson/superjson.ts SuperJsonDocument -o src/interfaces/superjson/superjson.schema.json",
+    "generate_schemas": "yarn run generate_profile_schema && yarn run generate_map_schema && yarn run generate_superjson_schema",
     "prepare": "husky install"
   },
   "dependencies": {

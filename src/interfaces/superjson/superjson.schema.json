@@ -1,0 +1,646 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
+    "properties": {
+        "profiles": {
+            "additionalProperties": {
+                "anyOf": [
+                    {
+                        "additionalProperties": false,
+                        "properties": {
+                            "defaults": {
+                                "additionalProperties": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "input": {
+                                            "additionalProperties": {
+                                            },
+                                            "type": "object"
+                                        },
+                                        "providerFailover": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "description": "Default per usecase values.",
+                                "type": "object"
+                            },
+                            "priority": {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            "providers": {
+                                "additionalProperties": {
+                                    "anyOf": [
+                                        {
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "defaults": {
+                                                    "additionalProperties": {
+                                                        "additionalProperties": false,
+                                                        "properties": {
+                                                            "input": {
+                                                                "additionalProperties": {
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "retryPolicy": {
+                                                                "anyOf": [
+                                                                    {
+                                                                        "additionalProperties": false,
+                                                                        "properties": {
+                                                                            "kind": {
+                                                                                "enum": [
+                                                                                    "none"
+                                                                                ],
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "kind"
+                                                                        ],
+                                                                        "type": "object"
+                                                                    },
+                                                                    {
+                                                                        "additionalProperties": false,
+                                                                        "properties": {
+                                                                            "backoff": {
+                                                                                "anyOf": [
+                                                                                    {
+                                                                                        "additionalProperties": false,
+                                                                                        "properties": {
+                                                                                            "factor": {
+                                                                                                "minimum": 0,
+                                                                                                "type": "integer"
+                                                                                            },
+                                                                                            "kind": {
+                                                                                                "enum": [
+                                                                                                    "exponential"
+                                                                                                ],
+                                                                                                "type": "string"
+                                                                                            },
+                                                                                            "start": {
+                                                                                                "minimum": 0,
+                                                                                                "type": "integer"
+                                                                                            }
+                                                                                        },
+                                                                                        "required": [
+                                                                                            "kind"
+                                                                                        ],
+                                                                                        "type": "object"
+                                                                                    },
+                                                                                    {
+                                                                                        "enum": [
+                                                                                            "exponential"
+                                                                                        ],
+                                                                                        "type": "string"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            "kind": {
+                                                                                "enum": [
+                                                                                    "circuit-breaker"
+                                                                                ],
+                                                                                "type": "string"
+                                                                            },
+                                                                            "maxContiguousRetries": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "requestTimeout": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "kind"
+                                                                        ],
+                                                                        "type": "object"
+                                                                    },
+                                                                    {
+                                                                        "enum": [
+                                                                            "circuit-breaker",
+                                                                            "none"
+                                                                        ],
+                                                                        "type": "string"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "description": "Default per provider usecase values.",
+                                                    "type": "object"
+                                                },
+                                                "file": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "file"
+                                            ],
+                                            "type": "object"
+                                        },
+                                        {
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "defaults": {
+                                                    "additionalProperties": {
+                                                        "additionalProperties": false,
+                                                        "properties": {
+                                                            "input": {
+                                                                "additionalProperties": {
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "retryPolicy": {
+                                                                "anyOf": [
+                                                                    {
+                                                                        "additionalProperties": false,
+                                                                        "properties": {
+                                                                            "kind": {
+                                                                                "enum": [
+                                                                                    "none"
+                                                                                ],
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "kind"
+                                                                        ],
+                                                                        "type": "object"
+                                                                    },
+                                                                    {
+                                                                        "additionalProperties": false,
+                                                                        "properties": {
+                                                                            "backoff": {
+                                                                                "anyOf": [
+                                                                                    {
+                                                                                        "additionalProperties": false,
+                                                                                        "properties": {
+                                                                                            "factor": {
+                                                                                                "minimum": 0,
+                                                                                                "type": "integer"
+                                                                                            },
+                                                                                            "kind": {
+                                                                                                "enum": [
+                                                                                                    "exponential"
+                                                                                                ],
+                                                                                                "type": "string"
+                                                                                            },
+                                                                                            "start": {
+                                                                                                "minimum": 0,
+                                                                                                "type": "integer"
+                                                                                            }
+                                                                                        },
+                                                                                        "required": [
+                                                                                            "kind"
+                                                                                        ],
+                                                                                        "type": "object"
+                                                                                    },
+                                                                                    {
+                                                                                        "enum": [
+                                                                                            "exponential"
+                                                                                        ],
+                                                                                        "type": "string"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            "kind": {
+                                                                                "enum": [
+                                                                                    "circuit-breaker"
+                                                                                ],
+                                                                                "type": "string"
+                                                                            },
+                                                                            "maxContiguousRetries": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "requestTimeout": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "kind"
+                                                                        ],
+                                                                        "type": "object"
+                                                                    },
+                                                                    {
+                                                                        "enum": [
+                                                                            "circuit-breaker",
+                                                                            "none"
+                                                                        ],
+                                                                        "type": "string"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "description": "Default per provider usecase values.",
+                                                    "type": "object"
+                                                },
+                                                "mapRevision": {
+                                                    "type": "string"
+                                                },
+                                                "mapVariant": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "description": "Profile provider entry containing either `profileProviderSettings` or shorthands."
+                                },
+                                "type": "object"
+                            },
+                            "version": {
+                                "pattern": "^(0|[1-9]\\d*)\\.(0|[1-9]\\d*)\\.(0|[1-9]\\d*)(?:-((?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\\.(?:0|[1-9]\\d*|\\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\\+([0-9a-zA-Z-]+(?:\\.[0-9a-zA-Z-]+)*))?$",
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "version"
+                        ],
+                        "type": "object"
+                    },
+                    {
+                        "additionalProperties": false,
+                        "properties": {
+                            "defaults": {
+                                "additionalProperties": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "input": {
+                                            "additionalProperties": {
+                                            },
+                                            "type": "object"
+                                        },
+                                        "providerFailover": {
+                                            "type": "boolean"
+                                        }
+                                    },
+                                    "type": "object"
+                                },
+                                "description": "Default per usecase values.",
+                                "type": "object"
+                            },
+                            "file": {
+                                "type": "string"
+                            },
+                            "priority": {
+                                "items": {
+                                    "type": "string"
+                                },
+                                "type": "array"
+                            },
+                            "providers": {
+                                "additionalProperties": {
+                                    "anyOf": [
+                                        {
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "defaults": {
+                                                    "additionalProperties": {
+                                                        "additionalProperties": false,
+                                                        "properties": {
+                                                            "input": {
+                                                                "additionalProperties": {
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "retryPolicy": {
+                                                                "anyOf": [
+                                                                    {
+                                                                        "additionalProperties": false,
+                                                                        "properties": {
+                                                                            "kind": {
+                                                                                "enum": [
+                                                                                    "none"
+                                                                                ],
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "kind"
+                                                                        ],
+                                                                        "type": "object"
+                                                                    },
+                                                                    {
+                                                                        "additionalProperties": false,
+                                                                        "properties": {
+                                                                            "backoff": {
+                                                                                "anyOf": [
+                                                                                    {
+                                                                                        "additionalProperties": false,
+                                                                                        "properties": {
+                                                                                            "factor": {
+                                                                                                "minimum": 0,
+                                                                                                "type": "integer"
+                                                                                            },
+                                                                                            "kind": {
+                                                                                                "enum": [
+                                                                                                    "exponential"
+                                                                                                ],
+                                                                                                "type": "string"
+                                                                                            },
+                                                                                            "start": {
+                                                                                                "minimum": 0,
+                                                                                                "type": "integer"
+                                                                                            }
+                                                                                        },
+                                                                                        "required": [
+                                                                                            "kind"
+                                                                                        ],
+                                                                                        "type": "object"
+                                                                                    },
+                                                                                    {
+                                                                                        "enum": [
+                                                                                            "exponential"
+                                                                                        ],
+                                                                                        "type": "string"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            "kind": {
+                                                                                "enum": [
+                                                                                    "circuit-breaker"
+                                                                                ],
+                                                                                "type": "string"
+                                                                            },
+                                                                            "maxContiguousRetries": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "requestTimeout": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "kind"
+                                                                        ],
+                                                                        "type": "object"
+                                                                    },
+                                                                    {
+                                                                        "enum": [
+                                                                            "circuit-breaker",
+                                                                            "none"
+                                                                        ],
+                                                                        "type": "string"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "description": "Default per provider usecase values.",
+                                                    "type": "object"
+                                                },
+                                                "file": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "file"
+                                            ],
+                                            "type": "object"
+                                        },
+                                        {
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "defaults": {
+                                                    "additionalProperties": {
+                                                        "additionalProperties": false,
+                                                        "properties": {
+                                                            "input": {
+                                                                "additionalProperties": {
+                                                                },
+                                                                "type": "object"
+                                                            },
+                                                            "retryPolicy": {
+                                                                "anyOf": [
+                                                                    {
+                                                                        "additionalProperties": false,
+                                                                        "properties": {
+                                                                            "kind": {
+                                                                                "enum": [
+                                                                                    "none"
+                                                                                ],
+                                                                                "type": "string"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "kind"
+                                                                        ],
+                                                                        "type": "object"
+                                                                    },
+                                                                    {
+                                                                        "additionalProperties": false,
+                                                                        "properties": {
+                                                                            "backoff": {
+                                                                                "anyOf": [
+                                                                                    {
+                                                                                        "additionalProperties": false,
+                                                                                        "properties": {
+                                                                                            "factor": {
+                                                                                                "minimum": 0,
+                                                                                                "type": "integer"
+                                                                                            },
+                                                                                            "kind": {
+                                                                                                "enum": [
+                                                                                                    "exponential"
+                                                                                                ],
+                                                                                                "type": "string"
+                                                                                            },
+                                                                                            "start": {
+                                                                                                "minimum": 0,
+                                                                                                "type": "integer"
+                                                                                            }
+                                                                                        },
+                                                                                        "required": [
+                                                                                            "kind"
+                                                                                        ],
+                                                                                        "type": "object"
+                                                                                    },
+                                                                                    {
+                                                                                        "enum": [
+                                                                                            "exponential"
+                                                                                        ],
+                                                                                        "type": "string"
+                                                                                    }
+                                                                                ]
+                                                                            },
+                                                                            "kind": {
+                                                                                "enum": [
+                                                                                    "circuit-breaker"
+                                                                                ],
+                                                                                "type": "string"
+                                                                            },
+                                                                            "maxContiguousRetries": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "requestTimeout": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "kind"
+                                                                        ],
+                                                                        "type": "object"
+                                                                    },
+                                                                    {
+                                                                        "enum": [
+                                                                            "circuit-breaker",
+                                                                            "none"
+                                                                        ],
+                                                                        "type": "string"
+                                                                    }
+                                                                ]
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    },
+                                                    "description": "Default per provider usecase values.",
+                                                    "type": "object"
+                                                },
+                                                "mapRevision": {
+                                                    "type": "string"
+                                                },
+                                                "mapVariant": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        {
+                                            "type": "string"
+                                        }
+                                    ],
+                                    "description": "Profile provider entry containing either `profileProviderSettings` or shorthands."
+                                },
+                                "type": "object"
+                            }
+                        },
+                        "required": [
+                            "file"
+                        ],
+                        "type": "object"
+                    },
+                    {
+                        "type": "string"
+                    }
+                ],
+                "description": "Profile entry containing either `profileSettings` or shorthands."
+            },
+            "type": "object"
+        },
+        "providers": {
+            "additionalProperties": {
+                "anyOf": [
+                    {
+                        "additionalProperties": false,
+                        "description": "Expanded provider settings for one provider name.",
+                        "properties": {
+                            "file": {
+                                "type": "string"
+                            },
+                            "security": {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "apikey": {
+                                                    "type": "string"
+                                                },
+                                                "id": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "apikey",
+                                                "id"
+                                            ],
+                                            "type": "object"
+                                        },
+                                        {
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "password": {
+                                                    "type": "string"
+                                                },
+                                                "username": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "password",
+                                                "username"
+                                            ],
+                                            "type": "object"
+                                        },
+                                        {
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "token": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "token"
+                                            ],
+                                            "type": "object"
+                                        },
+                                        {
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "digest": {
+                                                    "type": "string"
+                                                },
+                                                "id": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "digest",
+                                                "id"
+                                            ],
+                                            "type": "object"
+                                        }
+                                    ],
+                                    "description": "Authorization variables."
+                                },
+                                "type": "array"
+                            }
+                        },
+                        "type": "object"
+                    },
+                    {
+                        "type": "string"
+                    }
+                ]
+            },
+            "type": "object"
+        }
+    },
+    "type": "object"
+}
+
