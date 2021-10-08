@@ -20,6 +20,7 @@ export type ProfileNodeKind =
   // USECASE
   | 'UseCaseSlotDefinition'
   | 'UseCaseDefinition'
+  | 'UseCaseExample'
   // DOCUMENT
   | 'ProfileHeader'
   | 'ProfileDocument';
@@ -206,6 +207,7 @@ export interface UseCaseDefinitionNode
   result?: UseCaseSlotDefinitionNode | undefined;
   asyncResult?: UseCaseSlotDefinitionNode | undefined;
   error?: UseCaseSlotDefinitionNode | undefined;
+  examples?: UseCaseExampleNode[] | undefined;
 }
 
 // DOCUMENT //
@@ -273,4 +275,12 @@ export type ProfileASTNode =
   | ProfileHeaderNode
   | UnionDefinitionNode
   | UseCaseDefinitionNode
-  | UseCaseSlotDefinitionNode;
+  | UseCaseSlotDefinitionNode
+  | UseCaseExampleNode;
+
+// EXAMPLES //
+
+export interface UseCaseExampleNode extends ProfileASTNodeBase, DocumentedNode {
+  kind: 'UseCaseExample';
+  exampleName?: string;
+}

@@ -885,6 +885,12 @@
                 "error": {
                     "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>"
                 },
+                "examples": {
+                    "items": {
+                        "$ref": "#/definitions/UseCaseExampleNode"
+                    },
+                    "type": "array"
+                },
                 "input": {
                     "$ref": "#/definitions/UseCaseSlotDefinitionNode<ObjectDefinitionNode>"
                 },
@@ -951,6 +957,64 @@
             "required": [
                 "kind",
                 "useCaseName"
+            ],
+            "type": "object"
+        },
+        "UseCaseExampleNode": {
+            "additionalProperties": false,
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "exampleName": {
+                    "type": "string"
+                },
+                "kind": {
+                    "enum": [
+                        "UseCaseExample"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
+                    "type": "object"
+                },
+                "span": {
+                    "additionalProperties": false,
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
+                    "type": "object"
+                },
+                "title": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "kind"
             ],
             "type": "object"
         },
