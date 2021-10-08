@@ -2,6 +2,67 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "additionalProperties": false,
     "definitions": {
+        "AssignmentExampleNode": {
+            "additionalProperties": false,
+            "description": "Assignment example node: `key.\"b.az\".bar = <value>`",
+            "properties": {
+                "key": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "kind": {
+                    "enum": [
+                        "AssignmentExample"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
+                    "type": "object"
+                },
+                "span": {
+                    "additionalProperties": false,
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
+                    "type": "object"
+                },
+                "value": {
+                    "$ref": "#/definitions/LiteralExampleNode"
+                }
+            },
+            "required": [
+                "key",
+                "kind",
+                "value"
+            ],
+            "type": "object"
+        },
         "EnumDefinitionNode": {
             "additionalProperties": false,
             "description": "Construct of form: `enum { values... }`",
@@ -289,6 +350,76 @@
                 "kind"
             ],
             "type": "object"
+        },
+        "ListLiteralExampleNode": {
+            "additionalProperties": false,
+            "description": "List literal example node: `[ <...literals> ]`",
+            "properties": {
+                "items": {
+                    "items": {
+                        "$ref": "#/definitions/LiteralExampleNode"
+                    },
+                    "type": "array"
+                },
+                "kind": {
+                    "enum": [
+                        "ListLiteralExample"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
+                    "type": "object"
+                },
+                "span": {
+                    "additionalProperties": false,
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "items",
+                "kind"
+            ],
+            "type": "object"
+        },
+        "LiteralExampleNode": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/PrimitiveLiteralExampleNode"
+                },
+                {
+                    "$ref": "#/definitions/ObjectLiteralExampleNode"
+                },
+                {
+                    "$ref": "#/definitions/ListLiteralExampleNode"
+                }
+            ]
         },
         "ModelTypeNameNode": {
             "additionalProperties": false,
@@ -644,6 +775,121 @@
             ],
             "type": "object"
         },
+        "ObjectLiteralExampleNode": {
+            "additionalProperties": false,
+            "description": "Object literal example node: `{ <...assignments> }`",
+            "properties": {
+                "fields": {
+                    "items": {
+                        "$ref": "#/definitions/AssignmentExampleNode"
+                    },
+                    "type": "array"
+                },
+                "kind": {
+                    "enum": [
+                        "ObjectLiteralExample"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
+                    "type": "object"
+                },
+                "span": {
+                    "additionalProperties": false,
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "fields",
+                "kind"
+            ],
+            "type": "object"
+        },
+        "PrimitiveLiteralExampleNode": {
+            "additionalProperties": false,
+            "description": "Primitive literal example for boolean, string and number values.",
+            "properties": {
+                "kind": {
+                    "enum": [
+                        "PrimitiveLiteralExample"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
+                    "type": "object"
+                },
+                "span": {
+                    "additionalProperties": false,
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
+                    "type": "object"
+                },
+                "value": {
+                    "type": [
+                        "string",
+                        "number",
+                        "boolean"
+                    ]
+                }
+            },
+            "required": [
+                "kind",
+                "value"
+            ],
+            "type": "object"
+        },
         "PrimitiveTypeNameNode": {
             "additionalProperties": false,
             "description": "From keywords: `boolean`, `number` and `string`",
@@ -963,11 +1209,50 @@
         "UseCaseExampleNode": {
             "additionalProperties": false,
             "properties": {
+                "asyncResult": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/PrimitiveLiteralExampleNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ObjectLiteralExampleNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ListLiteralExampleNode"
+                        }
+                    ]
+                },
                 "description": {
                     "type": "string"
                 },
+                "error": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/PrimitiveLiteralExampleNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ObjectLiteralExampleNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ListLiteralExampleNode"
+                        }
+                    ]
+                },
                 "exampleName": {
                     "type": "string"
+                },
+                "input": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/PrimitiveLiteralExampleNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ObjectLiteralExampleNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ListLiteralExampleNode"
+                        }
+                    ]
                 },
                 "kind": {
                     "enum": [
@@ -991,6 +1276,19 @@
                         "line"
                     ],
                     "type": "object"
+                },
+                "result": {
+                    "anyOf": [
+                        {
+                            "$ref": "#/definitions/PrimitiveLiteralExampleNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ObjectLiteralExampleNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ListLiteralExampleNode"
+                        }
+                    ]
                 },
                 "span": {
                     "additionalProperties": false,

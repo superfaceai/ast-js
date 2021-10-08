@@ -20,10 +20,15 @@ export type ProfileNodeKind =
   // USECASE
   | 'UseCaseSlotDefinition'
   | 'UseCaseDefinition'
-  | 'UseCaseExample'
   // DOCUMENT
   | 'ProfileHeader'
-  | 'ProfileDocument';
+  | 'ProfileDocument'
+  // EXAMPLES
+  | 'UseCaseExample'
+  | 'PrimitiveLiteralExample'
+  | 'ObjectLiteralExample'
+  | 'AssignmentExample'
+  | 'ListLiteralExample';
 
 export interface ProfileASTNodeBase {
   kind: ProfileNodeKind;
@@ -276,11 +281,56 @@ export type ProfileASTNode =
   | UnionDefinitionNode
   | UseCaseDefinitionNode
   | UseCaseSlotDefinitionNode
-  | UseCaseExampleNode;
+  | UseCaseExampleNode
+  | PrimitiveLiteralExampleNode
+  | ObjectLiteralExampleNode
+  | ListLiteralExampleNode;
 
 // EXAMPLES //
 
 export interface UseCaseExampleNode extends ProfileASTNodeBase, DocumentedNode {
   kind: 'UseCaseExample';
   exampleName?: string;
+  input?: LiteralExampleNode | undefined;
+  result?: LiteralExampleNode | undefined;
+  asyncResult?: LiteralExampleNode | undefined;
+  error?: LiteralExampleNode | undefined;
 }
+
+/**
+ * Primitive literal example for boolean, string and number values.
+ */
+export interface PrimitiveLiteralExampleNode extends ProfileASTNodeBase {
+  kind: 'PrimitiveLiteralExample';
+  value: number | string | boolean;
+}
+
+/**
+ * Object literal example node: `{ <...assignments> }`
+ */
+export interface ObjectLiteralExampleNode extends ProfileASTNodeBase {
+  kind: 'ObjectLiteralExample';
+  fields: AssignmentExampleNode[];
+}
+
+/**
+ * List literal example node: `[ <...literals> ]`
+ */
+export interface ListLiteralExampleNode extends ProfileASTNodeBase {
+  kind: 'ListLiteralExample';
+  items: LiteralExampleNode[];
+}
+
+/**
+ * Assignment example node: `key."b.az".bar = <value>`
+ */
+export interface AssignmentExampleNode extends ProfileASTNodeBase {
+  kind: 'AssignmentExample';
+  key: string[];
+  value: LiteralExampleNode;
+}
+
+export type LiteralExampleNode =
+  | PrimitiveLiteralExampleNode
+  | ObjectLiteralExampleNode
+  | ListLiteralExampleNode;
