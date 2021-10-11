@@ -103,7 +103,9 @@ export type TypeDefinition =
   | EnumDefinitionNode
   | UnionDefinitionNode
   | ListDefinitionNode
-  | NonNullDefinitionNode;
+  | NonNullDefinitionNode
+  | UseCaseExampleNode
+  | ComlinkLiteralNode;
 
 export type Type = TypeName | TypeDefinition;
 
@@ -174,7 +176,7 @@ export interface NamedModelDefinitionNode
 // USECASE //
 
 /**
- * Named slot definition for usecases.
+ * Named slot definition for usecases and usecase examples.
  *
  * The point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation.
  */
@@ -182,7 +184,7 @@ export interface UseCaseSlotDefinitionNode<T extends Type = Type>
   extends ProfileASTNodeBase,
     DocumentedNode {
   kind: 'UseCaseSlotDefinition';
-  type?: T | undefined;
+  value: T;
 }
 
 /**
@@ -209,10 +211,10 @@ export interface UseCaseDefinitionNode
   /** Usecase safety indicator */
   safety?: 'safe' | 'unsafe' | 'idempotent' | undefined;
   input?: UseCaseSlotDefinitionNode<ObjectDefinitionNode> | undefined;
-  result?: UseCaseSlotDefinitionNode | undefined;
-  asyncResult?: UseCaseSlotDefinitionNode | undefined;
-  error?: UseCaseSlotDefinitionNode | undefined;
-  examples?: UseCaseSlotDefinitionNode[] | undefined;
+  result?: UseCaseSlotDefinitionNode<Type> | undefined;
+  asyncResult?: UseCaseSlotDefinitionNode<Type> | undefined;
+  error?: UseCaseSlotDefinitionNode<Type> | undefined;
+  examples?: UseCaseSlotDefinitionNode<UseCaseExampleNode>[] | undefined;
 }
 
 // DOCUMENT //
@@ -291,10 +293,10 @@ export type ProfileASTNode =
 export interface UseCaseExampleNode extends ProfileASTNodeBase {
   kind: 'UseCaseExample';
   exampleName?: string;
-  input?: UseCaseSlotDefinitionNode | undefined;
-  result?: UseCaseSlotDefinitionNode | undefined;
-  asyncResult?: UseCaseSlotDefinitionNode | undefined;
-  error?: UseCaseSlotDefinitionNode | undefined;
+  input?: UseCaseSlotDefinitionNode<ComlinkLiteralNode> | undefined;
+  result?: UseCaseSlotDefinitionNode<ComlinkLiteralNode> | undefined;
+  asyncResult?: UseCaseSlotDefinitionNode<ComlinkLiteralNode> | undefined;
+  error?: UseCaseSlotDefinitionNode<ComlinkLiteralNode> | undefined;
 }
 
 /**

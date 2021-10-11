@@ -2,6 +2,258 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "additionalProperties": false,
     "definitions": {
+        "ComlinkAssignmentNode": {
+            "additionalProperties": false,
+            "description": "Comlink assignment node: `key.\"b.az\".bar = <value>`",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "key": {
+                    "items": {
+                        "type": "string"
+                    },
+                    "type": "array"
+                },
+                "kind": {
+                    "enum": [
+                        "ComlinkAssignment"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
+                    "type": "object"
+                },
+                "span": {
+                    "additionalProperties": false,
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
+                    "type": "object"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "value": {
+                    "$ref": "#/definitions/ComlinkLiteralNode"
+                }
+            },
+            "required": [
+                "key",
+                "kind",
+                "value"
+            ],
+            "type": "object"
+        },
+        "ComlinkListLiteralNode": {
+            "additionalProperties": false,
+            "description": "Comlink list literal node: `[ <...literals> ]`",
+            "properties": {
+                "items": {
+                    "items": {
+                        "$ref": "#/definitions/ComlinkLiteralNode"
+                    },
+                    "type": "array"
+                },
+                "kind": {
+                    "enum": [
+                        "ComlinkListLiteral"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
+                    "type": "object"
+                },
+                "span": {
+                    "additionalProperties": false,
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "items",
+                "kind"
+            ],
+            "type": "object"
+        },
+        "ComlinkLiteralNode": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
+                },
+                {
+                    "$ref": "#/definitions/ComlinkObjectLiteralNode"
+                },
+                {
+                    "$ref": "#/definitions/ComlinkListLiteralNode"
+                }
+            ]
+        },
+        "ComlinkObjectLiteralNode": {
+            "additionalProperties": false,
+            "description": "Comlink object literal node: `{ <...assignments> }`",
+            "properties": {
+                "fields": {
+                    "items": {
+                        "$ref": "#/definitions/ComlinkAssignmentNode"
+                    },
+                    "type": "array"
+                },
+                "kind": {
+                    "enum": [
+                        "ComlinkObjectLiteral"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
+                    "type": "object"
+                },
+                "span": {
+                    "additionalProperties": false,
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "fields",
+                "kind"
+            ],
+            "type": "object"
+        },
+        "ComlinkPrimitiveLiteralNode": {
+            "additionalProperties": false,
+            "description": "Comlink primitive literal for boolean, string and number values.",
+            "properties": {
+                "kind": {
+                    "enum": [
+                        "ComlinkPrimitiveLiteral"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
+                    "type": "object"
+                },
+                "span": {
+                    "additionalProperties": false,
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
+                    "type": "object"
+                },
+                "value": {
+                    "type": [
+                        "string",
+                        "number",
+                        "boolean"
+                    ]
+                }
+            },
+            "required": [
+                "kind",
+                "value"
+            ],
+            "type": "object"
+        },
         "EnumDefinitionNode": {
             "additionalProperties": false,
             "description": "Construct of form: `enum { values... }`",
@@ -203,6 +455,18 @@
                         },
                         {
                             "$ref": "#/definitions/UnionDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/UseCaseExampleNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ComlinkObjectLiteralNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ComlinkListLiteralNode"
                         }
                     ]
                 }
@@ -240,6 +504,18 @@
                         },
                         {
                             "$ref": "#/definitions/UnionDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/UseCaseExampleNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ComlinkObjectLiteralNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ComlinkListLiteralNode"
                         }
                     ]
                 },
@@ -421,6 +697,18 @@
                         },
                         {
                             "$ref": "#/definitions/UnionDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/UseCaseExampleNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ComlinkObjectLiteralNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ComlinkListLiteralNode"
                         }
                     ]
                 }
@@ -507,6 +795,18 @@
                         },
                         {
                             "$ref": "#/definitions/UnionDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/UseCaseExampleNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ComlinkObjectLiteralNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ComlinkListLiteralNode"
                         }
                     ]
                 }
@@ -860,6 +1160,18 @@
                             },
                             {
                                 "$ref": "#/definitions/NonNullDefinitionNode"
+                            },
+                            {
+                                "$ref": "#/definitions/UseCaseExampleNode"
+                            },
+                            {
+                                "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
+                            },
+                            {
+                                "$ref": "#/definitions/ComlinkObjectLiteralNode"
+                            },
+                            {
+                                "$ref": "#/definitions/ComlinkListLiteralNode"
                             }
                         ]
                     },
@@ -887,7 +1199,7 @@
                 },
                 "examples": {
                     "items": {
-                        "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>"
+                        "$ref": "#/definitions/UseCaseSlotDefinitionNode<UseCaseExampleNode>"
                     },
                     "type": "array"
                 },
@@ -960,16 +1272,24 @@
             ],
             "type": "object"
         },
-        "UseCaseSlotDefinitionNode<ObjectDefinitionNode>": {
+        "UseCaseExampleNode": {
             "additionalProperties": false,
-            "description": "Named slot definition for usecases.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation.",
             "properties": {
-                "description": {
+                "asyncResult": {
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<ComlinkLiteralNode>"
+                },
+                "error": {
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<ComlinkLiteralNode>"
+                },
+                "exampleName": {
                     "type": "string"
+                },
+                "input": {
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<ComlinkLiteralNode>"
                 },
                 "kind": {
                     "enum": [
-                        "UseCaseSlotDefinition"
+                        "UseCaseExample"
                     ],
                     "type": "string"
                 },
@@ -990,6 +1310,9 @@
                     ],
                     "type": "object"
                 },
+                "result": {
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<ComlinkLiteralNode>"
+                },
                 "span": {
                     "additionalProperties": false,
                     "description": "Span of one node inside source code.",
@@ -1006,12 +1329,6 @@
                         "start"
                     ],
                     "type": "object"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "type": {
-                    "$ref": "#/definitions/ObjectDefinitionNode"
                 }
             },
             "required": [
@@ -1019,9 +1336,9 @@
             ],
             "type": "object"
         },
-        "UseCaseSlotDefinitionNode<Type>": {
+        "UseCaseSlotDefinitionNode<ComlinkLiteralNode>": {
             "additionalProperties": false,
-            "description": "Named slot definition for usecases.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation.",
+            "description": "Named slot definition for usecases and usecase examples.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation.",
             "properties": {
                 "description": {
                     "type": "string"
@@ -1069,7 +1386,127 @@
                 "title": {
                     "type": "string"
                 },
-                "type": {
+                "value": {
+                    "$ref": "#/definitions/ComlinkLiteralNode"
+                }
+            },
+            "required": [
+                "kind",
+                "value"
+            ],
+            "type": "object"
+        },
+        "UseCaseSlotDefinitionNode<ObjectDefinitionNode>": {
+            "additionalProperties": false,
+            "description": "Named slot definition for usecases and usecase examples.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation.",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "kind": {
+                    "enum": [
+                        "UseCaseSlotDefinition"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
+                    "type": "object"
+                },
+                "span": {
+                    "additionalProperties": false,
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
+                    "type": "object"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "value": {
+                    "$ref": "#/definitions/ObjectDefinitionNode"
+                }
+            },
+            "required": [
+                "kind",
+                "value"
+            ],
+            "type": "object"
+        },
+        "UseCaseSlotDefinitionNode<Type>": {
+            "additionalProperties": false,
+            "description": "Named slot definition for usecases and usecase examples.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation.",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "kind": {
+                    "enum": [
+                        "UseCaseSlotDefinition"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
+                    "type": "object"
+                },
+                "span": {
+                    "additionalProperties": false,
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
+                    "type": "object"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "value": {
                     "anyOf": [
                         {
                             "$ref": "#/definitions/PrimitiveTypeNameNode"
@@ -1091,12 +1528,85 @@
                         },
                         {
                             "$ref": "#/definitions/UnionDefinitionNode"
+                        },
+                        {
+                            "$ref": "#/definitions/UseCaseExampleNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ComlinkObjectLiteralNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ComlinkListLiteralNode"
                         }
                     ]
                 }
             },
             "required": [
-                "kind"
+                "kind",
+                "value"
+            ],
+            "type": "object"
+        },
+        "UseCaseSlotDefinitionNode<UseCaseExampleNode>": {
+            "additionalProperties": false,
+            "description": "Named slot definition for usecases and usecase examples.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation.",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "kind": {
+                    "enum": [
+                        "UseCaseSlotDefinition"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
+                    "type": "object"
+                },
+                "span": {
+                    "additionalProperties": false,
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
+                    "type": "object"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "value": {
+                    "$ref": "#/definitions/UseCaseExampleNode"
+                }
+            },
+            "required": [
+                "kind",
+                "value"
             ],
             "type": "object"
         }
