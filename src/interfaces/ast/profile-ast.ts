@@ -324,7 +324,9 @@ export interface ListLiteralExampleNode extends ProfileASTNodeBase {
 /**
  * Assignment example node: `key."b.az".bar = <value>`
  */
-export interface AssignmentExampleNode extends ProfileASTNodeBase {
+export interface AssignmentExampleNode
+  extends ProfileASTNodeBase,
+    DocumentedNode {
   kind: 'AssignmentExample';
   key: string[];
   value: LiteralExampleNode;

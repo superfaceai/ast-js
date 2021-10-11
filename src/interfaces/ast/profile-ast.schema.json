@@ -6,6 +6,9 @@
             "additionalProperties": false,
             "description": "Assignment example node: `key.\"b.az\".bar = <value>`",
             "properties": {
+                "description": {
+                    "type": "string"
+                },
                 "key": {
                     "items": {
                         "type": "string"
@@ -51,6 +54,9 @@
                         "start"
                     ],
                     "type": "object"
+                },
+                "title": {
+                    "type": "string"
                 },
                 "value": {
                     "$ref": "#/definitions/LiteralExampleNode"
