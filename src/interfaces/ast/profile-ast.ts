@@ -291,10 +291,10 @@ export type ProfileASTNode =
 export interface UseCaseExampleNode extends ProfileASTNodeBase, DocumentedNode {
   kind: 'UseCaseExample';
   exampleName?: string;
-  input?: ComlinkLiteralNode | undefined;
-  result?: ComlinkLiteralNode | undefined;
-  asyncResult?: ComlinkLiteralNode | undefined;
-  error?: ComlinkLiteralNode | undefined;
+  input?: UseCaseSlotDefinitionNode | undefined;
+  result?: UseCaseSlotDefinitionNode | undefined;
+  asyncResult?: UseCaseSlotDefinitionNode | undefined;
+  error?: UseCaseSlotDefinitionNode | undefined;
 }
 
 /**

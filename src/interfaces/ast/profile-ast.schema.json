@@ -2,258 +2,6 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "additionalProperties": false,
     "definitions": {
-        "ComlinkAssignmentNode": {
-            "additionalProperties": false,
-            "description": "Comlink assignment node: `key.\"b.az\".bar = <value>`",
-            "properties": {
-                "description": {
-                    "type": "string"
-                },
-                "key": {
-                    "items": {
-                        "type": "string"
-                    },
-                    "type": "array"
-                },
-                "kind": {
-                    "enum": [
-                        "ComlinkAssignment"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
-                    ],
-                    "type": "object"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "value": {
-                    "$ref": "#/definitions/ComlinkLiteralNode"
-                }
-            },
-            "required": [
-                "key",
-                "kind",
-                "value"
-            ],
-            "type": "object"
-        },
-        "ComlinkListLiteralNode": {
-            "additionalProperties": false,
-            "description": "Comlink list literal node: `[ <...literals> ]`",
-            "properties": {
-                "items": {
-                    "items": {
-                        "$ref": "#/definitions/ComlinkLiteralNode"
-                    },
-                    "type": "array"
-                },
-                "kind": {
-                    "enum": [
-                        "ComlinkListLiteral"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
-                    ],
-                    "type": "object"
-                }
-            },
-            "required": [
-                "items",
-                "kind"
-            ],
-            "type": "object"
-        },
-        "ComlinkLiteralNode": {
-            "anyOf": [
-                {
-                    "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
-                },
-                {
-                    "$ref": "#/definitions/ComlinkObjectLiteralNode"
-                },
-                {
-                    "$ref": "#/definitions/ComlinkListLiteralNode"
-                }
-            ]
-        },
-        "ComlinkObjectLiteralNode": {
-            "additionalProperties": false,
-            "description": "Comlink object literal node: `{ <...assignments> }`",
-            "properties": {
-                "fields": {
-                    "items": {
-                        "$ref": "#/definitions/ComlinkAssignmentNode"
-                    },
-                    "type": "array"
-                },
-                "kind": {
-                    "enum": [
-                        "ComlinkObjectLiteral"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
-                    ],
-                    "type": "object"
-                }
-            },
-            "required": [
-                "fields",
-                "kind"
-            ],
-            "type": "object"
-        },
-        "ComlinkPrimitiveLiteralNode": {
-            "additionalProperties": false,
-            "description": "Comlink primitive literal for boolean, string and number values.",
-            "properties": {
-                "kind": {
-                    "enum": [
-                        "ComlinkPrimitiveLiteral"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
-                    ],
-                    "type": "object"
-                },
-                "value": {
-                    "type": [
-                        "string",
-                        "number",
-                        "boolean"
-                    ]
-                }
-            },
-            "required": [
-                "kind",
-                "value"
-            ],
-            "type": "object"
-        },
         "EnumDefinitionNode": {
             "additionalProperties": false,
             "description": "Construct of form: `enum { values... }`",
@@ -1216,49 +964,19 @@
             "additionalProperties": false,
             "properties": {
                 "asyncResult": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
-                        },
-                        {
-                            "$ref": "#/definitions/ComlinkObjectLiteralNode"
-                        },
-                        {
-                            "$ref": "#/definitions/ComlinkListLiteralNode"
-                        }
-                    ]
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>"
                 },
                 "description": {
                     "type": "string"
                 },
                 "error": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
-                        },
-                        {
-                            "$ref": "#/definitions/ComlinkObjectLiteralNode"
-                        },
-                        {
-                            "$ref": "#/definitions/ComlinkListLiteralNode"
-                        }
-                    ]
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>"
                 },
                 "exampleName": {
                     "type": "string"
                 },
                 "input": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
-                        },
-                        {
-                            "$ref": "#/definitions/ComlinkObjectLiteralNode"
-                        },
-                        {
-                            "$ref": "#/definitions/ComlinkListLiteralNode"
-                        }
-                    ]
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>"
                 },
                 "kind": {
                     "enum": [
@@ -1284,17 +1002,7 @@
                     "type": "object"
                 },
                 "result": {
-                    "anyOf": [
-                        {
-                            "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
-                        },
-                        {
-                            "$ref": "#/definitions/ComlinkObjectLiteralNode"
-                        },
-                        {
-                            "$ref": "#/definitions/ComlinkListLiteralNode"
-                        }
-                    ]
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>"
                 },
                 "span": {
                     "additionalProperties": false,
