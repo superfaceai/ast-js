@@ -14,6 +14,7 @@ import {
   ObjectDefinitionNode,
   ProfileDocumentNode,
   ProfileHeaderNode,
+  Type,
   UnionDefinitionNode,
   UseCaseDefinitionNode,
   UseCaseSlotDefinitionNode,
@@ -289,8 +290,12 @@ describe('profile-ast.utils', () => {
       };
       expect(isUseCaseSlotDefinitionNode(primitiveNode)).toEqual(false);
 
-      const node: UseCaseSlotDefinitionNode = {
+      const node: UseCaseSlotDefinitionNode<Type> = {
         kind: 'UseCaseSlotDefinition',
+        value: {
+          kind: 'PrimitiveTypeName',
+          name: 'boolean',
+        },
       };
       expect(isUseCaseSlotDefinitionNode(node)).toEqual(true);
     });
