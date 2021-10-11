@@ -2,9 +2,9 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "additionalProperties": false,
     "definitions": {
-        "AssignmentExampleNode": {
+        "ComlinkAssignmentNode": {
             "additionalProperties": false,
-            "description": "Assignment example node: `key.\"b.az\".bar = <value>`",
+            "description": "Comlink assignment node: `key.\"b.az\".bar = <value>`",
             "properties": {
                 "description": {
                     "type": "string"
@@ -17,7 +17,7 @@
                 },
                 "kind": {
                     "enum": [
-                        "AssignmentExample"
+                        "ComlinkAssignment"
                     ],
                     "type": "string"
                 },
@@ -59,11 +59,196 @@
                     "type": "string"
                 },
                 "value": {
-                    "$ref": "#/definitions/LiteralExampleNode"
+                    "$ref": "#/definitions/ComlinkLiteralNode"
                 }
             },
             "required": [
                 "key",
+                "kind",
+                "value"
+            ],
+            "type": "object"
+        },
+        "ComlinkListLiteralNode": {
+            "additionalProperties": false,
+            "description": "Comlink list literal node: `[ <...literals> ]`",
+            "properties": {
+                "items": {
+                    "items": {
+                        "$ref": "#/definitions/ComlinkLiteralNode"
+                    },
+                    "type": "array"
+                },
+                "kind": {
+                    "enum": [
+                        "ComlinkListLiteral"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
+                    "type": "object"
+                },
+                "span": {
+                    "additionalProperties": false,
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "items",
+                "kind"
+            ],
+            "type": "object"
+        },
+        "ComlinkLiteralNode": {
+            "anyOf": [
+                {
+                    "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
+                },
+                {
+                    "$ref": "#/definitions/ComlinkObjectLiteralNode"
+                },
+                {
+                    "$ref": "#/definitions/ComlinkListLiteralNode"
+                }
+            ]
+        },
+        "ComlinkObjectLiteralNode": {
+            "additionalProperties": false,
+            "description": "Comlink object literal node: `{ <...assignments> }`",
+            "properties": {
+                "fields": {
+                    "items": {
+                        "$ref": "#/definitions/ComlinkAssignmentNode"
+                    },
+                    "type": "array"
+                },
+                "kind": {
+                    "enum": [
+                        "ComlinkObjectLiteral"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
+                    "type": "object"
+                },
+                "span": {
+                    "additionalProperties": false,
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "fields",
+                "kind"
+            ],
+            "type": "object"
+        },
+        "ComlinkPrimitiveLiteralNode": {
+            "additionalProperties": false,
+            "description": "Comlink primitive literal for boolean, string and number values.",
+            "properties": {
+                "kind": {
+                    "enum": [
+                        "ComlinkPrimitiveLiteral"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "properties": {
+                        "column": {
+                            "type": "number"
+                        },
+                        "line": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "column",
+                        "line"
+                    ],
+                    "type": "object"
+                },
+                "span": {
+                    "additionalProperties": false,
+                    "description": "Span of one node inside source code.",
+                    "properties": {
+                        "end": {
+                            "type": "number"
+                        },
+                        "start": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
+                    "type": "object"
+                },
+                "value": {
+                    "type": [
+                        "string",
+                        "number",
+                        "boolean"
+                    ]
+                }
+            },
+            "required": [
                 "kind",
                 "value"
             ],
@@ -356,76 +541,6 @@
                 "kind"
             ],
             "type": "object"
-        },
-        "ListLiteralExampleNode": {
-            "additionalProperties": false,
-            "description": "List literal example node: `[ <...literals> ]`",
-            "properties": {
-                "items": {
-                    "items": {
-                        "$ref": "#/definitions/LiteralExampleNode"
-                    },
-                    "type": "array"
-                },
-                "kind": {
-                    "enum": [
-                        "ListLiteralExample"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
-                    ],
-                    "type": "object"
-                }
-            },
-            "required": [
-                "items",
-                "kind"
-            ],
-            "type": "object"
-        },
-        "LiteralExampleNode": {
-            "anyOf": [
-                {
-                    "$ref": "#/definitions/PrimitiveLiteralExampleNode"
-                },
-                {
-                    "$ref": "#/definitions/ObjectLiteralExampleNode"
-                },
-                {
-                    "$ref": "#/definitions/ListLiteralExampleNode"
-                }
-            ]
         },
         "ModelTypeNameNode": {
             "additionalProperties": false,
@@ -781,121 +896,6 @@
             ],
             "type": "object"
         },
-        "ObjectLiteralExampleNode": {
-            "additionalProperties": false,
-            "description": "Object literal example node: `{ <...assignments> }`",
-            "properties": {
-                "fields": {
-                    "items": {
-                        "$ref": "#/definitions/AssignmentExampleNode"
-                    },
-                    "type": "array"
-                },
-                "kind": {
-                    "enum": [
-                        "ObjectLiteralExample"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
-                    ],
-                    "type": "object"
-                }
-            },
-            "required": [
-                "fields",
-                "kind"
-            ],
-            "type": "object"
-        },
-        "PrimitiveLiteralExampleNode": {
-            "additionalProperties": false,
-            "description": "Primitive literal example for boolean, string and number values.",
-            "properties": {
-                "kind": {
-                    "enum": [
-                        "PrimitiveLiteralExample"
-                    ],
-                    "type": "string"
-                },
-                "location": {
-                    "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
-                    ],
-                    "type": "object"
-                },
-                "value": {
-                    "type": [
-                        "string",
-                        "number",
-                        "boolean"
-                    ]
-                }
-            },
-            "required": [
-                "kind",
-                "value"
-            ],
-            "type": "object"
-        },
         "PrimitiveTypeNameNode": {
             "additionalProperties": false,
             "description": "From keywords: `boolean`, `number` and `string`",
@@ -1218,13 +1218,13 @@
                 "asyncResult": {
                     "anyOf": [
                         {
-                            "$ref": "#/definitions/PrimitiveLiteralExampleNode"
+                            "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
                         },
                         {
-                            "$ref": "#/definitions/ObjectLiteralExampleNode"
+                            "$ref": "#/definitions/ComlinkObjectLiteralNode"
                         },
                         {
-                            "$ref": "#/definitions/ListLiteralExampleNode"
+                            "$ref": "#/definitions/ComlinkListLiteralNode"
                         }
                     ]
                 },
@@ -1234,13 +1234,13 @@
                 "error": {
                     "anyOf": [
                         {
-                            "$ref": "#/definitions/PrimitiveLiteralExampleNode"
+                            "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
                         },
                         {
-                            "$ref": "#/definitions/ObjectLiteralExampleNode"
+                            "$ref": "#/definitions/ComlinkObjectLiteralNode"
                         },
                         {
-                            "$ref": "#/definitions/ListLiteralExampleNode"
+                            "$ref": "#/definitions/ComlinkListLiteralNode"
                         }
                     ]
                 },
@@ -1250,13 +1250,13 @@
                 "input": {
                     "anyOf": [
                         {
-                            "$ref": "#/definitions/PrimitiveLiteralExampleNode"
+                            "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
                         },
                         {
-                            "$ref": "#/definitions/ObjectLiteralExampleNode"
+                            "$ref": "#/definitions/ComlinkObjectLiteralNode"
                         },
                         {
-                            "$ref": "#/definitions/ListLiteralExampleNode"
+                            "$ref": "#/definitions/ComlinkListLiteralNode"
                         }
                     ]
                 },
@@ -1286,13 +1286,13 @@
                 "result": {
                     "anyOf": [
                         {
-                            "$ref": "#/definitions/PrimitiveLiteralExampleNode"
+                            "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
                         },
                         {
-                            "$ref": "#/definitions/ObjectLiteralExampleNode"
+                            "$ref": "#/definitions/ComlinkObjectLiteralNode"
                         },
                         {
-                            "$ref": "#/definitions/ListLiteralExampleNode"
+                            "$ref": "#/definitions/ComlinkListLiteralNode"
                         }
                     ]
                 },

@@ -25,10 +25,10 @@ export type ProfileNodeKind =
   | 'ProfileDocument'
   // EXAMPLES
   | 'UseCaseExample'
-  | 'PrimitiveLiteralExample'
-  | 'ObjectLiteralExample'
-  | 'AssignmentExample'
-  | 'ListLiteralExample';
+  | 'ComlinkPrimitiveLiteral'
+  | 'ComlinkObjectLiteral'
+  | 'ComlinkAssignment'
+  | 'ComlinkListLiteral';
 
 export interface ProfileASTNodeBase {
   kind: ProfileNodeKind;
@@ -282,57 +282,57 @@ export type ProfileASTNode =
   | UseCaseDefinitionNode
   | UseCaseSlotDefinitionNode
   | UseCaseExampleNode
-  | PrimitiveLiteralExampleNode
-  | ObjectLiteralExampleNode
-  | ListLiteralExampleNode;
+  | ComlinkPrimitiveLiteralNode
+  | ComlinkObjectLiteralNode
+  | ComlinkListLiteralNode;
 
 // EXAMPLES //
 
 export interface UseCaseExampleNode extends ProfileASTNodeBase, DocumentedNode {
   kind: 'UseCaseExample';
   exampleName?: string;
-  input?: LiteralExampleNode | undefined;
-  result?: LiteralExampleNode | undefined;
-  asyncResult?: LiteralExampleNode | undefined;
-  error?: LiteralExampleNode | undefined;
+  input?: ComlinkLiteralNode | undefined;
+  result?: ComlinkLiteralNode | undefined;
+  asyncResult?: ComlinkLiteralNode | undefined;
+  error?: ComlinkLiteralNode | undefined;
 }
 
 /**
- * Primitive literal example for boolean, string and number values.
+ * Comlink primitive literal for boolean, string and number values.
  */
-export interface PrimitiveLiteralExampleNode extends ProfileASTNodeBase {
-  kind: 'PrimitiveLiteralExample';
+export interface ComlinkPrimitiveLiteralNode extends ProfileASTNodeBase {
+  kind: 'ComlinkPrimitiveLiteral';
   value: number | string | boolean;
 }
 
 /**
- * Object literal example node: `{ <...assignments> }`
+ * Comlink object literal node: `{ <...assignments> }`
  */
-export interface ObjectLiteralExampleNode extends ProfileASTNodeBase {
-  kind: 'ObjectLiteralExample';
-  fields: AssignmentExampleNode[];
+export interface ComlinkObjectLiteralNode extends ProfileASTNodeBase {
+  kind: 'ComlinkObjectLiteral';
+  fields: ComlinkAssignmentNode[];
 }
 
 /**
- * List literal example node: `[ <...literals> ]`
+ * Comlink list literal node: `[ <...literals> ]`
  */
-export interface ListLiteralExampleNode extends ProfileASTNodeBase {
-  kind: 'ListLiteralExample';
-  items: LiteralExampleNode[];
+export interface ComlinkListLiteralNode extends ProfileASTNodeBase {
+  kind: 'ComlinkListLiteral';
+  items: ComlinkLiteralNode[];
 }
 
 /**
- * Assignment example node: `key."b.az".bar = <value>`
+ * Comlink assignment node: `key."b.az".bar = <value>`
  */
-export interface AssignmentExampleNode
+export interface ComlinkAssignmentNode
   extends ProfileASTNodeBase,
     DocumentedNode {
-  kind: 'AssignmentExample';
+  kind: 'ComlinkAssignment';
   key: string[];
-  value: LiteralExampleNode;
+  value: ComlinkLiteralNode;
 }
 
-export type LiteralExampleNode =
-  | PrimitiveLiteralExampleNode
-  | ObjectLiteralExampleNode
-  | ListLiteralExampleNode;
+export type ComlinkLiteralNode =
+  | ComlinkPrimitiveLiteralNode
+  | ComlinkObjectLiteralNode
+  | ComlinkListLiteralNode;
