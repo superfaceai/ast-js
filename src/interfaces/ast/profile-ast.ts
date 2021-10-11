@@ -212,7 +212,7 @@ export interface UseCaseDefinitionNode
   result?: UseCaseSlotDefinitionNode | undefined;
   asyncResult?: UseCaseSlotDefinitionNode | undefined;
   error?: UseCaseSlotDefinitionNode | undefined;
-  examples?: UseCaseExampleNode[] | undefined;
+  examples?: UseCaseSlotDefinitionNode[] | undefined;
 }
 
 // DOCUMENT //
@@ -288,7 +288,7 @@ export type ProfileASTNode =
 
 // EXAMPLES //
 
-export interface UseCaseExampleNode extends ProfileASTNodeBase, DocumentedNode {
+export interface UseCaseExampleNode extends ProfileASTNodeBase {
   kind: 'UseCaseExample';
   exampleName?: string;
   input?: UseCaseSlotDefinitionNode | undefined;
