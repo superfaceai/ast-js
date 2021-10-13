@@ -59,8 +59,9 @@ export const isUnionDefinitionNode: Guard<UnionDefinitionNode> =
   createIs<UnionDefinitionNode>();
 export const isUseCaseDefinitionNode: Guard<UseCaseDefinitionNode> =
   createIs<UseCaseDefinitionNode>();
-export const isUseCaseSlotDefinitionNode: Guard<UseCaseSlotDefinitionNode> =
-  createIs<UseCaseSlotDefinitionNode>();
+export const isUseCaseSlotDefinitionNode: Guard<
+  UseCaseSlotDefinitionNode<ProfileASTNode>
+> = createIs<UseCaseSlotDefinitionNode<ProfileASTNode>>();
 
 export const assertProfileDocumentNode: (node: unknown) => ProfileDocumentNode =
   createAssertEquals<ProfileDocumentNode>();
