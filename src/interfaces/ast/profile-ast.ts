@@ -180,7 +180,7 @@ export interface NamedModelDefinitionNode
  *
  * The point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation.
  */
-export interface UseCaseSlotDefinitionNode<T extends Type = Type>
+export interface UseCaseSlotDefinitionNode<T extends ProfileASTNode>
   extends ProfileASTNodeBase,
     DocumentedNode {
   kind: 'UseCaseSlotDefinition';
@@ -282,7 +282,8 @@ export type ProfileASTNode =
   | ProfileHeaderNode
   | UnionDefinitionNode
   | UseCaseDefinitionNode
-  | UseCaseSlotDefinitionNode
+  | UseCaseSlotDefinitionNode<Type>
+  | UseCaseSlotDefinitionNode<ComlinkLiteralNode>
   | UseCaseExampleNode
   | ComlinkPrimitiveLiteralNode
   | ComlinkObjectLiteralNode
