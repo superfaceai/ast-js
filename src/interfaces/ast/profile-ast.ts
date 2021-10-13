@@ -22,13 +22,7 @@ export type ProfileNodeKind =
   | 'UseCaseDefinition'
   // DOCUMENT
   | 'ProfileHeader'
-  | 'ProfileDocument'
-  // EXAMPLES
-  | 'UseCaseExample'
-  | 'ComlinkPrimitiveLiteral'
-  | 'ComlinkObjectLiteral'
-  | 'ComlinkAssignment'
-  | 'ComlinkListLiteral';
+  | 'ProfileDocument';
 
 export interface ProfileASTNodeBase {
   kind: ProfileNodeKind;
@@ -103,9 +97,7 @@ export type TypeDefinition =
   | EnumDefinitionNode
   | UnionDefinitionNode
   | ListDefinitionNode
-  | NonNullDefinitionNode
-  | UseCaseExampleNode
-  | ComlinkLiteralNode;
+  | NonNullDefinitionNode;
 
 export type Type = TypeName | TypeDefinition;
 
@@ -176,7 +168,7 @@ export interface NamedModelDefinitionNode
 // USECASE //
 
 /**
- * Named slot definition for usecases and usecase examples.
+ * Named slot definition for usecases.
  *
  * The point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation.
  */
@@ -184,7 +176,7 @@ export interface UseCaseSlotDefinitionNode<T extends Type = Type>
   extends ProfileASTNodeBase,
     DocumentedNode {
   kind: 'UseCaseSlotDefinition';
-  value: T;
+  type?: T | undefined;
 }
 
 /**
@@ -211,10 +203,9 @@ export interface UseCaseDefinitionNode
   /** Usecase safety indicator */
   safety?: 'safe' | 'unsafe' | 'idempotent' | undefined;
   input?: UseCaseSlotDefinitionNode<ObjectDefinitionNode> | undefined;
-  result?: UseCaseSlotDefinitionNode<Type> | undefined;
-  asyncResult?: UseCaseSlotDefinitionNode<Type> | undefined;
-  error?: UseCaseSlotDefinitionNode<Type> | undefined;
-  examples?: UseCaseSlotDefinitionNode<UseCaseExampleNode>[] | undefined;
+  result?: UseCaseSlotDefinitionNode | undefined;
+  asyncResult?: UseCaseSlotDefinitionNode | undefined;
+  error?: UseCaseSlotDefinitionNode | undefined;
 }
 
 // DOCUMENT //
@@ -282,59 +273,4 @@ export type ProfileASTNode =
   | ProfileHeaderNode
   | UnionDefinitionNode
   | UseCaseDefinitionNode
-  | UseCaseSlotDefinitionNode
-  | UseCaseExampleNode
-  | ComlinkPrimitiveLiteralNode
-  | ComlinkObjectLiteralNode
-  | ComlinkListLiteralNode;
-
-// EXAMPLES //
-
-export interface UseCaseExampleNode extends ProfileASTNodeBase {
-  kind: 'UseCaseExample';
-  exampleName?: string;
-  input?: UseCaseSlotDefinitionNode<ComlinkLiteralNode> | undefined;
-  result?: UseCaseSlotDefinitionNode<ComlinkLiteralNode> | undefined;
-  asyncResult?: UseCaseSlotDefinitionNode<ComlinkLiteralNode> | undefined;
-  error?: UseCaseSlotDefinitionNode<ComlinkLiteralNode> | undefined;
-}
-
-/**
- * Comlink primitive literal for boolean, string and number values.
- */
-export interface ComlinkPrimitiveLiteralNode extends ProfileASTNodeBase {
-  kind: 'ComlinkPrimitiveLiteral';
-  value: number | string | boolean;
-}
-
-/**
- * Comlink object literal node: `{ <...assignments> }`
- */
-export interface ComlinkObjectLiteralNode extends ProfileASTNodeBase {
-  kind: 'ComlinkObjectLiteral';
-  fields: ComlinkAssignmentNode[];
-}
-
-/**
- * Comlink list literal node: `[ <...literals> ]`
- */
-export interface ComlinkListLiteralNode extends ProfileASTNodeBase {
-  kind: 'ComlinkListLiteral';
-  items: ComlinkLiteralNode[];
-}
-
-/**
- * Comlink assignment node: `key."b.az".bar = <value>`
- */
-export interface ComlinkAssignmentNode
-  extends ProfileASTNodeBase,
-    DocumentedNode {
-  kind: 'ComlinkAssignment';
-  key: string[];
-  value: ComlinkLiteralNode;
-}
-
-export type ComlinkLiteralNode =
-  | ComlinkPrimitiveLiteralNode
-  | ComlinkObjectLiteralNode
-  | ComlinkListLiteralNode;
+  | UseCaseSlotDefinitionNode;
