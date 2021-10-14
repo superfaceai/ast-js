@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.33] - 2021-10-14
+
 ## [0.0.32] - 2021-10-14
 
 ## [0.0.32-beta.0] - 2021-10-14
@@ -133,7 +135,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - First AST
 - Github workflow publishing
 
-[Unreleased]: https://github.com/superfaceai/ast-js/compare/v0.0.32...HEAD
+[Unreleased]: https://github.com/superfaceai/ast-js/compare/v0.0.33...HEAD
+[0.0.33]: https://github.com/superfaceai/ast-js/compare/v0.0.32...v0.0.33
 [0.0.32]: https://github.com/superfaceai/ast-js/compare/v0.0.32-beta.0...v0.0.32
 [0.0.32-beta.0]: https://github.com/superfaceai/ast-js/compare/v0.0.31...v0.0.32-beta.0
 [0.0.31]: https://github.com/superfaceai/ast-js/compare/v0.0.31-beta.0...v0.0.31
