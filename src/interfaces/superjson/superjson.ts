@@ -240,11 +240,13 @@ export type SecurityValues =
 export type ProviderSettings = {
   file?: string | undefined;
   security?: SecurityValues[] | undefined;
+  parameters?: { [key: string]: string } | undefined;
 };
 
 export type NormalizedProviderSettings = {
   file?: string | undefined;
   security: SecurityValues[];
+  parameters: { [key: string]: string };
 };
 
 export type ProviderEntry = UriPath | ProviderSettings;
