@@ -7,10 +7,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   MAP_AST_CHANGED=$((`stat -f "%c" src/interfaces/ast/map-ast.ts` - `stat -f "%c" src/interfaces/ast/map-ast.schema.json`))
   PROFILE_AST_CHANGED=$((`stat -f "%c" src/interfaces/ast/profile-ast.ts` - `stat -f "%c" src/interfaces/ast/profile-ast.schema.json`))
   SUPERJSON_AST_CHANGED=$((`stat -f "%c" src/interfaces/superjson/superjson.ts` - `stat -f "%c" src/interfaces/superjson/superjson.schema.json`))
+  PROVIDERJSON_AST_CHANGED=$((`stat -f "%c" src/interfaces/providerjson/providerjson.ts` - `stat -f "%c" src/interfaces/providerjson/providerjson.schema.json`))
 else
   MAP_AST_CHANGED=$((`stat --format="%Y" src/interfaces/ast/map-ast.ts` - `stat --format="%Y" src/interfaces/ast/map-ast.schema.json`))
   PROFILE_AST_CHANGED=$((`stat --format="%Y" src/interfaces/ast/profile-ast.ts` - `stat --format="%Y" src/interfaces/ast/profile-ast.schema.json`))
   SUPERJSON_AST_CHANGED=$((`stat --format="%Y" src/interfaces/superjson/superjson.ts` - `stat --format="%Y" src/interfaces/superjson/superjson.schema.json`))
+  PROVIDERJSON_AST_CHANGED=$((`stat --format="%Y" src/interfaces/providerjson/providerjson.ts` - `stat --format="%Y" src/interfaces/providerjson/providerjson.schema.json`))
 fi
 
 
@@ -26,6 +28,11 @@ fi
 
 if [ $SUPERJSON_AST_CHANGED -gt 0 ]; then
   yarn run --silent generate_superjson_schema 
+  GENERATED=1
+fi
+
+if [ $PROVIDERJSON_AST_CHANGED -gt 0 ]; then
+  yarn run --silent generate_providerjson_schema 
   GENERATED=1
 fi
 
