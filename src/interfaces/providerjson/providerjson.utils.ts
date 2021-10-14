@@ -2,6 +2,7 @@ import { assertEquals, createIs, TypeGuardError } from 'typescript-is';
 
 import { Guard, isValidIdentifier } from '../ast';
 import { SecurityValues } from '../superjson';
+import { IntegrationParameter } from '.';
 import {
   ApiKeySecurityScheme,
   BasicAuthSecurityScheme,
@@ -91,4 +92,15 @@ export function prepareSecurityValues(
   }
 
   return security;
+}
+
+export function prepareProviderParameters(parameters: IntegrationParameter[]): {
+  [key: string]: string;
+} {
+  const preparedParameters: { [key: string]: string } = {};
+  for (const parameter of parameters) {
+    preparedParameters[parameter.name] = parameter.default || '';
+  }
+
+  return preparedParameters;
 }

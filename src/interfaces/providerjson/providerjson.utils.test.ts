@@ -1,3 +1,4 @@
+import { IntegrationParameter, prepareProviderParameters } from '.';
 import {
   ApiKeyPlacement,
   HttpScheme,
@@ -650,5 +651,35 @@ describe('prepareSecurityValues', () => {
         mockSecurityScheme as SecurityScheme,
       ])
     ).toEqual([]);
+  });
+
+  describe('prepareProviderParameters', () => {
+    const mockParameters: IntegrationParameter[] = [
+      {
+        name: 'first',
+        default: 'first-value',
+        description: '1',
+      },
+      {
+        name: 'second',
+        description: '2',
+      },
+      {
+        name: 'third',
+      },
+    ];
+
+    it('prepares provider parameters', () => {
+      expect(prepareProviderParameters(mockParameters)).toEqual({
+        first: 'first-value',
+        second: '',
+        third: '',
+      });
+    });
+
+    it('prepares empty provider parameters', () => {
+      const mockParameters: IntegrationParameter[] = [];
+      expect(prepareProviderParameters(mockParameters)).toEqual({});
+    });
   });
 });
