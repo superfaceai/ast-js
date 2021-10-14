@@ -1,0 +1,186 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
+    "definitions": {
+        "ApiKeyPlacement": {
+            "enum": [
+                "body",
+                "header",
+                "path",
+                "query"
+            ],
+            "type": "string"
+        }
+    },
+    "properties": {
+        "defaultService": {
+            "type": "string"
+        },
+        "name": {
+            "pattern": "^[a-z][_\\-a-z]*$",
+            "type": "string"
+        },
+        "parameters": {
+            "items": {
+                "additionalProperties": false,
+                "properties": {
+                    "default": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$",
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "name"
+                ],
+                "type": "object"
+            },
+            "type": "array"
+        },
+        "securitySchemes": {
+            "items": {
+                "anyOf": [
+                    {
+                        "additionalProperties": false,
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "in": {
+                                "$ref": "#/definitions/ApiKeyPlacement"
+                            },
+                            "name": {
+                                "type": "string"
+                            },
+                            "type": {
+                                "enum": [
+                                    "apiKey"
+                                ],
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "in",
+                            "type"
+                        ],
+                        "type": "object"
+                    },
+                    {
+                        "additionalProperties": false,
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "scheme": {
+                                "enum": [
+                                    "basic"
+                                ],
+                                "type": "string"
+                            },
+                            "type": {
+                                "enum": [
+                                    "http"
+                                ],
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "scheme",
+                            "type"
+                        ],
+                        "type": "object"
+                    },
+                    {
+                        "additionalProperties": false,
+                        "properties": {
+                            "bearerFormat": {
+                                "type": "string"
+                            },
+                            "id": {
+                                "type": "string"
+                            },
+                            "scheme": {
+                                "enum": [
+                                    "bearer"
+                                ],
+                                "type": "string"
+                            },
+                            "type": {
+                                "enum": [
+                                    "http"
+                                ],
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "scheme",
+                            "type"
+                        ],
+                        "type": "object"
+                    },
+                    {
+                        "additionalProperties": false,
+                        "properties": {
+                            "id": {
+                                "type": "string"
+                            },
+                            "scheme": {
+                                "enum": [
+                                    "digest"
+                                ],
+                                "type": "string"
+                            },
+                            "type": {
+                                "enum": [
+                                    "http"
+                                ],
+                                "type": "string"
+                            }
+                        },
+                        "required": [
+                            "id",
+                            "scheme",
+                            "type"
+                        ],
+                        "type": "object"
+                    }
+                ]
+            },
+            "type": "array"
+        },
+        "services": {
+            "items": {
+                "additionalProperties": false,
+                "properties": {
+                    "baseUrl": {
+                        "type": "string"
+                    },
+                    "id": {
+                        "type": "string"
+                    }
+                },
+                "required": [
+                    "baseUrl",
+                    "id"
+                ],
+                "type": "object"
+            },
+            "type": "array"
+        }
+    },
+    "required": [
+        "defaultService",
+        "name",
+        "services"
+    ],
+    "type": "object"
+}
+
