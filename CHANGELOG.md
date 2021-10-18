@@ -19,15 +19,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.32] - 2021-10-14
 
-## [0.0.32-beta.0] - 2021-10-14
 ### Added
 - provider.json schemas
 
 ## [0.0.31] - 2021-09-29
-
-## [0.0.31-beta.0] - 2021-09-28
-
-## [0.0.30-beta.0] - 2021-09-28
 
 ## [0.0.29] - 2021-09-08
 

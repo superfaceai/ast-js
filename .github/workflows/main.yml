@@ -7,7 +7,6 @@ name: CI
 on:
   - push
 
-
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -17,30 +16,30 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - name: Setup Node.js environment
-      uses: actions/setup-node@v2
-      with:
-        registry-url: https://registry.npmjs.org/
-        scope: "@superfaceai"
-        node-version: "14"
-    - name: Checkout
-      uses: actions/checkout@v2.3.4
-    - name: Get yarn cache directory path
-      id: yarn-cache-dir-path
-      run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          registry-url: https://registry.npmjs.org/
+          scope: "@superfaceai"
+          node-version: "14"
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
 
-    - uses: actions/cache@v2.1.3
-      id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-      with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-yarn-
-    # Runs a set of commands using the runners shell
-    - name: Install dependencies
-      run: yarn install
-    - name: Test
-      run: yarn test
+      - uses: actions/cache@v2.1.3
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      # Runs a set of commands using the runners shell
+      - name: Install dependencies
+        run: yarn install
+      - name: Test
+        run: yarn test --bail
   # This workflow contains a single job called "build"
   lint:
     # The type of runner that the job will run on
@@ -48,30 +47,30 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - name: Setup Node.js environment
-      uses: actions/setup-node@v2
-      with:
-        registry-url: https://registry.npmjs.org/
-        scope: "@superfaceai"
-        node-version: "14"
-    - name: Checkout
-      uses: actions/checkout@v2.3.4
-    - name: Get yarn cache directory path
-      id: yarn-cache-dir-path
-      run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          registry-url: https://registry.npmjs.org/
+          scope: "@superfaceai"
+          node-version: "14"
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
 
-    - uses: actions/cache@v2.1.3
-      id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-      with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-yarn-
-    # Runs a set of commands using the runners shell
-    - name: Install dependencies
-      run:  yarn install
-    - name: Lint
-      run:  yarn lint
+      - uses: actions/cache@v2.1.3
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      # Runs a set of commands using the runners shell
+      - name: Install dependencies
+        run: yarn install
+      - name: Lint
+        run: yarn lint
 
   lincense-check:
     # The type of runner that the job will run on
@@ -79,31 +78,31 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    - name: Setup Node.js environment
-      uses: actions/setup-node@v2
-      with:
-        registry-url: https://registry.npmjs.org/
-        scope: "@superfaceai"
-        node-version: "14"
-    - name: Checkout
-      uses: actions/checkout@v2.3.4
-    - name: Get yarn cache directory path
-      id: yarn-cache-dir-path
-      run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v2
+        with:
+          registry-url: https://registry.npmjs.org/
+          scope: "@superfaceai"
+          node-version: "14"
+      - name: Checkout
+        uses: actions/checkout@v2.3.4
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
 
-    - uses: actions/cache@v2.1.3
-      id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
-      with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-        restore-keys: |
-          ${{ runner.os }}-yarn-
-    # Runs a set of commands using the runners shell
-    - name: Install dependencies
-      run:  yarn install
-    - name: Install License checker
-      run:  |
-        yarn global add license-checker
-        echo "$(yarn global bin)" >> $GITHUB_PATH
-    - name: Check licenses
-      run: "license-checker --onlyAllow '0BDS;MIT;Apache-2.0;ISC;BSD-3-Clause;BSD-2-Clause;CC-BY-4.0;CC-BY-3.0;BSD;CC0-1.0;Unlicense;Public Domain' --summary"
+      - uses: actions/cache@v2.1.3
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      # Runs a set of commands using the runners shell
+      - name: Install dependencies
+        run: yarn install
+      - name: Install License checker
+        run: |
+          yarn global add license-checker
+          echo "$(yarn global bin)" >> $GITHUB_PATH
+      - name: Check licenses
+        run: "license-checker --onlyAllow '0BDS;MIT;Apache-2.0;ISC;BSD-3-Clause;BSD-2-Clause;CC-BY-4.0;CC-BY-3.0;BSD;CC0-1.0;Unlicense;Public Domain' --summary"
