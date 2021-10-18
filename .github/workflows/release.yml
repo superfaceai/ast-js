@@ -82,6 +82,7 @@ jobs:
       # Read version changelog
       - id: get-changelog
         name: Get release version changelog
+        if: startsWith(github.event.inputs.release-level, 'pre') != true
         uses: superfaceai/release-changelog-action@v1
         with:
           path-to-changelog: CHANGELOG.md
