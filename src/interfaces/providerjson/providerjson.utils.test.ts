@@ -654,6 +654,7 @@ describe('prepareSecurityValues', () => {
   });
 
   describe('prepareProviderParameters', () => {
+    const mockProviderName = 'swapi';
     const mockParameters: IntegrationParameter[] = [
       {
         name: 'first',
@@ -667,19 +668,31 @@ describe('prepareSecurityValues', () => {
       {
         name: 'third',
       },
+      {
+        name: 'anothe-r-te-st',
+      },
+      {
+        name: 'te_st',
+      },
     ];
 
     it('prepares provider parameters', () => {
-      expect(prepareProviderParameters(mockParameters)).toEqual({
+      expect(
+        prepareProviderParameters(mockProviderName, mockParameters)
+      ).toEqual({
         first: 'first-value',
-        second: '',
-        third: '',
+        second: '$SWAPI_SECOND',
+        third: '$SWAPI_THIRD',
+        ['anothe-r-te-st']: '$SWAPI_ANOTHE_R_TE_ST',
+        ['te_st']: '$SWAPI_TE_ST',
       });
     });
 
     it('prepares empty provider parameters', () => {
       const mockParameters: IntegrationParameter[] = [];
-      expect(prepareProviderParameters(mockParameters)).toEqual({});
+      expect(
+        prepareProviderParameters(mockProviderName, mockParameters)
+      ).toEqual({});
     });
   });
 });
