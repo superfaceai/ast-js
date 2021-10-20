@@ -33,7 +33,7 @@ export type ProfileNodeKind =
 export interface ProfileASTNodeBase {
   kind: ProfileNodeKind;
   // Span and Location are stripped during AST transfer, but not during parsing.
-  location?: LocationInfo;
+  location?: LocationInfo | undefined;
 }
 
 // TYPES //

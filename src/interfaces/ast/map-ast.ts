@@ -26,7 +26,7 @@ export type MapNodeKind =
 
 export interface MapASTNodeBase {
   kind: MapNodeKind;
-  location?: LocationInfo;
+  location?: LocationInfo | undefined;
 }
 
 // ATOMS

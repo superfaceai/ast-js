@@ -37,7 +37,12 @@ export interface DocumentedNode {
  * Information about AST and Parser used to compile provided AST
  */
 export interface AstMetadata {
-  astVersion: { major: number; minor: number; patch: number; label?: string };
+  astVersion: {
+    major: number;
+    minor: number;
+    patch: number;
+    label?: string | undefined;
+  };
   parserVersion: {
     major: number;
     minor: number;
