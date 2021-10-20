@@ -66,7 +66,7 @@ export function prepareSecurityValues(
   const security: SecurityValues[] = [];
 
   for (const scheme of schemes) {
-    const envProviderName = providerName.replace('-', '_').toUpperCase();
+    const envProviderName = providerName.replace(/-/g, '_').toUpperCase();
     if (isApiKeySecurityScheme(scheme)) {
       security.push({
         id: scheme.id,
@@ -94,12 +94,23 @@ export function prepareSecurityValues(
   return security;
 }
 
-export function prepareProviderParameters(parameters: IntegrationParameter[]): {
+export function prepareProviderParameters(
+  providerName: string,
+  parameters: IntegrationParameter[]
+): {
   [key: string]: string;
 } {
+  const envProviderName = providerName.replace(/-/g, '_').toUpperCase();
   const preparedParameters: { [key: string]: string } = {};
   for (const parameter of parameters) {
-    preparedParameters[parameter.name] = parameter.default || '';
+    if (parameter.default) {
+      preparedParameters[parameter.name] = parameter.default;
+    } else {
+      const envParameterName = parameter.name.replace(/-/g, '_').toUpperCase();
+      preparedParameters[
+        parameter.name
+      ] = `${envProviderName}_${envParameterName}`;
+    }
   }
 
   return preparedParameters;
