@@ -23,10 +23,10 @@ type Span = {
 };
 
 /**Information about Node */
-export interface DocumentationInfo {
+export interface NodeDocumentation {
   title: string | undefined;
   description?: string | undefined;
-  location?: LocationInfo;
+  location?: LocationInfo | undefined;
 }
 
 /**
@@ -38,7 +38,7 @@ export interface AstMetadata {
     major: number;
     minor: number;
     patch: number;
-    label?: string;
+    label?: string | undefined;
   };
   checksum: string;
 }

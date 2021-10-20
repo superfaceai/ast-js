@@ -367,89 +367,6 @@
             ],
             "type": "object"
         },
-        "DocumentationInfo": {
-            "additionalProperties": false,
-            "description": "Information about Node",
-            "properties": {
-                "description": {
-                    "type": "string"
-                },
-                "location": {
-                    "additionalProperties": false,
-                    "properties": {
-                        "location": {
-                            "additionalProperties": false,
-                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                            "properties": {
-                                "end": {
-                                    "additionalProperties": false,
-                                    "properties": {
-                                        "column": {
-                                            "type": "number"
-                                        },
-                                        "line": {
-                                            "type": "number"
-                                        }
-                                    },
-                                    "required": [
-                                        "column",
-                                        "line"
-                                    ],
-                                    "type": "object"
-                                },
-                                "start": {
-                                    "additionalProperties": false,
-                                    "properties": {
-                                        "column": {
-                                            "type": "number"
-                                        },
-                                        "line": {
-                                            "type": "number"
-                                        }
-                                    },
-                                    "required": [
-                                        "column",
-                                        "line"
-                                    ],
-                                    "type": "object"
-                                }
-                            },
-                            "required": [
-                                "end",
-                                "start"
-                            ],
-                            "type": "object"
-                        },
-                        "span": {
-                            "additionalProperties": false,
-                            "description": "Span of one node inside source code.",
-                            "properties": {
-                                "end": {
-                                    "type": "number"
-                                },
-                                "start": {
-                                    "type": "number"
-                                }
-                            },
-                            "required": [
-                                "end",
-                                "start"
-                            ],
-                            "type": "object"
-                        }
-                    },
-                    "required": [
-                        "location",
-                        "span"
-                    ],
-                    "type": "object"
-                },
-                "title": {
-                    "type": "string"
-                }
-            },
-            "type": "object"
-        },
         "HttpCallStatementNode": {
             "additionalProperties": false,
             "properties": {
@@ -1116,8 +1033,7 @@
             "additionalProperties": false,
             "properties": {
                 "documentation": {
-                    "$ref": "#/definitions/DocumentationInfo",
-                    "description": "Information about Node"
+                    "$ref": "#/definitions/NodeDocumentation"
                 },
                 "kind": {
                     "enum": [
@@ -1370,6 +1286,89 @@
             ],
             "type": "object"
         },
+        "NodeDocumentation": {
+            "additionalProperties": false,
+            "description": "Information about Node",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "end": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
+                                },
+                                "start": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
+                        },
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "location",
+                        "span"
+                    ],
+                    "type": "object"
+                },
+                "title": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
         "ObjectLiteralNode": {
             "additionalProperties": false,
             "description": "Object literal node: `{ <...assignments> }`",
@@ -1467,8 +1466,7 @@
             "additionalProperties": false,
             "properties": {
                 "documentation": {
-                    "$ref": "#/definitions/DocumentationInfo",
-                    "description": "Information about Node"
+                    "$ref": "#/definitions/NodeDocumentation"
                 },
                 "kind": {
                     "enum": [
