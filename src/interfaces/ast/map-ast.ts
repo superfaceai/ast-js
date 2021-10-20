@@ -1,4 +1,4 @@
-import { DocumentedNode, Location, Span } from './source';
+import { AstMetadata, DocumentedNode, LocationInfo } from './source';
 
 export type MapNodeKind =
   // ATOMS
@@ -26,8 +26,7 @@ export type MapNodeKind =
 
 export interface MapASTNodeBase {
   kind: MapNodeKind;
-  span?: Span | undefined;
-  location?: Location | undefined;
+  location?: LocationInfo;
 }
 
 // ATOMS
@@ -263,6 +262,7 @@ export interface MapHeaderNode extends MapASTNodeBase {
 }
 
 export interface MapDocumentNode extends MapASTNodeBase {
+  astMetadata: AstMetadata;
   kind: 'MapDocument';
   header: MapHeaderNode;
   definitions: (MapDefinitionNode | OperationDefinitionNode)[];

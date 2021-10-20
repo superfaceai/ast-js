@@ -3,7 +3,7 @@
  *
  * Both `line` and `column` are indexed from 1.
  */
-export type Location = {
+type Location = {
   line: number;
   column: number;
 };
@@ -11,7 +11,7 @@ export type Location = {
 /**
  * Span of one node inside source code.
  */
-export type Span = {
+type Span = {
   start: number;
   end: number;
 };
@@ -21,3 +21,23 @@ export interface DocumentedNode {
   title?: string | undefined;
   description?: string | undefined;
 }
+
+/**
+ * Information about AST and Parser used to compile provided AST
+ */
+export interface AstMetadata {
+  astVersion: { major: number; minor: number; patch: number; label?: string };
+  parserVersion: {
+    major: number;
+    minor: number;
+    patch: number;
+    label?: string;
+  };
+  checksum: string;
+}
+
+//TODO: not sure about optionality/ possible undefined value
+export type LocationInfo = {
+  span: Span;
+  location: Location;
+};

@@ -2,6 +2,67 @@
     "$schema": "http://json-schema.org/draft-07/schema#",
     "additionalProperties": false,
     "definitions": {
+        "AstMetadata": {
+            "additionalProperties": false,
+            "description": "Information about AST and Parser used to compile provided AST",
+            "properties": {
+                "astVersion": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "label": {
+                            "type": "string"
+                        },
+                        "major": {
+                            "type": "number"
+                        },
+                        "minor": {
+                            "type": "number"
+                        },
+                        "patch": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "major",
+                        "minor",
+                        "patch"
+                    ],
+                    "type": "object"
+                },
+                "checksum": {
+                    "type": "string"
+                },
+                "parserVersion": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "label": {
+                            "type": "string"
+                        },
+                        "major": {
+                            "type": "number"
+                        },
+                        "minor": {
+                            "type": "number"
+                        },
+                        "patch": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "major",
+                        "minor",
+                        "patch"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "astVersion",
+                "checksum",
+                "parserVersion"
+            ],
+            "type": "object"
+        },
         "ComlinkAssignmentNode": {
             "additionalProperties": false,
             "description": "Comlink assignment node: `key.\"b.az\".bar = <value>`",
@@ -23,35 +84,45 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 },
@@ -87,35 +158,45 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 }
@@ -157,35 +238,45 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 }
@@ -208,35 +299,45 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 },
@@ -266,35 +367,45 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 },
@@ -326,35 +437,45 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 },
@@ -394,41 +515,51 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 },
                 "required": {
                     "description": "Non-required fields don't have to be present at all",
                     "type": "boolean"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
-                    ],
-                    "type": "object"
                 },
                 "title": {
                     "type": "string"
@@ -527,35 +658,45 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 }
@@ -578,41 +719,51 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 },
                 "name": {
                     "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$",
                     "type": "string"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
-                    ],
-                    "type": "object"
                 }
             },
             "required": [
@@ -640,35 +791,45 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 },
@@ -734,41 +895,51 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 },
                 "modelName": {
                     "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$",
                     "type": "string"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
-                    ],
-                    "type": "object"
                 },
                 "title": {
                     "type": "string"
@@ -829,35 +1000,45 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 },
@@ -905,35 +1086,45 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 }
@@ -956,18 +1147,45 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 },
@@ -978,23 +1196,6 @@
                         "string"
                     ],
                     "type": "string"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
-                    ],
-                    "type": "object"
                 }
             },
             "required": [
@@ -1018,18 +1219,45 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 },
@@ -1040,23 +1268,6 @@
                 "scope": {
                     "pattern": "^[a-z][a-z0-9_-]*$",
                     "type": "string"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
-                    ],
-                    "type": "object"
                 },
                 "title": {
                     "type": "string"
@@ -1108,35 +1319,45 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 },
@@ -1214,18 +1435,45 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 },
@@ -1240,23 +1488,6 @@
                         "unsafe"
                     ],
                     "type": "string"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
-                    ],
-                    "type": "object"
                 },
                 "title": {
                     "type": "string"
@@ -1295,40 +1526,50 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 },
                 "result": {
                     "$ref": "#/definitions/UseCaseSlotDefinitionNode<ComlinkLiteralNode>"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
-                    ],
-                    "type": "object"
                 }
             },
             "required": [
@@ -1351,35 +1592,45 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 },
@@ -1411,35 +1662,45 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 },
@@ -1471,35 +1732,45 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
+                        "location",
+                        "span"
                     ],
                     "type": "object"
                 },
@@ -1565,6 +1836,97 @@
                 },
                 "location": {
                     "additionalProperties": false,
+                    "properties": {
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
+                        },
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "location",
+                        "span"
+                    ],
+                    "type": "object"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "value": {
+                    "$ref": "#/definitions/UseCaseExampleNode"
+                }
+            },
+            "required": [
+                "kind",
+                "value"
+            ],
+            "type": "object"
+        }
+    },
+    "description": "Node enclosing the whole document",
+    "properties": {
+        "astMetadata": {
+            "$ref": "#/definitions/AstMetadata"
+        },
+        "definitions": {
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "#/definitions/NamedFieldDefinitionNode"
+                    },
+                    {
+                        "$ref": "#/definitions/NamedModelDefinitionNode"
+                    },
+                    {
+                        "$ref": "#/definitions/UseCaseDefinitionNode"
+                    }
+                ]
+            },
+            "type": "array"
+        },
+        "header": {
+            "$ref": "#/definitions/ProfileHeaderNode"
+        },
+        "kind": {
+            "enum": [
+                "ProfileDocument"
+            ],
+            "type": "string"
+        },
+        "location": {
+            "additionalProperties": false,
+            "properties": {
+                "location": {
+                    "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
                         "column": {
@@ -1596,84 +1958,17 @@
                         "start"
                     ],
                     "type": "object"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "value": {
-                    "$ref": "#/definitions/UseCaseExampleNode"
                 }
             },
             "required": [
-                "kind",
-                "value"
-            ],
-            "type": "object"
-        }
-    },
-    "description": "Node enclosing the whole document",
-    "properties": {
-        "definitions": {
-            "items": {
-                "anyOf": [
-                    {
-                        "$ref": "#/definitions/NamedFieldDefinitionNode"
-                    },
-                    {
-                        "$ref": "#/definitions/NamedModelDefinitionNode"
-                    },
-                    {
-                        "$ref": "#/definitions/UseCaseDefinitionNode"
-                    }
-                ]
-            },
-            "type": "array"
-        },
-        "header": {
-            "$ref": "#/definitions/ProfileHeaderNode"
-        },
-        "kind": {
-            "enum": [
-                "ProfileDocument"
-            ],
-            "type": "string"
-        },
-        "location": {
-            "additionalProperties": false,
-            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-            "properties": {
-                "column": {
-                    "type": "number"
-                },
-                "line": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "column",
-                "line"
-            ],
-            "type": "object"
-        },
-        "span": {
-            "additionalProperties": false,
-            "description": "Span of one node inside source code.",
-            "properties": {
-                "end": {
-                    "type": "number"
-                },
-                "start": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "end",
-                "start"
+                "location",
+                "span"
             ],
             "type": "object"
         }
     },
     "required": [
+        "astMetadata",
         "definitions",
         "header",
         "kind"
