@@ -109,7 +109,7 @@ export function prepareProviderParameters(
       const envParameterName = parameter.name.replace(/-/g, '_').toUpperCase();
       preparedParameters[
         parameter.name
-      ] = `${envProviderName}_${envParameterName}`;
+      ] = `$${envProviderName}_${envParameterName}`;
     }
   }
 

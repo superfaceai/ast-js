@@ -681,10 +681,10 @@ describe('prepareSecurityValues', () => {
         prepareProviderParameters(mockProviderName, mockParameters)
       ).toEqual({
         first: 'first-value',
-        second: 'SWAPI_SECOND',
-        third: 'SWAPI_THIRD',
-        ['anothe-r-te-st']: 'SWAPI_ANOTHE_R_TE_ST',
-        ['te_st']: 'SWAPI_TE_ST',
+        second: '$SWAPI_SECOND',
+        third: '$SWAPI_THIRD',
+        ['anothe-r-te-st']: '$SWAPI_ANOTHE_R_TE_ST',
+        ['te_st']: '$SWAPI_TE_ST',
       });
     });
 
