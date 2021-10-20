@@ -25,16 +25,42 @@
                             "additionalProperties": false,
                             "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                             "properties": {
-                                "column": {
-                                    "type": "number"
+                                "end": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 },
-                                "line": {
-                                    "type": "number"
+                                "start": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 }
                             },
                             "required": [
-                                "column",
-                                "line"
+                                "end",
+                                "start"
                             ],
                             "type": "object"
                         },
@@ -163,16 +189,42 @@
                             "additionalProperties": false,
                             "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                             "properties": {
-                                "column": {
-                                    "type": "number"
+                                "end": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 },
-                                "line": {
-                                    "type": "number"
+                                "start": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 }
                             },
                             "required": [
-                                "column",
-                                "line"
+                                "end",
+                                "start"
                             ],
                             "type": "object"
                         },
@@ -245,16 +297,42 @@
                             "additionalProperties": false,
                             "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                             "properties": {
-                                "column": {
-                                    "type": "number"
+                                "end": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 },
-                                "line": {
-                                    "type": "number"
+                                "start": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 }
                             },
                             "required": [
-                                "column",
-                                "line"
+                                "end",
+                                "start"
                             ],
                             "type": "object"
                         },
@@ -289,6 +367,89 @@
             ],
             "type": "object"
         },
+        "DocumentationInfo": {
+            "additionalProperties": false,
+            "description": "Information about Node",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                            "properties": {
+                                "end": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
+                                },
+                                "start": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
+                        },
+                        "span": {
+                            "additionalProperties": false,
+                            "description": "Span of one node inside source code.",
+                            "properties": {
+                                "end": {
+                                    "type": "number"
+                                },
+                                "start": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "location",
+                        "span"
+                    ],
+                    "type": "object"
+                },
+                "title": {
+                    "type": "string"
+                }
+            },
+            "type": "object"
+        },
         "HttpCallStatementNode": {
             "additionalProperties": false,
             "properties": {
@@ -305,16 +466,42 @@
                             "additionalProperties": false,
                             "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                             "properties": {
-                                "column": {
-                                    "type": "number"
+                                "end": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 },
-                                "line": {
-                                    "type": "number"
+                                "start": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 }
                             },
                             "required": [
-                                "column",
-                                "line"
+                                "end",
+                                "start"
                             ],
                             "type": "object"
                         },
@@ -409,16 +596,42 @@
                             "additionalProperties": false,
                             "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                             "properties": {
-                                "column": {
-                                    "type": "number"
+                                "end": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 },
-                                "line": {
-                                    "type": "number"
+                                "start": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 }
                             },
                             "required": [
-                                "column",
-                                "line"
+                                "end",
+                                "start"
                             ],
                             "type": "object"
                         },
@@ -503,16 +716,42 @@
                             "additionalProperties": false,
                             "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                             "properties": {
-                                "column": {
-                                    "type": "number"
+                                "end": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 },
-                                "line": {
-                                    "type": "number"
+                                "start": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 }
                             },
                             "required": [
-                                "column",
-                                "line"
+                                "end",
+                                "start"
                             ],
                             "type": "object"
                         },
@@ -594,16 +833,42 @@
                             "additionalProperties": false,
                             "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                             "properties": {
-                                "column": {
-                                    "type": "number"
+                                "end": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 },
-                                "line": {
-                                    "type": "number"
+                                "start": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 }
                             },
                             "required": [
-                                "column",
-                                "line"
+                                "end",
+                                "start"
                             ],
                             "type": "object"
                         },
@@ -665,16 +930,42 @@
                             "additionalProperties": false,
                             "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                             "properties": {
-                                "column": {
-                                    "type": "number"
+                                "end": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 },
-                                "line": {
-                                    "type": "number"
+                                "start": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 }
                             },
                             "required": [
-                                "column",
-                                "line"
+                                "end",
+                                "start"
                             ],
                             "type": "object"
                         },
@@ -729,16 +1020,42 @@
                             "additionalProperties": false,
                             "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                             "properties": {
-                                "column": {
-                                    "type": "number"
+                                "end": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 },
-                                "line": {
-                                    "type": "number"
+                                "start": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 }
                             },
                             "required": [
-                                "column",
-                                "line"
+                                "end",
+                                "start"
                             ],
                             "type": "object"
                         },
@@ -798,8 +1115,9 @@
         "MapDefinitionNode": {
             "additionalProperties": false,
             "properties": {
-                "description": {
-                    "type": "string"
+                "documentation": {
+                    "$ref": "#/definitions/DocumentationInfo",
+                    "description": "Information about Node"
                 },
                 "kind": {
                     "enum": [
@@ -814,16 +1132,42 @@
                             "additionalProperties": false,
                             "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                             "properties": {
-                                "column": {
-                                    "type": "number"
+                                "end": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 },
-                                "line": {
-                                    "type": "number"
+                                "start": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 }
                             },
                             "required": [
-                                "column",
-                                "line"
+                                "end",
+                                "start"
                             ],
                             "type": "object"
                         },
@@ -874,9 +1218,6 @@
                     },
                     "type": "array"
                 },
-                "title": {
-                    "type": "string"
-                },
                 "usecaseName": {
                     "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$",
                     "type": "string"
@@ -906,16 +1247,42 @@
                             "additionalProperties": false,
                             "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                             "properties": {
-                                "column": {
-                                    "type": "number"
+                                "end": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 },
-                                "line": {
-                                    "type": "number"
+                                "start": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 }
                             },
                             "required": [
-                                "column",
-                                "line"
+                                "end",
+                                "start"
                             ],
                             "type": "object"
                         },
@@ -1026,16 +1393,42 @@
                             "additionalProperties": false,
                             "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                             "properties": {
-                                "column": {
-                                    "type": "number"
+                                "end": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 },
-                                "line": {
-                                    "type": "number"
+                                "start": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 }
                             },
                             "required": [
-                                "column",
-                                "line"
+                                "end",
+                                "start"
                             ],
                             "type": "object"
                         },
@@ -1073,8 +1466,9 @@
         "OperationDefinitionNode": {
             "additionalProperties": false,
             "properties": {
-                "description": {
-                    "type": "string"
+                "documentation": {
+                    "$ref": "#/definitions/DocumentationInfo",
+                    "description": "Information about Node"
                 },
                 "kind": {
                     "enum": [
@@ -1089,16 +1483,42 @@
                             "additionalProperties": false,
                             "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                             "properties": {
-                                "column": {
-                                    "type": "number"
+                                "end": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 },
-                                "line": {
-                                    "type": "number"
+                                "start": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 }
                             },
                             "required": [
-                                "column",
-                                "line"
+                                "end",
+                                "start"
                             ],
                             "type": "object"
                         },
@@ -1148,9 +1568,6 @@
                         ]
                     },
                     "type": "array"
-                },
-                "title": {
-                    "type": "string"
                 }
             },
             "required": [
@@ -1183,16 +1600,42 @@
                             "additionalProperties": false,
                             "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                             "properties": {
-                                "column": {
-                                    "type": "number"
+                                "end": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 },
-                                "line": {
-                                    "type": "number"
+                                "start": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 }
                             },
                             "required": [
-                                "column",
-                                "line"
+                                "end",
+                                "start"
                             ],
                             "type": "object"
                         },
@@ -1252,16 +1695,42 @@
                             "additionalProperties": false,
                             "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                             "properties": {
-                                "column": {
-                                    "type": "number"
+                                "end": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 },
-                                "line": {
-                                    "type": "number"
+                                "start": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 }
                             },
                             "required": [
-                                "column",
-                                "line"
+                                "end",
+                                "start"
                             ],
                             "type": "object"
                         },
@@ -1329,16 +1798,42 @@
                             "additionalProperties": false,
                             "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                             "properties": {
-                                "column": {
-                                    "type": "number"
+                                "end": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 },
-                                "line": {
-                                    "type": "number"
+                                "start": {
+                                    "additionalProperties": false,
+                                    "properties": {
+                                        "column": {
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
                                 }
                             },
                             "required": [
-                                "column",
-                                "line"
+                                "end",
+                                "start"
                             ],
                             "type": "object"
                         },
@@ -1407,16 +1902,42 @@
                     "additionalProperties": false,
                     "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "end": {
+                            "additionalProperties": false,
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "start": {
+                            "additionalProperties": false,
+                            "properties": {
+                                "column": {
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
+                        "end",
+                        "start"
                     ],
                     "type": "object"
                 },

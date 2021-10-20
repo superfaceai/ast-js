@@ -1,4 +1,4 @@
-import { AstMetadata, DocumentedNode, LocationInfo } from './source';
+import { AstMetadata, DocumentationInfo, LocationInfo } from './source';
 
 // BASE //
 
@@ -113,7 +113,8 @@ export type Type = TypeName | TypeDefinition;
 /**
  * Construct found as enum value.
  */
-export interface EnumValueNode extends ProfileASTNodeBase, DocumentedNode {
+export interface EnumValueNode extends ProfileASTNodeBase {
+  documentation?: DocumentationInfo;
   kind: 'EnumValue';
   value: string | number | boolean;
 }
@@ -121,9 +122,8 @@ export interface EnumValueNode extends ProfileASTNodeBase, DocumentedNode {
 /**
  * Construct of form: `ident type` or `ident` that appear inside object model definitions
  */
-export interface FieldDefinitionNode
-  extends ProfileASTNodeBase,
-    DocumentedNode {
+export interface FieldDefinitionNode extends ProfileASTNodeBase {
+  documentation?: DocumentationInfo;
   kind: 'FieldDefinition';
   /**
    * @pattern require('./utils').IDENTIFIER_RE_SOURCE
@@ -140,9 +140,8 @@ export interface FieldDefinitionNode
  * This assigns the name of `ident` to a type. All fields in the documents with the same name
  * will then share this type.
  */
-export interface NamedFieldDefinitionNode
-  extends ProfileASTNodeBase,
-    DocumentedNode {
+export interface NamedFieldDefinitionNode extends ProfileASTNodeBase {
+  documentation?: DocumentationInfo;
   kind: 'NamedFieldDefinition';
   /**
    * @pattern require('./utils').IDENTIFIER_RE_SOURCE
@@ -161,9 +160,8 @@ export interface NamedFieldDefinitionNode
  * This can be used ranging from simple type alias `model Foo string` to complex unions
  * and objects `model Bar Foo! | enum { ONE = 1, TWO = 2 } | { baz boolean }`
  */
-export interface NamedModelDefinitionNode
-  extends ProfileASTNodeBase,
-    DocumentedNode {
+export interface NamedModelDefinitionNode extends ProfileASTNodeBase {
+  documentation?: DocumentationInfo;
   kind: 'NamedModelDefinition';
   /**
    * @pattern require('./utils').IDENTIFIER_RE_SOURCE
@@ -180,8 +178,8 @@ export interface NamedModelDefinitionNode
  * The point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation.
  */
 export interface UseCaseSlotDefinitionNode<T extends ProfileASTNode>
-  extends ProfileASTNodeBase,
-    DocumentedNode {
+  extends ProfileASTNodeBase {
+  documentation?: DocumentationInfo;
   kind: 'UseCaseSlotDefinition';
   value: T;
 }
@@ -199,9 +197,8 @@ usecase ident safety {
 }
 ```
 */
-export interface UseCaseDefinitionNode
-  extends ProfileASTNodeBase,
-    DocumentedNode {
+export interface UseCaseDefinitionNode extends ProfileASTNodeBase {
+  documentation?: DocumentationInfo;
   kind: 'UseCaseDefinition';
   /**
    * @pattern require('./utils').IDENTIFIER_RE_SOURCE
@@ -221,7 +218,8 @@ export interface UseCaseDefinitionNode
 /**
  * The node containing document information.
  */
-export interface ProfileHeaderNode extends ProfileASTNodeBase, DocumentedNode {
+export interface ProfileHeaderNode extends ProfileASTNodeBase {
+  documentation?: DocumentationInfo;
   kind: 'ProfileHeader';
   /**
    * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
@@ -327,9 +325,8 @@ export interface ComlinkListLiteralNode extends ProfileASTNodeBase {
 /**
  * Comlink assignment node: `key."b.az".bar = <value>`
  */
-export interface ComlinkAssignmentNode
-  extends ProfileASTNodeBase,
-    DocumentedNode {
+export interface ComlinkAssignmentNode extends ProfileASTNodeBase {
+  documentation?: DocumentationInfo;
   kind: 'ComlinkAssignment';
   key: string[];
   value: ComlinkLiteralNode;

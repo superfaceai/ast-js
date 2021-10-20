@@ -4,8 +4,14 @@
  * Both `line` and `column` are indexed from 1.
  */
 type Location = {
-  line: number;
-  column: number;
+  start: {
+    line: number;
+    column: number;
+  };
+  end: {
+    line: number;
+    column: number;
+  };
 };
 
 /**
@@ -16,10 +22,11 @@ type Span = {
   end: number;
 };
 
-/** Node preceded by documenting string literal */
-export interface DocumentedNode {
-  title?: string | undefined;
+/**Information about Node */
+export interface DocumentationInfo {
+  title: string | undefined;
   description?: string | undefined;
+  location?: LocationInfo;
 }
 
 /**
@@ -36,7 +43,6 @@ export interface AstMetadata {
   checksum: string;
 }
 
-//TODO: not sure about optionality/ possible undefined value
 export type LocationInfo = {
   span: Span;
   location: Location;
