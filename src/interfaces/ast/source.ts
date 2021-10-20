@@ -22,11 +22,15 @@ type Span = {
   end: number;
 };
 
-/**Information about Node */
-export interface NodeDocumentation {
-  title: string | undefined;
-  description?: string | undefined;
-  location?: LocationInfo | undefined;
+/** Node preceded by documenting string literal */
+export interface DocumentedNode {
+  documentation?:
+    | {
+        title: string | undefined;
+        description?: string | undefined;
+        location?: LocationInfo | undefined;
+      }
+    | undefined;
 }
 
 /**

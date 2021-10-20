@@ -1,4 +1,4 @@
-import { AstMetadata, LocationInfo, NodeDocumentation } from './source';
+import { AstMetadata, DocumentedNode, LocationInfo } from './source';
 
 export type MapNodeKind =
   // ATOMS
@@ -190,8 +190,7 @@ export type Substatement =
   | CallStatementNode
   | HttpCallStatementNode;
 
-export interface MapDefinitionNode extends MapASTNodeBase {
-  documentation?: NodeDocumentation | undefined;
+export interface MapDefinitionNode extends MapASTNodeBase, DocumentedNode {
   kind: 'MapDefinition';
 
   /**
@@ -205,8 +204,9 @@ export interface MapDefinitionNode extends MapASTNodeBase {
   statements: Substatement[];
 }
 
-export interface OperationDefinitionNode extends MapASTNodeBase {
-  documentation?: NodeDocumentation | undefined;
+export interface OperationDefinitionNode
+  extends MapASTNodeBase,
+    DocumentedNode {
   kind: 'OperationDefinition';
   /**
    * @pattern require('./utils').IDENTIFIER_RE_SOURCE
