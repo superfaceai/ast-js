@@ -1,4 +1,4 @@
-import { AstMetadata, DocumentedNode, LocationInfo } from './source';
+import { AstMetadata, DocumentedNode, LocationSpan } from './source';
 
 export type MapNodeKind =
   // ATOMS
@@ -26,7 +26,7 @@ export type MapNodeKind =
 
 export interface MapASTNodeBase {
   kind: MapNodeKind;
-  location?: LocationInfo | undefined;
+  location?: LocationSpan | undefined;
 }
 
 // ATOMS

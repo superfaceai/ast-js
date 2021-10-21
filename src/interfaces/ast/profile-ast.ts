@@ -1,4 +1,4 @@
-import { AstMetadata, DocumentedNode, LocationInfo } from './source';
+import { AstMetadata, DocumentedNode, LocationSpan } from './source';
 
 // BASE //
 
@@ -32,8 +32,8 @@ export type ProfileNodeKind =
 
 export interface ProfileASTNodeBase {
   kind: ProfileNodeKind;
-  // Span and Location are stripped during AST transfer, but not during parsing.
-  location?: LocationInfo | undefined;
+  // Stripped during transfer, but provided during parsing
+  location?: LocationSpan | undefined;
 }
 
 // TYPES //

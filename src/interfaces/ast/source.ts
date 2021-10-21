@@ -1,34 +1,33 @@
 /**
- * Human-readable location of a token inside source code.
- *
- * Both `line` and `column` are indexed from 1.
+ * Location within the source.
+ * 
+ * Contains both the human-readable line:column information and character index.
  */
-type Location = {
-  start: {
-    line: number;
-    column: number;
-  };
-  end: {
-    line: number;
-    column: number;
-  };
+export type Location = {
+  /** Line number - starts at 1 */
+  line: number;
+  /** Column number - starts at 1 */
+  column: number;
+  /** Character index within the source code - starts at 0 */
+  charIndex: number;
 };
 
 /**
- * Span of one node inside source code.
+ * Location span within the source.
  */
-type Span = {
-  start: number;
-  end: number;
+export type LocationSpan = {
+  start: Location;
+  end: Location;
 };
+
 
 /** Node preceded by documenting string literal */
 export interface DocumentedNode {
   documentation?:
     | {
-        title: string | undefined;
+        title: string;
         description?: string | undefined;
-        location?: LocationInfo | undefined;
+        location?: LocationSpan | undefined;
       }
     | undefined;
 }
@@ -49,10 +48,5 @@ export interface AstMetadata {
     patch: number;
     label?: string | undefined;
   };
-  checksum: string;
+  sourceChecksum: string;
 }
-
-export type LocationInfo = {
-  span: Span;
-  location: Location;
-};

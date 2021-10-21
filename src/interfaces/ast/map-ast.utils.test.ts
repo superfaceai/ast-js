@@ -170,7 +170,7 @@ describe('map-ast.utils', () => {
         astMetadata: {
           astVersion: { major: 1, minor: 0, patch: 0 },
           parserVersion: { major: 1, minor: 0, patch: 0 },
-          checksum: 'dsdds',
+          sourceChecksum: 'dsdds',
         },
         header: {
           kind: 'MapHeader',
