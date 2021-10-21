@@ -217,7 +217,7 @@ export interface OperationDefinitionNode
 
 // DOCUMENT
 
-export interface MapHeaderNode extends MapASTNodeBase {
+export interface MapHeaderNode extends MapASTNodeBase, DocumentedNode {
   kind: 'MapHeader';
   profile: {
     /**
