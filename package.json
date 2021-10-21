@@ -1,6 +1,6 @@
 {
   "name": "@superfaceai/ast",
-  "version": "0.0.34",
+  "version": "0.0.35-beta.0",
   "description": "Superface profile and map language ASTs, https://superface.ai",
   "main": "dist/index.js",
   "source": "src/index.ts",
