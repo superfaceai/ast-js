@@ -1,6 +1,6 @@
 /**
  * Location within the source.
- * 
+ *
  * Contains both the human-readable line:column information and character index.
  */
 export type Location = {
@@ -19,7 +19,6 @@ export type LocationSpan = {
   start: Location;
   end: Location;
 };
-
 
 /** Node preceded by documenting string literal */
 export interface DocumentedNode {

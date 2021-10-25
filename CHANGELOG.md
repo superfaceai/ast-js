@@ -6,6 +6,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Changed
+- **BREAKING CHANGE**: `location` and `span` properties merged together
+- **BREAKING CHANGE**: `astMetadata` property added to map and profile document
+- **BREAKING CHANGE**: `title` and `decsription` properties nested under `documentation` property with added `location` property
 
 ## [0.0.34] - 2021-10-14
 ### Added
