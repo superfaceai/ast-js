@@ -1,5 +1,6 @@
-import { createAssertEquals, createIs } from 'typescript-is';
+import { createAssertEquals, createIs, TypeGuardError } from 'typescript-is';
 
+import { AssertionError } from '../../error';
 import {
   DocumentDefinition,
   EnumDefinitionNode,
@@ -63,8 +64,17 @@ export const isUseCaseSlotDefinitionNode: Guard<
   UseCaseSlotDefinitionNode<ProfileASTNode>
 > = createIs<UseCaseSlotDefinitionNode<ProfileASTNode>>();
 
-export const assertProfileDocumentNode: (node: unknown) => ProfileDocumentNode =
-  createAssertEquals<ProfileDocumentNode>();
+export function assertProfileDocumentNode(node: unknown): ProfileDocumentNode {
+  const assert = createAssertEquals<ProfileDocumentNode>();
+  try {
+    return assert(node);
+  } catch (error) {
+    if (error instanceof TypeGuardError) {
+      throw new AssertionError(error.message, error.path);
+    }
+    throw error;
+  }
+}
 
 export interface ProfileAstVisitor<R = unknown> {
   visit(node: ProfileASTNode, ...parameters: unknown[]): R;
