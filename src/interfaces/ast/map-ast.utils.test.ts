@@ -1,4 +1,6 @@
+import { AssertionError } from '../..';
 import {
+  assertMapDocumentNode,
   AssignmentNode,
   CallStatementNode,
   ConditionAtomNode,
@@ -428,6 +430,43 @@ describe('map-ast.utils', () => {
         arguments: [],
       };
       expect(isInlineCallNode(node)).toEqual(true);
+    });
+  });
+
+  describe('assertMapDocumentNode', () => {
+    it('asserts node is map definition node', () => {
+      const outcomeNode: OutcomeStatementNode = {
+        kind: 'OutcomeStatement',
+        isError: false,
+        terminateFlow: false,
+        value: {
+          kind: 'ObjectLiteral',
+          fields: [],
+        },
+      };
+      expect(() => assertMapDocumentNode(outcomeNode)).toThrowError(
+        new AssertionError(
+          "Map AST validation failed at $.kind: expected string 'MapDocument', found: 'OutcomeStatement'",
+          []
+        )
+      );
+
+      const node: MapDocumentNode = {
+        kind: 'MapDocument',
+        header: {
+          kind: 'MapHeader',
+          profile: {
+            name: 'test',
+            version: {
+              major: 1,
+              minor: 0,
+            },
+          },
+          provider: 'provider',
+        },
+        definitions: [],
+      };
+      expect(assertMapDocumentNode(node)).toEqual(node);
     });
   });
 });

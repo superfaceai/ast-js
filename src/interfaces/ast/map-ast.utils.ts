@@ -64,7 +64,7 @@ export function assertMapDocumentNode(node: unknown): MapDocumentNode {
     return assert(node);
   } catch (error) {
     if (error instanceof TypeGuardError) {
-      throw new AssertionError(error.message, error.path);
+      throw new AssertionError(`Map AST ${error.message}`, error.path);
     }
     throw error;
   }

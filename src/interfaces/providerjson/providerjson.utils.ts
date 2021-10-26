@@ -26,7 +26,7 @@ export function assertProviderJson(input: unknown): ProviderJson {
     parsedInput = assertEquals<ProviderJson>(input);
   } catch (error) {
     if (error instanceof TypeGuardError) {
-      throw new AssertionError(error.message, error.path);
+      throw new AssertionError(`Provider JSON ${error.message}`, error.path);
     }
     throw error;
   }

@@ -70,7 +70,7 @@ export function assertProfileDocumentNode(node: unknown): ProfileDocumentNode {
     return assert(node);
   } catch (error) {
     if (error instanceof TypeGuardError) {
-      throw new AssertionError(error.message, error.path);
+      throw new AssertionError(`Profile AST ${error.message}`, error.path);
     }
     throw error;
   }

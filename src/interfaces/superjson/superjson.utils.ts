@@ -28,7 +28,7 @@ export const assertSuperJsonDocument: (input: unknown) => SuperJsonDocument = (
     parsedInput = assertEquals<SuperJsonDocument>(input);
   } catch (error) {
     if (error instanceof TypeGuardError) {
-      throw new AssertionError(error.message, error.path);
+      throw new AssertionError(`Super.json ${error.message}`, error.path);
     }
     throw error;
   }

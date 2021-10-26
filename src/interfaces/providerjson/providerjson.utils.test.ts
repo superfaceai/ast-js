@@ -1,3 +1,4 @@
+import { AssertionError } from '../..';
 import { IntegrationParameter, prepareProviderParameters } from '.';
 import {
   ApiKeyPlacement,
@@ -176,18 +177,12 @@ describe('ProviderJsonDocument', () => {
       }`;
     expect(() => {
       assertProviderJson(JSON.parse(providerJson));
-    })
-      .toThrowError
-      // new ZodError([
-      //   {
-      //     code: 'invalid_type',
-      //     expected: 'string',
-      //     received: 'undefined',
-      //     path: ['name'],
-      //     message: 'Required',
-      //   },
-      // ])
-      ();
+    }).toThrowError(
+      new AssertionError(
+        `Provider JSON validation failed at input: expected 'name' in object, found: {\n  services: [ { baseUrl: 'https://swapi.dev/api', id: 'swapidev' } ],\n  defaultService: 'swapidev'\n}`,
+        []
+      )
+    );
   });
 
   it('throws error on document with invalid name', () => {
@@ -203,17 +198,7 @@ describe('ProviderJsonDocument', () => {
       }`;
     expect(() => {
       assertProviderJson(JSON.parse(providerJson));
-    })
-      .toThrowError
-      // new ZodError([
-      //   {
-      //     validation: 'regex',
-      //     code: 'invalid_string',
-      //     path: ['name'],
-      //     message: 'Invalid',
-      //   },
-      // ])
-      ();
+    }).toThrowError(new AssertionError(`invalid provider name`, []));
   });
 
   it('throws error on document with missing services', () => {
@@ -223,18 +208,12 @@ describe('ProviderJsonDocument', () => {
       }`;
     expect(() => {
       assertProviderJson(JSON.parse(providerJson));
-    })
-      .toThrowError
-      // new ZodError([
-      //   {
-      //     code: 'invalid_type',
-      //     expected: 'array',
-      //     received: 'undefined',
-      //     path: ['services'],
-      //     message: 'Required',
-      //   },
-      // ])
-      ();
+    }).toThrowError(
+      new AssertionError(
+        `Provider JSON validation failed at input: expected 'services' in object, found: { name: 'swapidev', defaultService: 'swapidev' }`,
+        []
+      )
+    );
   });
 
   it('throws error on document with missing property in services', () => {
@@ -249,18 +228,12 @@ describe('ProviderJsonDocument', () => {
       }`;
     expect(() => {
       assertProviderJson(JSON.parse(providerJson));
-    })
-      .toThrowError
-      // new ZodError([
-      //   {
-      //     code: 'invalid_type',
-      //     expected: 'string',
-      //     received: 'undefined',
-      //     path: ['services', 0, 'baseUrl'],
-      //     message: 'Required',
-      //   },
-      // ])
-      ();
+    }).toThrowError(
+      new AssertionError(
+        `Provider JSON validation failed at input.services.[0]: expected 'baseUrl' in object, found: { id: 'swapidev' }`,
+        []
+      )
+    );
   });
 
   it('throws error on document with missing defaultService', () => {
@@ -275,18 +248,12 @@ describe('ProviderJsonDocument', () => {
       }`;
     expect(() => {
       assertProviderJson(JSON.parse(providerJson));
-    })
-      .toThrowError
-      // new ZodError([
-      //   {
-      //     code: 'invalid_type',
-      //     expected: 'string',
-      //     received: 'undefined',
-      //     path: ['defaultService'],
-      //     message: 'Required',
-      //   },
-      // ])
-      ();
+    }).toThrowError(
+      new AssertionError(
+        `Provider JSON validation failed at input: expected 'defaultService' in object, found: {\n  name: 'swapidev',\n  services: [ { baseUrl: 'https://swapi.dev/api', id: 'swapidev' } ]\n}`,
+        []
+      )
+    );
   });
 
   it('throws error on document with missing id property in securitySchemes', () => {
