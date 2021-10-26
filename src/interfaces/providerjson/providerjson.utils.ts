@@ -1,5 +1,6 @@
 import { assertEquals, createIs, TypeGuardError } from 'typescript-is';
 
+import { AssertionError } from '../../error';
 import { Guard, isValidIdentifier } from '../ast';
 import { SecurityValues } from '../superjson';
 import { IntegrationParameter } from '.';
@@ -20,29 +21,27 @@ export function isValidProviderName(name: string): boolean {
 export const isProviderJson: Guard<ProviderJson> = createIs<ProviderJson>();
 
 export function assertProviderJson(input: unknown): ProviderJson {
-  const parsedInput = assertEquals<ProviderJson>(input);
+  let parsedInput: ProviderJson;
+  try {
+    parsedInput = assertEquals<ProviderJson>(input);
+  } catch (error) {
+    if (error instanceof TypeGuardError) {
+      throw new AssertionError(`Provider JSON ${error.message}`, error.path);
+    }
+    throw error;
+  }
   if (!isValidProviderName(parsedInput.name)) {
-    throw new TypeGuardError(
-      {
-        message: 'invalid provider name',
-        path: ['$', 'name'],
-        reason: { type: 'string' },
-      },
-      parsedInput.name
-    );
+    throw new AssertionError('invalid provider name', ['$', 'name']);
   }
 
   if (parsedInput.parameters !== undefined) {
     for (const [index, parameter] of parsedInput.parameters.entries()) {
       if (!isValidIdentifier(parameter.name)) {
-        throw new TypeGuardError(
-          {
-            message: 'invalid parameter name',
-            path: ['$', 'parameters', index.toString()],
-            reason: { type: 'string' },
-          },
-          parameter.name
-        );
+        throw new AssertionError('invalid parameter name', [
+          '$',
+          'parameters',
+          index.toString(),
+        ]);
       }
     }
   }

@@ -1,3 +1,4 @@
+import { AssertionError } from '../../error';
 import {
   assertSuperJsonDocument,
   isApiKeySecurityValues,
@@ -76,7 +77,12 @@ describe('super.json utils', () => {
         },
         in: 'valid',
       };
-      expect(() => assertSuperJsonDocument(superjson)).toThrow();
+      expect(() => assertSuperJsonDocument(superjson)).toThrow(
+        new AssertionError(
+          `Super.json validation failed at input: superfluous property 'in' in object, found: {\n  profiles: { 'send-message': { version: '1.0.0', providers: [Object] } },\n  providers: { acme: { security: [Array] } },\n  in: 'valid'\n}`,
+          []
+        )
+      );
     });
   });
 

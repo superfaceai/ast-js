@@ -1,3 +1,4 @@
+import { AssertionError } from '../../error';
 import {
   isPrimitiveTypeNameNode,
   ModelTypeNameNode,
@@ -20,6 +21,7 @@ import {
   UseCaseSlotDefinitionNode,
 } from './profile-ast';
 import {
+  assertProfileDocumentNode,
   isDocumentDefinition,
   isEnumDefinitionNode,
   isEnumValueNode,
@@ -381,6 +383,48 @@ describe('profile-ast.utils', () => {
         fieldName: 'test',
       };
       expect(isDocumentDefinition(node)).toEqual(true);
+    });
+  });
+  describe('assertProfileDocumentNode', () => {
+    it('asserts node is profile document node', () => {
+      const primitiveNode: PrimitiveTypeNameNode = {
+        kind: 'PrimitiveTypeName',
+        name: 'boolean',
+      };
+      expect(() => assertProfileDocumentNode(primitiveNode)).toThrowError(
+        new AssertionError(
+          "Profile AST validation failed at $: expected 'astMetadata' in object, found: { kind: 'PrimitiveTypeName', name: 'boolean' }",
+          []
+        )
+      );
+
+      const node: ProfileDocumentNode = {
+        kind: 'ProfileDocument',
+        astMetadata: {
+          sourceChecksum: 'checksum',
+          astVersion: {
+            major: 1,
+            minor: 0,
+            patch: 0,
+          },
+          parserVersion: {
+            major: 1,
+            minor: 0,
+            patch: 0,
+          },
+        },
+        header: {
+          kind: 'ProfileHeader',
+          name: 'test',
+          version: {
+            major: 1,
+            minor: 0,
+            patch: 0,
+          },
+        },
+        definitions: [],
+      };
+      expect(assertProfileDocumentNode(node)).toEqual(node);
     });
   });
 });

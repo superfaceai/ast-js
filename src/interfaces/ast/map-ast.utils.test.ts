@@ -1,4 +1,6 @@
+import { AssertionError } from '../../error';
 import {
+  assertMapDocumentNode,
   AssignmentNode,
   CallStatementNode,
   ConditionAtomNode,
@@ -433,6 +435,56 @@ describe('map-ast.utils', () => {
         arguments: [],
       };
       expect(isInlineCallNode(node)).toEqual(true);
+    });
+  });
+
+  describe('assertMapDocumentNode', () => {
+    it('asserts node is map definition node', () => {
+      const outcomeNode: OutcomeStatementNode = {
+        kind: 'OutcomeStatement',
+        isError: false,
+        terminateFlow: false,
+        value: {
+          kind: 'ObjectLiteral',
+          fields: [],
+        },
+      };
+      expect(() => assertMapDocumentNode(outcomeNode)).toThrowError(
+        new AssertionError(
+          `Map AST validation failed at $: expected 'astMetadata' in object, found: {\n  kind: 'OutcomeStatement',\n  isError: false,\n  terminateFlow: false,\n  value: { kind: 'ObjectLiteral', fields: [] }\n}`,
+          []
+        )
+      );
+
+      const node: MapDocumentNode = {
+        astMetadata: {
+          sourceChecksum: 'checksum',
+          astVersion: {
+            major: 1,
+            minor: 0,
+            patch: 0,
+          },
+          parserVersion: {
+            major: 1,
+            minor: 0,
+            patch: 0,
+          },
+        },
+        kind: 'MapDocument',
+        header: {
+          kind: 'MapHeader',
+          profile: {
+            name: 'test',
+            version: {
+              major: 1,
+              minor: 0,
+            },
+          },
+          provider: 'provider',
+        },
+        definitions: [],
+      };
+      expect(assertMapDocumentNode(node)).toEqual(node);
     });
   });
 });

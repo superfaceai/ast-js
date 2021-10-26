@@ -1,5 +1,6 @@
 import { assertEquals, createIs, TypeGuardError } from 'typescript-is';
 
+import { AssertionError } from '../../error';
 import { Guard } from '..';
 import {
   ApiKeySecurityValues,
@@ -22,7 +23,15 @@ export function isFileURIString(input: string): boolean {
 export const assertSuperJsonDocument: (input: unknown) => SuperJsonDocument = (
   input: unknown
 ) => {
-  const parsedInput = assertEquals<SuperJsonDocument>(input);
+  let parsedInput: SuperJsonDocument;
+  try {
+    parsedInput = assertEquals<SuperJsonDocument>(input);
+  } catch (error) {
+    if (error instanceof TypeGuardError) {
+      throw new AssertionError(`Super.json ${error.message}`, error.path);
+    }
+    throw error;
+  }
 
   // NOTE: This is value validation that can't be done by typescript-is now
   //       This is just temporary and will be performed by super.json semantic validator when it's done
@@ -31,25 +40,20 @@ export const assertSuperJsonDocument: (input: unknown) => SuperJsonDocument = (
   )) {
     if (typeof profile === 'string') {
       if (!isVersionString(profile) && !isFileURIString(profile)) {
-        throw new TypeGuardError(
-          {
-            message: 'there are no valid alternatives',
-            path: ['$', 'profiles', profileKey],
-            reason: { type: 'union' },
-          },
-          profile
-        );
+        throw new AssertionError('there are no valid alternatives', [
+          '$',
+          'profiles',
+          profileKey,
+        ]);
       }
     } else {
       if ('version' in profile && !isVersionString(profile.version)) {
-        throw new TypeGuardError(
-          {
-            message: 'invalid version string format',
-            path: ['$', 'profiles', profileKey, 'version'],
-            reason: { type: 'string' },
-          },
-          profile.version
-        );
+        throw new AssertionError('invalid version string format', [
+          '$',
+          'profiles',
+          profileKey,
+          'version',
+        ]);
       }
 
       for (const [providerKey, provider] of Object.entries(
@@ -57,14 +61,13 @@ export const assertSuperJsonDocument: (input: unknown) => SuperJsonDocument = (
       )) {
         if (typeof provider === 'string') {
           if (!isVersionString(provider) && !isFileURIString(provider)) {
-            throw new TypeGuardError(
-              {
-                message: 'there are no valid alternatives',
-                path: ['$', 'profiles', profileKey, 'providers', providerKey],
-                reason: { type: 'union' },
-              },
-              provider
-            );
+            throw new AssertionError('there are no valid alternatives', [
+              '$',
+              'profiles',
+              profileKey,
+              'providers',
+              providerKey,
+            ]);
           }
         }
       }
@@ -76,14 +79,11 @@ export const assertSuperJsonDocument: (input: unknown) => SuperJsonDocument = (
   )) {
     if (typeof provider === 'string') {
       if (!isFileURIString(provider)) {
-        throw new TypeGuardError(
-          {
-            message: 'there are no valid alternatives',
-            path: ['$', 'providers', providerKey],
-            reason: { type: 'union' },
-          },
-          provider
-        );
+        throw new AssertionError('there are no valid alternatives', [
+          '$',
+          'providers',
+          providerKey,
+        ]);
       }
     }
   }

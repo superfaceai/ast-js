@@ -1,5 +1,6 @@
-import { createAssertEquals, createIs } from 'typescript-is';
+import { createAssertEquals, createIs, TypeGuardError } from 'typescript-is';
 
+import { AssertionError } from '../../error';
 import {
   AssignmentNode,
   CallStatementNode,
@@ -57,8 +58,17 @@ export const isPrimitiveLiteralNode: Guard<PrimitiveLiteralNode> =
 export const isSetStatementNode: Guard<SetStatementNode> =
   createIs<SetStatementNode>();
 
-export const assertMapDocumentNode: (node: unknown) => MapDocumentNode =
-  createAssertEquals<MapDocumentNode>();
+export function assertMapDocumentNode(node: unknown): MapDocumentNode {
+  const assert = createAssertEquals<MapDocumentNode>();
+  try {
+    return assert(node);
+  } catch (error) {
+    if (error instanceof TypeGuardError) {
+      throw new AssertionError(`Map AST ${error.message}`, error.path);
+    }
+    throw error;
+  }
+}
 
 export interface MapAstVisitor<R = unknown> {
   visit(node: MapASTNode): R;
