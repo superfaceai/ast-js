@@ -451,12 +451,25 @@ describe('map-ast.utils', () => {
       };
       expect(() => assertMapDocumentNode(outcomeNode)).toThrowError(
         new AssertionError(
-          "Map AST validation failed at $.kind: expected string 'MapDocument', found: 'OutcomeStatement'",
+          `Map AST validation failed at $: expected 'astMetadata' in object, found: {\n  kind: 'OutcomeStatement',\n  isError: false,\n  terminateFlow: false,\n  value: { kind: 'ObjectLiteral', fields: [] }\n}`,
           []
         )
       );
 
       const node: MapDocumentNode = {
+        astMetadata: {
+          sourceChecksum: 'checksum',
+          astVersion: {
+            major: 1,
+            minor: 0,
+            patch: 0,
+          },
+          parserVersion: {
+            major: 1,
+            minor: 0,
+            patch: 0,
+          },
+        },
         kind: 'MapDocument',
         header: {
           kind: 'MapHeader',

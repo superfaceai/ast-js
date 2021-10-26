@@ -393,13 +393,26 @@ describe('profile-ast.utils', () => {
       };
       expect(() => assertProfileDocumentNode(primitiveNode)).toThrowError(
         new AssertionError(
-          "Profile AST validation failed at $.kind: expected string 'ProfileDocument', found: 'PrimitiveTypeName'",
+          "Profile AST validation failed at $: expected 'astMetadata' in object, found: { kind: 'PrimitiveTypeName', name: 'boolean' }",
           []
         )
       );
 
       const node: ProfileDocumentNode = {
         kind: 'ProfileDocument',
+        astMetadata: {
+          sourceChecksum: 'checksum',
+          astVersion: {
+            major: 1,
+            minor: 0,
+            patch: 0,
+          },
+          parserVersion: {
+            major: 1,
+            minor: 0,
+            patch: 0,
+          },
+        },
         header: {
           kind: 'ProfileHeader',
           name: 'test',
