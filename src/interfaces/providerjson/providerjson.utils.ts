@@ -103,14 +103,10 @@ export function prepareProviderParameters(
   const envProviderName = providerName.replace(/-/g, '_').toUpperCase();
   const preparedParameters: { [key: string]: string } = {};
   for (const parameter of parameters) {
-    if (parameter.default) {
-      preparedParameters[parameter.name] = parameter.default;
-    } else {
-      const envParameterName = parameter.name.replace(/-/g, '_').toUpperCase();
-      preparedParameters[
-        parameter.name
-      ] = `$${envProviderName}_${envParameterName}`;
-    }
+    const envParameterName = parameter.name.replace(/-/g, '_').toUpperCase();
+    preparedParameters[
+      parameter.name
+    ] = `$${envProviderName}_${envParameterName}`;
   }
 
   return preparedParameters;
