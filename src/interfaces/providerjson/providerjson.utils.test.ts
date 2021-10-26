@@ -1,4 +1,4 @@
-import { AssertionError } from '../..';
+import { AssertionError } from '../../error';
 import { IntegrationParameter, prepareProviderParameters } from '.';
 import {
   ApiKeyPlacement,
