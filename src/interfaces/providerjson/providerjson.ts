@@ -1,6 +1,9 @@
 export const PROVIDER_NAME_REGEX = new RegExp('^[a-z][_\\-a-z]*$');
 export const PROVIDER_NAME_REGEX_SOURCE = PROVIDER_NAME_REGEX.source;
 
+/**
+ * Type of security value.
+ */
 export enum SecurityType {
   APIKEY = 'apiKey',
   HTTP = 'http',
@@ -19,6 +22,9 @@ export enum HttpScheme {
   DIGEST = 'digest',
 }
 
+/**
+ * Security scheme for api key authorization.
+ */
 export type ApiKeySecurityScheme = {
   id: string;
   type: SecurityType.APIKEY;
@@ -26,12 +32,18 @@ export type ApiKeySecurityScheme = {
   name?: string | undefined;
 };
 
+/**
+ * Security scheme for basic authorization.
+ */
 export type BasicAuthSecurityScheme = {
   id: string;
   type: SecurityType.HTTP;
   scheme: HttpScheme.BASIC;
 };
 
+/**
+ * Security scheme for bearer authorization.
+ */
 export type BearerTokenSecurityScheme = {
   id: string;
   type: SecurityType.HTTP;
@@ -39,12 +51,18 @@ export type BearerTokenSecurityScheme = {
   bearerFormat?: string | undefined;
 };
 
+/**
+ * Security scheme for digest authorization.
+ */
 export type DigestSecurityScheme = {
   id: string;
   type: SecurityType.HTTP;
   scheme: HttpScheme.DIGEST;
 };
 
+/**
+ * Type describing general security scheme.
+ */
 export type SecurityScheme =
   | ApiKeySecurityScheme
   | BasicAuthSecurityScheme
@@ -56,6 +74,9 @@ export type ProviderService = {
   baseUrl: string;
 };
 
+/**
+ * Parameter needed for use of provider.
+ */
 export type IntegrationParameter = {
   /**
    * @pattern require('../ast/utils').IDENTIFIER_RE_SOURCE
@@ -65,6 +86,9 @@ export type IntegrationParameter = {
   default?: string | undefined;
 };
 
+/**
+ * Type decribing provider.json document.
+ */
 export type ProviderJson = {
   /**
    * @pattern require('.').PROVIDER_NAME_REGEX_SOURCE

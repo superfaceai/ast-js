@@ -20,30 +20,55 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
+                    "description": "Location span within the source.",
                     "properties": {
                         "end": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
                         "start": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
@@ -60,6 +85,67 @@
                 "key",
                 "kind",
                 "value"
+            ],
+            "type": "object"
+        },
+        "AstMetadata": {
+            "additionalProperties": false,
+            "description": "Information about AST and Parser used to compile provided AST",
+            "properties": {
+                "astVersion": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "label": {
+                            "type": "string"
+                        },
+                        "major": {
+                            "type": "number"
+                        },
+                        "minor": {
+                            "type": "number"
+                        },
+                        "patch": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "major",
+                        "minor",
+                        "patch"
+                    ],
+                    "type": "object"
+                },
+                "parserVersion": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "label": {
+                            "type": "string"
+                        },
+                        "major": {
+                            "type": "number"
+                        },
+                        "minor": {
+                            "type": "number"
+                        },
+                        "patch": {
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "major",
+                        "minor",
+                        "patch"
+                    ],
+                    "type": "object"
+                },
+                "sourceChecksum": {
+                    "type": "string"
+                }
+            },
+            "required": [
+                "astVersion",
+                "parserVersion",
+                "sourceChecksum"
             ],
             "type": "object"
         },
@@ -87,33 +173,55 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "operationName": {
-                    "type": "string"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
+                    "description": "Location span within the source.",
                     "properties": {
                         "end": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
                         "start": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
@@ -121,6 +229,9 @@
                         "start"
                     ],
                     "type": "object"
+                },
+                "operationName": {
+                    "type": "string"
                 },
                 "statements": {
                     "items": {
@@ -159,30 +270,55 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
+                    "description": "Location span within the source.",
                     "properties": {
                         "end": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
                         "start": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
@@ -209,18 +345,60 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "description": "Location span within the source.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "end": {
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "start": {
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
+                        "end",
+                        "start"
                     ],
                     "type": "object"
                 },
@@ -235,23 +413,6 @@
                         "$ref": "#/definitions/HttpResponseHandlerNode"
                     },
                     "type": "array"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
-                    ],
-                    "type": "object"
                 },
                 "url": {
                     "format": "uri-reference",
@@ -303,18 +464,60 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "description": "Location span within the source.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "end": {
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "start": {
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
+                        "end",
+                        "start"
                     ],
                     "type": "object"
                 },
@@ -344,23 +547,6 @@
                         "type": "object"
                     },
                     "type": "array"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
-                    ],
-                    "type": "object"
                 }
             },
             "required": [
@@ -387,30 +573,55 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
+                    "description": "Location span within the source.",
                     "properties": {
                         "end": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
                         "start": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
@@ -468,33 +679,55 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "operationName": {
-                    "type": "string"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
+                    "description": "Location span within the source.",
                     "properties": {
                         "end": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
                         "start": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
@@ -502,6 +735,9 @@
                         "start"
                     ],
                     "type": "object"
+                },
+                "operationName": {
+                    "type": "string"
                 }
             },
             "required": [
@@ -529,30 +765,55 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
+                    "description": "Location span within the source.",
                     "properties": {
                         "end": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
                         "start": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
@@ -583,18 +844,60 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "description": "Location span within the source.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "end": {
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "start": {
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
+                        "end",
+                        "start"
                     ],
                     "type": "object"
                 },
@@ -603,23 +906,6 @@
                 },
                 "sourceMap": {
                     "type": "string"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
-                    ],
-                    "type": "object"
                 }
             },
             "required": [
@@ -647,8 +933,79 @@
         "MapDefinitionNode": {
             "additionalProperties": false,
             "properties": {
-                "description": {
-                    "type": "string"
+                "documentation": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "description": {
+                            "type": "string"
+                        },
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Location span within the source.",
+                            "properties": {
+                                "end": {
+                                    "additionalProperties": false,
+                                    "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                                    "properties": {
+                                        "charIndex": {
+                                            "description": "Character index within the source code - starts at 0",
+                                            "type": "number"
+                                        },
+                                        "column": {
+                                            "description": "Column number - starts at 1",
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "description": "Line number - starts at 1",
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "charIndex",
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
+                                },
+                                "start": {
+                                    "additionalProperties": false,
+                                    "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                                    "properties": {
+                                        "charIndex": {
+                                            "description": "Character index within the source code - starts at 0",
+                                            "type": "number"
+                                        },
+                                        "column": {
+                                            "description": "Column number - starts at 1",
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "description": "Line number - starts at 1",
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "charIndex",
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
+                        },
+                        "title": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "title"
+                    ],
+                    "type": "object"
                 },
                 "kind": {
                     "enum": [
@@ -658,34 +1015,55 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "name": {
-                    "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$",
-                    "type": "string"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
+                    "description": "Location span within the source.",
                     "properties": {
                         "end": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
                         "start": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
@@ -693,6 +1071,10 @@
                         "start"
                     ],
                     "type": "object"
+                },
+                "name": {
+                    "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$",
+                    "type": "string"
                 },
                 "statements": {
                     "items": {
@@ -713,9 +1095,6 @@
                     },
                     "type": "array"
                 },
-                "title": {
-                    "type": "string"
-                },
                 "usecaseName": {
                     "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$",
                     "type": "string"
@@ -732,6 +1111,80 @@
         "MapHeaderNode": {
             "additionalProperties": false,
             "properties": {
+                "documentation": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "description": {
+                            "type": "string"
+                        },
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Location span within the source.",
+                            "properties": {
+                                "end": {
+                                    "additionalProperties": false,
+                                    "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                                    "properties": {
+                                        "charIndex": {
+                                            "description": "Character index within the source code - starts at 0",
+                                            "type": "number"
+                                        },
+                                        "column": {
+                                            "description": "Column number - starts at 1",
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "description": "Line number - starts at 1",
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "charIndex",
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
+                                },
+                                "start": {
+                                    "additionalProperties": false,
+                                    "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                                    "properties": {
+                                        "charIndex": {
+                                            "description": "Character index within the source code - starts at 0",
+                                            "type": "number"
+                                        },
+                                        "column": {
+                                            "description": "Column number - starts at 1",
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "description": "Line number - starts at 1",
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "charIndex",
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
+                        },
+                        "title": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "title"
+                    ],
+                    "type": "object"
+                },
                 "kind": {
                     "enum": [
                         "MapHeader"
@@ -740,18 +1193,60 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
+                    "description": "Location span within the source.",
                     "properties": {
-                        "column": {
-                            "type": "number"
+                        "end": {
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
-                        "line": {
-                            "type": "number"
+                        "start": {
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
-                        "column",
-                        "line"
+                        "end",
+                        "start"
                     ],
                     "type": "object"
                 },
@@ -803,23 +1298,6 @@
                     "pattern": "^[a-z][a-z0-9_-]*$",
                     "type": "string"
                 },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
-                    "properties": {
-                        "end": {
-                            "type": "number"
-                        },
-                        "start": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "end",
-                        "start"
-                    ],
-                    "type": "object"
-                },
                 "variant": {
                     "pattern": "^[a-z][a-z0-9_-]*$",
                     "type": "string"
@@ -850,30 +1328,55 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
+                    "description": "Location span within the source.",
                     "properties": {
                         "end": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
                         "start": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
@@ -892,8 +1395,79 @@
         "OperationDefinitionNode": {
             "additionalProperties": false,
             "properties": {
-                "description": {
-                    "type": "string"
+                "documentation": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "description": {
+                            "type": "string"
+                        },
+                        "location": {
+                            "additionalProperties": false,
+                            "description": "Location span within the source.",
+                            "properties": {
+                                "end": {
+                                    "additionalProperties": false,
+                                    "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                                    "properties": {
+                                        "charIndex": {
+                                            "description": "Character index within the source code - starts at 0",
+                                            "type": "number"
+                                        },
+                                        "column": {
+                                            "description": "Column number - starts at 1",
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "description": "Line number - starts at 1",
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "charIndex",
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
+                                },
+                                "start": {
+                                    "additionalProperties": false,
+                                    "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                                    "properties": {
+                                        "charIndex": {
+                                            "description": "Character index within the source code - starts at 0",
+                                            "type": "number"
+                                        },
+                                        "column": {
+                                            "description": "Column number - starts at 1",
+                                            "type": "number"
+                                        },
+                                        "line": {
+                                            "description": "Line number - starts at 1",
+                                            "type": "number"
+                                        }
+                                    },
+                                    "required": [
+                                        "charIndex",
+                                        "column",
+                                        "line"
+                                    ],
+                                    "type": "object"
+                                }
+                            },
+                            "required": [
+                                "end",
+                                "start"
+                            ],
+                            "type": "object"
+                        },
+                        "title": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "title"
+                    ],
+                    "type": "object"
                 },
                 "kind": {
                     "enum": [
@@ -903,34 +1477,55 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "name": {
-                    "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$",
-                    "type": "string"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
+                    "description": "Location span within the source.",
                     "properties": {
                         "end": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
                         "start": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
@@ -938,6 +1533,10 @@
                         "start"
                     ],
                     "type": "object"
+                },
+                "name": {
+                    "pattern": "^[_a-zA-Z][_a-zA-Z0-9]*$",
+                    "type": "string"
                 },
                 "statements": {
                     "items": {
@@ -957,9 +1556,6 @@
                         ]
                     },
                     "type": "array"
-                },
-                "title": {
-                    "type": "string"
                 }
             },
             "required": [
@@ -987,30 +1583,55 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
+                    "description": "Location span within the source.",
                     "properties": {
                         "end": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
                         "start": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
@@ -1046,30 +1667,55 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
+                    "description": "Location span within the source.",
                     "properties": {
                         "end": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
                         "start": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
@@ -1113,30 +1759,55 @@
                 },
                 "location": {
                     "additionalProperties": false,
-                    "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-                    "properties": {
-                        "column": {
-                            "type": "number"
-                        },
-                        "line": {
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "span": {
-                    "additionalProperties": false,
-                    "description": "Span of one node inside source code.",
+                    "description": "Location span within the source.",
                     "properties": {
                         "end": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         },
                         "start": {
-                            "type": "number"
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
                         }
                     },
                     "required": [
@@ -1154,6 +1825,9 @@
         }
     },
     "properties": {
+        "astMetadata": {
+            "$ref": "#/definitions/AstMetadata"
+        },
         "definitions": {
             "items": {
                 "anyOf": [
@@ -1178,30 +1852,55 @@
         },
         "location": {
             "additionalProperties": false,
-            "description": "Human-readable location of a token inside source code.\n\nBoth `line` and `column` are indexed from 1.",
-            "properties": {
-                "column": {
-                    "type": "number"
-                },
-                "line": {
-                    "type": "number"
-                }
-            },
-            "required": [
-                "column",
-                "line"
-            ],
-            "type": "object"
-        },
-        "span": {
-            "additionalProperties": false,
-            "description": "Span of one node inside source code.",
+            "description": "Location span within the source.",
             "properties": {
                 "end": {
-                    "type": "number"
+                    "additionalProperties": false,
+                    "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                    "properties": {
+                        "charIndex": {
+                            "description": "Character index within the source code - starts at 0",
+                            "type": "number"
+                        },
+                        "column": {
+                            "description": "Column number - starts at 1",
+                            "type": "number"
+                        },
+                        "line": {
+                            "description": "Line number - starts at 1",
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "charIndex",
+                        "column",
+                        "line"
+                    ],
+                    "type": "object"
                 },
                 "start": {
-                    "type": "number"
+                    "additionalProperties": false,
+                    "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                    "properties": {
+                        "charIndex": {
+                            "description": "Character index within the source code - starts at 0",
+                            "type": "number"
+                        },
+                        "column": {
+                            "description": "Column number - starts at 1",
+                            "type": "number"
+                        },
+                        "line": {
+                            "description": "Line number - starts at 1",
+                            "type": "number"
+                        }
+                    },
+                    "required": [
+                        "charIndex",
+                        "column",
+                        "line"
+                    ],
+                    "type": "object"
                 }
             },
             "required": [
@@ -1212,6 +1911,7 @@
         }
     },
     "required": [
+        "astMetadata",
         "definitions",
         "header",
         "kind"

@@ -350,6 +350,11 @@ describe('profile-ast.utils', () => {
 
       const node: ProfileDocumentNode = {
         kind: 'ProfileDocument',
+        astMetadata: {
+          astVersion: { major: 1, minor: 0, patch: 0 },
+          parserVersion: { major: 1, minor: 0, patch: 0 },
+          sourceChecksum: 'dsdds',
+        },
         header: {
           kind: 'ProfileHeader',
           name: 'test',
