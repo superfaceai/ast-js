@@ -680,7 +680,7 @@ describe('prepareSecurityValues', () => {
       expect(
         prepareProviderParameters(mockProviderName, mockParameters)
       ).toEqual({
-        first: 'first-value',
+        first: '$SWAPI_FIRST',
         second: '$SWAPI_SECOND',
         third: '$SWAPI_THIRD',
         ['anothe-r-te-st']: '$SWAPI_ANOTHE_R_TE_ST',
