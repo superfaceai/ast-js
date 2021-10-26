@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **BREAKING CHANGE**: `location` and `span` properties merged together
 - **BREAKING CHANGE**: `astMetadata` property added to map and profile document
 - **BREAKING CHANGE**: `title` and `decsription` properties nested under `documentation` property with added `location` property
+- `prepareProviderParameters` helper does not set parameter to default value
 
 ## [0.0.34] - 2021-10-14
 ### Added
