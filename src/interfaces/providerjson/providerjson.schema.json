@@ -12,6 +12,7 @@
             "type": "string"
         }
     },
+    "description": "Type decribing provider.json document.",
     "properties": {
         "defaultService": {
             "type": "string"
@@ -23,6 +24,7 @@
         "parameters": {
             "items": {
                 "additionalProperties": false,
+                "description": "Parameter needed for use of provider.",
                 "properties": {
                     "default": {
                         "type": "string"
@@ -47,6 +49,7 @@
                 "anyOf": [
                     {
                         "additionalProperties": false,
+                        "description": "Security scheme for api key authorization.",
                         "properties": {
                             "id": {
                                 "type": "string"
@@ -73,6 +76,7 @@
                     },
                     {
                         "additionalProperties": false,
+                        "description": "Security scheme for basic authorization.",
                         "properties": {
                             "id": {
                                 "type": "string"
@@ -99,6 +103,7 @@
                     },
                     {
                         "additionalProperties": false,
+                        "description": "Security scheme for bearer authorization.",
                         "properties": {
                             "bearerFormat": {
                                 "type": "string"
@@ -128,6 +133,7 @@
                     },
                     {
                         "additionalProperties": false,
+                        "description": "Security scheme for digest authorization.",
                         "properties": {
                             "id": {
                                 "type": "string"
@@ -152,7 +158,8 @@
                         ],
                         "type": "object"
                     }
-                ]
+                ],
+                "description": "Type describing general security scheme."
             },
             "type": "array"
         },
