@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.0] - 2021-11-04
 ### Added
 - `AssertionError` is thrown when `typescript-is` assert function fails.
 
@@ -27,7 +28,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.0.33] - 2021-10-14
 
 ## [0.0.32] - 2021-10-14
-
 ### Added
 - provider.json schemas
 
@@ -147,14 +147,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - First AST
 - Github workflow publishing
 
-[Unreleased]: https://github.com/superfaceai/ast-js/compare/v0.0.34...HEAD
+[Unreleased]: https://github.com/superfaceai/ast-js/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/superfaceai/ast-js/compare/v0.0.34...v1.0.0
 [0.0.34]: https://github.com/superfaceai/ast-js/compare/v0.0.33...v0.0.34
 [0.0.33]: https://github.com/superfaceai/ast-js/compare/v0.0.32...v0.0.33
-[0.0.32]: https://github.com/superfaceai/ast-js/compare/v0.0.32-beta.0...v0.0.32
-[0.0.32-beta.0]: https://github.com/superfaceai/ast-js/compare/v0.0.31...v0.0.32-beta.0
-[0.0.31]: https://github.com/superfaceai/ast-js/compare/v0.0.31-beta.0...v0.0.31
-[0.0.31-beta.0]: https://github.com/superfaceai/ast-js/compare/v0.0.30-beta.0...v0.0.31-beta.0
-[0.0.30-beta.0]: https://github.com/superfaceai/ast-js/compare/v0.0.29...v0.0.30-beta.0
+[0.0.32]: https://github.com/superfaceai/ast-js/compare/v0.0.31...v0.0.32
+[0.0.31]: https://github.com/superfaceai/ast-js/compare/v0.0.29...v0.0.31
 [0.0.29]: https://github.com/superfaceai/ast-js/compare/v0.0.28...v0.0.29
 [0.0.28]: https://github.com/superfaceai/ast-js/compare/v0.0.27...v0.0.28
 [0.0.27]: https://github.com/superfaceai/ast-js/compare/v0.0.26...v0.0.27
