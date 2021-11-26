@@ -287,7 +287,8 @@ export type ProfileASTNode =
   | UseCaseExampleNode
   | ComlinkPrimitiveLiteralNode
   | ComlinkObjectLiteralNode
-  | ComlinkListLiteralNode;
+  | ComlinkListLiteralNode
+  | ComlinkAssignmentNode;
 
 // EXAMPLES //
 
