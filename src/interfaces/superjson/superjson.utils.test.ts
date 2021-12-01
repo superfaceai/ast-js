@@ -163,7 +163,8 @@ describe('super.json utils', () => {
       expect(
         isDigestSecurityValues({
           id: 'some-id',
-          digest: 'some-digest',
+          username: 'some-user-name',
+          password: 'some-password',
         })
       ).toBe(true);
     });
