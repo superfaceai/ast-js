@@ -133,8 +133,14 @@
                     },
                     {
                         "additionalProperties": false,
-                        "description": "Security scheme for digest authorization.",
+                        "description": "Security scheme for digest authorization.\nstatusCode is code that should be returned from initial call for challenge eg. 401\nchallengeHeader is name of header containing challange from the server eq. www-authenticate\nauthorizationHeader is name of header containing authorization eq. Authorization",
                         "properties": {
+                            "authorizationHeader": {
+                                "type": "string"
+                            },
+                            "challengeHeader": {
+                                "type": "string"
+                            },
                             "id": {
                                 "type": "string"
                             },
@@ -143,6 +149,9 @@
                                     "digest"
                                 ],
                                 "type": "string"
+                            },
+                            "statusCode": {
+                                "type": "number"
                             },
                             "type": {
                                 "enum": [

@@ -53,11 +53,17 @@ export type BearerTokenSecurityScheme = {
 
 /**
  * Security scheme for digest authorization.
+ * statusCode is code that should be returned from initial call for challenge eg. 401
+ * challengeHeader is name of header containing challange from the server eq. www-authenticate
+ * authorizationHeader is name of header containing authorization eq. Authorization
  */
 export type DigestSecurityScheme = {
   id: string;
   type: SecurityType.HTTP;
   scheme: HttpScheme.DIGEST;
+  statusCode?: number | undefined;
+  challengeHeader?: string | undefined;
+  authorizationHeader?: string | undefined;
 };
 
 /**
