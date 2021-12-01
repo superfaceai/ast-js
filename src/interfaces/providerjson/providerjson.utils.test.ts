@@ -667,7 +667,8 @@ describe('prepareSecurityValues', () => {
       },
       {
         id: 'digest',
-        digest: `$TEST_PROVIDER_DIGEST`,
+        username: `$TEST_PROVIDER_USERNAME`,
+        password: `$TEST_PROVIDER_PASSWORD`,
       },
     ]);
   });

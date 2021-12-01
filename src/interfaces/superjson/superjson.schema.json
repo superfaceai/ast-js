@@ -618,16 +618,20 @@
                                         {
                                             "additionalProperties": false,
                                             "properties": {
-                                                "digest": {
+                                                "id": {
                                                     "type": "string"
                                                 },
-                                                "id": {
+                                                "password": {
+                                                    "type": "string"
+                                                },
+                                                "username": {
                                                     "type": "string"
                                                 }
                                             },
                                             "required": [
-                                                "digest",
-                                                "id"
+                                                "id",
+                                                "password",
+                                                "username"
                                             ],
                                             "type": "object"
                                         }

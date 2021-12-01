@@ -222,7 +222,8 @@ export type BearerTokenSecurityValues = IdBase & {
 };
 
 export type DigestSecurityValues = IdBase & {
-  digest: string;
+  username: string;
+  password: string;
 };
 
 /**
