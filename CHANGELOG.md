@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.0.0] - 2021-11-04
 ### Added
 - `AssertionError` is thrown when `typescript-is` assert function fails.
+- `serviceId` field to `HttpCallStatementNode`
 
 ### Changed
 - **BREAKING CHANGE**: `location` and `span` properties merged together
