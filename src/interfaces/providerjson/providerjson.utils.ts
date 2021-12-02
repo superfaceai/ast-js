@@ -1,6 +1,7 @@
-import { assertEquals, createIs, TypeGuardError } from 'typescript-is';
+import { assertEquals, TypeGuardError } from 'typescript-is';
 
 import { AssertionError } from '../../error';
+import { prepareIs } from '../../validation';
 import { Guard, isValidIdentifier } from '../ast';
 import { SecurityValues } from '../superjson';
 import { IntegrationParameter } from '.';
@@ -18,7 +19,7 @@ export function isValidProviderName(name: string): boolean {
   return PROVIDER_NAME_REGEX.test(name);
 }
 
-export const isProviderJson: Guard<ProviderJson> = createIs<ProviderJson>();
+export const isProviderJson: Guard<ProviderJson> = prepareIs<ProviderJson>('ProviderJson');
 
 export function assertProviderJson(input: unknown): ProviderJson {
   let parsedInput: ProviderJson;
@@ -50,13 +51,13 @@ export function assertProviderJson(input: unknown): ProviderJson {
 }
 
 export const isApiKeySecurityScheme: Guard<ApiKeySecurityScheme> =
-  createIs<ApiKeySecurityScheme>();
+  prepareIs<ApiKeySecurityScheme>('ProviderJson/ApiKeySecurityScheme');
 export const isBasicAuthSecurityScheme: Guard<BasicAuthSecurityScheme> =
-  createIs<BasicAuthSecurityScheme>();
+  prepareIs<BasicAuthSecurityScheme>('BasicAuthSecurityScheme');
 export const isBearerTokenSecurityScheme: Guard<BearerTokenSecurityScheme> =
-  createIs<BearerTokenSecurityScheme>();
+  prepareIs<BearerTokenSecurityScheme>('BearerTokenSecurityScheme');
 export const isDigestSecurityScheme: Guard<DigestSecurityScheme> =
-  createIs<DigestSecurityScheme>();
+  prepareIs<DigestSecurityScheme>('DigestSecurityScheme');
 
 export function prepareSecurityValues(
   providerName: string,

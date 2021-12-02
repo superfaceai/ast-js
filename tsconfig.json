@@ -11,6 +11,7 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "resolveJsonModule": true,
     "preserveConstEnums": true,
     "plugins": [
       {
@@ -22,7 +23,11 @@
     "strict": true,
     "strictPropertyInitialization": true,
     "target": "ES5",
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": [
+      "node_modules/@types"
+    ]
   },
-  "include": ["src/**/*.ts"]
+  "include": [
+    "src/**/*.ts"
+  ]
 }

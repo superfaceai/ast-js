@@ -30,6 +30,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "ajv": "^8.8.2",
     "typescript-is": "^0.18.3"
   },
   "devDependencies": {
