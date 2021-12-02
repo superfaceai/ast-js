@@ -136,11 +136,11 @@
                         "description": "Security scheme for digest authorization.",
                         "properties": {
                             "authorizationHeader": {
-                                "description": "Name of header containing authorization eq. Authorization",
+                                "description": "Name of header containing authorization eg. Authorization",
                                 "type": "string"
                             },
                             "challengeHeader": {
-                                "description": "Name of header containing challange from the server eq. www-authenticate",
+                                "description": "Name of header containing challenge from the server eg. www-authenticate",
                                 "type": "string"
                             },
                             "id": {
