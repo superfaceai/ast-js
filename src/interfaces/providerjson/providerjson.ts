@@ -63,11 +63,11 @@ export type DigestSecurityScheme = {
    */
   statusCode?: number | undefined;
   /**
-   * Name of header containing challange from the server eq. www-authenticate
+   * Name of header containing challenge from the server eg. www-authenticate
    */
   challengeHeader?: string | undefined;
   /**
-   * Name of header containing authorization eq. Authorization
+   * Name of header containing authorization eg. Authorization
    */
   authorizationHeader?: string | undefined;
 };
