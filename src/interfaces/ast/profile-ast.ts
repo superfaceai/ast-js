@@ -115,7 +115,7 @@ export type Type = TypeName | TypeDefinition;
  */
 export interface EnumValueNode extends ProfileASTNodeBase, DocumentedNode {
   kind: 'EnumValue';
-  name: string;
+  name?: string | undefined;
   value: string | number | boolean;
 }
 
