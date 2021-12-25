@@ -183,9 +183,6 @@ export interface HttpResponseHandlerNode extends MapASTNodeBase {
 export interface HttpCallStatementNode extends MapASTNodeBase {
   kind: 'HttpCallStatement';
   method: string;
-  /**
-   * @format uri-reference
-   **/
   url: string;
   request?: HttpRequestNode | undefined;
   responseHandlers: HttpResponseHandlerNode[];

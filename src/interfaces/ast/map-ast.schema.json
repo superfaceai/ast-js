@@ -417,7 +417,6 @@
                     "type": "array"
                 },
                 "url": {
-                    "format": "uri-reference",
                     "type": "string"
                 }
             },
