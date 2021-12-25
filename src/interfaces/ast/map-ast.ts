@@ -47,6 +47,9 @@ export interface ObjectLiteralNode extends MapASTNodeBase {
   fields: AssignmentNode[];
 }
 
+/**
+ * Jessie expression node: `<expression>`
+ */
 export interface JessieExpressionNode extends MapASTNodeBase {
   kind: 'JessieExpression';
   expression: string;
@@ -135,6 +138,9 @@ export interface CallStatementNode extends MapASTNodeBase {
   statements: (SetStatementNode | OutcomeStatementNode)[];
 }
 
+/**
+ * Http security requirement: `security <id>`
+ */
 export type HttpSecurityRequirement = {
   id: string;
   /** Optional scheme information. */
@@ -143,7 +149,7 @@ export type HttpSecurityRequirement = {
 
 /**
  * Request definition for http:
- * `request <?contentType> <?contentLanguage> { <?query> <?headers? <?body> }`
+ * `request <?contentType> <?contentLanguage> { <?query> <?headers> <?body> }`
  */
 export interface HttpRequestNode extends MapASTNodeBase {
   kind: 'HttpRequest';
@@ -171,6 +177,9 @@ export interface HttpResponseHandlerNode extends MapASTNodeBase {
   statements: (SetStatementNode | OutcomeStatementNode)[];
 }
 
+/**
+ * Http call statement: `http <method> <url> { <?request> <...responseHandlers> }`
+ */
 export interface HttpCallStatementNode extends MapASTNodeBase {
   kind: 'HttpCallStatement';
   method: string;
@@ -190,6 +199,9 @@ export type Substatement =
   | CallStatementNode
   | HttpCallStatementNode;
 
+/**
+ * Map definition: `map <name> { <...statements> }`
+ */
 export interface MapDefinitionNode extends MapASTNodeBase, DocumentedNode {
   kind: 'MapDefinition';
 
@@ -204,6 +216,9 @@ export interface MapDefinitionNode extends MapASTNodeBase, DocumentedNode {
   statements: Substatement[];
 }
 
+/**
+ * Operation definition: `operation <name> { <...statements> }`
+ */
 export interface OperationDefinitionNode
   extends MapASTNodeBase,
     DocumentedNode {
@@ -217,6 +232,11 @@ export interface OperationDefinitionNode
 
 // DOCUMENT
 
+/**
+ * Map header:
+ * `profile = <profile>`
+ * `provider = <provider>`
+ */
 export interface MapHeaderNode extends MapASTNodeBase, DocumentedNode {
   kind: 'MapHeader';
   profile: {
@@ -261,7 +281,13 @@ export interface MapHeaderNode extends MapASTNodeBase, DocumentedNode {
   variant?: string | undefined;
 }
 
+/**
+ * Map document:
+ * `<header>`
+ * `<...definitions>`
+ */
 export interface MapDocumentNode extends MapASTNodeBase {
+  /** @$ref AstMetadata */
   astMetadata: AstMetadata;
   kind: 'MapDocument';
   header: MapHeaderNode;

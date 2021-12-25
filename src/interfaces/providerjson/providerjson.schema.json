@@ -4,6 +4,8 @@
     "additionalProperties": false,
     "definitions": {
         "ApiKeyPlacement": {
+            "$id": "ApiKeyPlacement",
+            "description": "The placement of the API key.",
             "enum": [
                 "body",
                 "header",
@@ -57,7 +59,7 @@
                                 "type": "string"
                             },
                             "in": {
-                                "$ref": "#/definitions/ApiKeyPlacement"
+                                "$ref": "ApiKeyPlacement"
                             },
                             "name": {
                                 "type": "string"

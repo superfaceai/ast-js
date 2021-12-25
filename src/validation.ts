@@ -1,22 +1,34 @@
-import Ajv from "ajv"
+import Ajv, { AnySchema } from 'ajv';
+import addFormats from 'ajv-formats';
 
-import * as providerJsonSchema from './interfaces/providerjson/providerjson.schema.json'
+import { Assert, Guard } from './interfaces';
 
-export const ajv = new Ajv()
-ajv.addSchema(providerJsonSchema)
+export function preparePrepareIs(
+  schema: AnySchema
+): <T>(id: string) => Guard<T> {
+  const ajv = new Ajv({ allowUnionTypes: true });
+  addFormats(ajv);
+  ajv.addSchema(schema);
 
-//TODO: constrain T and try to get rid of id
-export function prepareIs<T>(id: string): (object: unknown) => object is T {
-  const validate = ajv.getSchema<T>(id)
-  if (!validate) {
-    throw new Error(`Schema with $id ${id} not found`)
-  }
+  return <T>(id: string) => {
+    return (object: unknown): object is T => {
+      if (ajv.validate(id, object)) {
+        return true;
+      }
 
-  return (object: unknown): object is T => {
-    if (validate(object)) {
-      return true
+      return false;
+    };
+  };
+}
+
+export function prepareAssert<T>(schema: AnySchema): Assert<T> {
+  const ajv = new Ajv({ allowUnionTypes: true });
+  addFormats(ajv);
+  ajv.addSchema(schema);
+
+  return function assert(input: unknown): asserts input is T {
+    if (!ajv.validate(schema, input)) {
+      throw new Error(ajv.errorsText());
     }
-
-    return false
-  }
+  };
 }

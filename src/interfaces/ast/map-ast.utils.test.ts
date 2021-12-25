@@ -1,4 +1,3 @@
-import { AssertionError } from '../../error';
 import {
   assertMapDocumentNode,
   AssignmentNode,
@@ -449,11 +448,8 @@ describe('map-ast.utils', () => {
           fields: [],
         },
       };
-      expect(() => assertMapDocumentNode(outcomeNode)).toThrowError(
-        new AssertionError(
-          `Map AST validation failed at $: expected 'astMetadata' in object, found: {\n  kind: 'OutcomeStatement',\n  isError: false,\n  terminateFlow: false,\n  value: { kind: 'ObjectLiteral', fields: [] }\n}`,
-          []
-        )
+      expect(() => assertMapDocumentNode(outcomeNode)).toThrow(
+        "data must have required property 'astMetadata'"
       );
 
       const node: MapDocumentNode = {

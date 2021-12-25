@@ -13,12 +13,6 @@
     "noUnusedParameters": true,
     "resolveJsonModule": true,
     "preserveConstEnums": true,
-    "plugins": [
-      {
-        "transform": "typescript-is/lib/transform-inline/transformer",
-        "disallowSuperfluousObjectProperties": true
-      }
-    ],
     "sourceMap": true,
     "strict": true,
     "strictPropertyInitialization": true,

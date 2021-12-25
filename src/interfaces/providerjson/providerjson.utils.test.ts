@@ -1,4 +1,3 @@
-import { AssertionError } from '../../error';
 import { IntegrationParameter, prepareProviderParameters } from '.';
 import {
   ApiKeyPlacement,
@@ -177,12 +176,7 @@ describe('ProviderJsonDocument', () => {
       }`;
     expect(() => {
       assertProviderJson(JSON.parse(providerJson));
-    }).toThrowError(
-      new AssertionError(
-        `Provider JSON validation failed at input: expected 'name' in object, found: {\n  services: [ { baseUrl: 'https://swapi.dev/api', id: 'swapidev' } ],\n  defaultService: 'swapidev'\n}`,
-        []
-      )
-    );
+    }).toThrow("data must have required property 'name'");
   });
 
   it('throws error on document with invalid name', () => {
@@ -198,7 +192,7 @@ describe('ProviderJsonDocument', () => {
       }`;
     expect(() => {
       assertProviderJson(JSON.parse(providerJson));
-    }).toThrowError(new AssertionError(`invalid provider name`, []));
+    }).toThrow('data/name must match pattern');
   });
 
   it('throws error on document with missing services', () => {
@@ -208,12 +202,7 @@ describe('ProviderJsonDocument', () => {
       }`;
     expect(() => {
       assertProviderJson(JSON.parse(providerJson));
-    }).toThrowError(
-      new AssertionError(
-        `Provider JSON validation failed at input: expected 'services' in object, found: { name: 'swapidev', defaultService: 'swapidev' }`,
-        []
-      )
-    );
+    }).toThrow("data must have required property 'services'");
   });
 
   it('throws error on document with missing property in services', () => {
@@ -228,12 +217,7 @@ describe('ProviderJsonDocument', () => {
       }`;
     expect(() => {
       assertProviderJson(JSON.parse(providerJson));
-    }).toThrowError(
-      new AssertionError(
-        `Provider JSON validation failed at input.services.[0]: expected 'baseUrl' in object, found: { id: 'swapidev' }`,
-        []
-      )
-    );
+    }).toThrow("data/services/0 must have required property 'baseUrl'");
   });
 
   it('throws error on document with missing defaultService', () => {
@@ -248,12 +232,7 @@ describe('ProviderJsonDocument', () => {
       }`;
     expect(() => {
       assertProviderJson(JSON.parse(providerJson));
-    }).toThrowError(
-      new AssertionError(
-        `Provider JSON validation failed at input: expected 'defaultService' in object, found: {\n  name: 'swapidev',\n  services: [ { baseUrl: 'https://swapi.dev/api', id: 'swapidev' } ]\n}`,
-        []
-      )
-    );
+    }).toThrow(`data must have required property 'defaultService'`);
   });
 
   it('throws error on document with missing id property in securitySchemes', () => {

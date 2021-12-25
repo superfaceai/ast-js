@@ -1,6 +1,4 @@
-import { createAssertEquals, createIs, TypeGuardError } from 'typescript-is';
-
-import { AssertionError } from '../../error';
+import { prepareAssert, preparePrepareIs } from '../../validation';
 import {
   ComlinkAssignmentNode,
   ComlinkListLiteralNode,
@@ -29,69 +27,111 @@ import {
   UseCaseExampleNode,
   UseCaseSlotDefinitionNode,
 } from './profile-ast';
-import { Guard } from './utils';
+import * as schema from './profile-ast.schema.json';
+import { Assert, Guard } from './utils';
 
-export const isDocumentDefinition: Guard<DocumentDefinition> =
-  createIs<DocumentDefinition>();
+const prepareIs = preparePrepareIs(schema);
+const assertEquals: Assert<ProfileDocumentNode> = prepareAssert(schema);
+
 export const isEnumDefinitionNode: Guard<EnumDefinitionNode> =
-  createIs<EnumDefinitionNode>();
-export const isEnumValueNode: Guard<EnumValueNode> = createIs<EnumValueNode>();
+  prepareIs<EnumDefinitionNode>('#/definitions/EnumDefinitionNode');
+export const isEnumValueNode: Guard<EnumValueNode> = prepareIs<EnumValueNode>(
+  '#/definitions/EnumValueNode'
+);
 export const isFieldDefinitionNode: Guard<FieldDefinitionNode> =
-  createIs<FieldDefinitionNode>();
+  prepareIs<FieldDefinitionNode>('#/definitions/FieldDefinitionNode');
 export const isListDefinitionNode: Guard<ListDefinitionNode> =
-  createIs<ListDefinitionNode>();
+  prepareIs<ListDefinitionNode>('#/definitions/ListDefinitionNode');
 export const isModelTypeNameNode: Guard<ModelTypeNameNode> =
-  createIs<ModelTypeNameNode>();
+  prepareIs<ModelTypeNameNode>('#/definitions/ModelTypeNameNode');
 export const isNamedFieldDefinitionNode: Guard<NamedFieldDefinitionNode> =
-  createIs<NamedFieldDefinitionNode>();
+  prepareIs<NamedFieldDefinitionNode>('#/definitions/NamedFieldDefinitionNode');
 export const isNamedModelDefinitionNode: Guard<NamedModelDefinitionNode> =
-  createIs<NamedModelDefinitionNode>();
+  prepareIs<NamedModelDefinitionNode>('#/definitions/NamedModelDefinitionNode');
 export const isNonNullDefinitionNode: Guard<NonNullDefinitionNode> =
-  createIs<NonNullDefinitionNode>();
+  prepareIs<NonNullDefinitionNode>('#/definitions/NonNullDefinitionNode');
 export const isObjectDefinitionNode: Guard<ObjectDefinitionNode> =
-  createIs<ObjectDefinitionNode>();
+  prepareIs<ObjectDefinitionNode>('#/definitions/ObjectDefinitionNode');
 export const isPrimitiveTypeNameNode: Guard<PrimitiveTypeNameNode> =
-  createIs<PrimitiveTypeNameNode>();
+  prepareIs<PrimitiveTypeNameNode>('#/definitions/PrimitiveTypeNameNode');
 export const isProfileASTNode: Guard<ProfileASTNode> =
-  createIs<ProfileASTNode>();
+  prepareIs<ProfileASTNode>('#/definitions/ProfileASTNode');
 export const isProfileDocumentNode: Guard<ProfileDocumentNode> =
-  createIs<ProfileDocumentNode>();
+  prepareIs<ProfileDocumentNode>('#/definitions/ProfileDocumentNode');
 export const isProfileHeaderNode: Guard<ProfileHeaderNode> =
-  createIs<ProfileHeaderNode>();
-export const isType: Guard<Type> = createIs<Type>();
-export const isTypeDefinition: Guard<TypeDefinition> =
-  createIs<TypeDefinition>();
-export const isTypeName: Guard<TypeName> = createIs<TypeName>();
+  prepareIs<ProfileHeaderNode>('#/definitions/ProfileHeaderNode');
+export const isTypeDefinition: Guard<TypeDefinition> = (
+  input: unknown
+): input is TypeDefinition =>
+  isObjectDefinitionNode(input) ||
+  isEnumDefinitionNode(input) ||
+  isUnionDefinitionNode(input) ||
+  isNonNullDefinitionNode(input) ||
+  isUseCaseExampleNode(input) ||
+  isComlinkListLiteralNode(input);
+export const isTypeName: Guard<TypeName> = (
+  input: unknown
+): input is TypeName =>
+  isPrimitiveTypeNameNode(input) || isModelTypeNameNode(input);
+export const isType: Guard<Type> = (input: unknown): input is Type =>
+  isTypeDefinition(input) || isTypeName(input);
 export const isUnionDefinitionNode: Guard<UnionDefinitionNode> =
-  createIs<UnionDefinitionNode>();
+  prepareIs<UnionDefinitionNode>('#/definitions/UnionDefinitionNode');
 export const isUseCaseDefinitionNode: Guard<UseCaseDefinitionNode> =
-  createIs<UseCaseDefinitionNode>();
+  prepareIs<UseCaseDefinitionNode>('#/definitions/UseCaseDefinitionNode');
+export const isUseCaseSlotDefinitionNodeType = prepareIs<
+  UseCaseSlotDefinitionNode<Type>
+>('#/definitions/UseCaseSlotDefinitionNode<Type>');
+export const isUseCaseSlotDefinitionNodeUseCaseExampleNode = prepareIs<
+  UseCaseSlotDefinitionNode<UseCaseExampleNode>
+>('#/definitions/UseCaseSlotDefinitionNode<UseCaseExampleNode>');
+export const isUseCaseSlotDefinitionNodeComlinkLiteralNode = prepareIs<
+  UseCaseSlotDefinitionNode<ComlinkLiteralNode>
+>('#/definitions/UseCaseSlotDefinitionNode<ComlinkLiteralNode>');
+export const isUseCaseSlotDefinitionNodeObjectDefinitionNode = prepareIs<
+  UseCaseSlotDefinitionNode<ObjectDefinitionNode>
+>('#/definitions/UseCaseSlotDefinitionNode<ObjectDefinitionNode>');
 export const isUseCaseSlotDefinitionNode: Guard<
   UseCaseSlotDefinitionNode<ProfileASTNode>
-> = createIs<UseCaseSlotDefinitionNode<ProfileASTNode>>();
+> = (input: unknown): input is UseCaseSlotDefinitionNode<ProfileASTNode> =>
+  isUseCaseSlotDefinitionNodeType(input) ||
+  isUseCaseSlotDefinitionNodeUseCaseExampleNode(input) ||
+  isUseCaseSlotDefinitionNodeComlinkLiteralNode(input) ||
+  isUseCaseSlotDefinitionNodeObjectDefinitionNode(input);
 export const isUseCaseExampleNode: Guard<UseCaseExampleNode> =
-  createIs<UseCaseExampleNode>();
+  prepareIs<UseCaseExampleNode>('#/definitions/UseCaseExampleNode');
 export const isComlinkPrimitiveLiteralNode: Guard<ComlinkPrimitiveLiteralNode> =
-  createIs<ComlinkPrimitiveLiteralNode>();
+  prepareIs<ComlinkPrimitiveLiteralNode>(
+    '#/definitions/ComlinkPrimitiveLiteralNode'
+  );
 export const isComlinkObjectLiteralNode: Guard<ComlinkObjectLiteralNode> =
-  createIs<ComlinkObjectLiteralNode>();
+  prepareIs<ComlinkObjectLiteralNode>('#/definitions/ComlinkObjectLiteralNode');
 export const isComlinkListLiteralNode: Guard<ComlinkListLiteralNode> =
-  createIs<ComlinkListLiteralNode>();
+  prepareIs<ComlinkListLiteralNode>('#/definitions/ComlinkListLiteralNode');
 export const isComlinkLiteralNode: Guard<ComlinkLiteralNode> =
-  createIs<ComlinkLiteralNode>();
+  prepareIs<ComlinkLiteralNode>('#/definitions/ComlinkLiteralNode');
 export const isComlinkAssignmentNode: Guard<ComlinkAssignmentNode> =
-  createIs<ComlinkAssignmentNode>();
+  prepareIs<ComlinkAssignmentNode>('#/definitions/ComlinkAssignmentNode');
+export const isDocumentDefinition: Guard<DocumentDefinition> = (
+  input: unknown
+): input is DocumentDefinition =>
+  isUseCaseDefinitionNode(input) ||
+  isNamedModelDefinitionNode(input) ||
+  isNamedFieldDefinitionNode(input);
 
 export function assertProfileDocumentNode(node: unknown): ProfileDocumentNode {
-  const assert = createAssertEquals<ProfileDocumentNode>();
-  try {
-    return assert(node);
-  } catch (error) {
-    if (error instanceof TypeGuardError) {
-      throw new AssertionError(`Profile AST ${error.message}`, error.path);
-    }
-    throw error;
-  }
+  assertEquals(node);
+
+  return node;
+  // const assert = createAssertEquals<ProfileDocumentNode>();
+  // try {
+  //   return assert(node);
+  // } catch (error) {
+  //   if (error instanceof TypeGuardError) {
+  //     throw new AssertionError(`Profile AST ${error.message}`, error.path);
+  //   }
+  //   throw error;
+  // }
 }
 
 export interface ProfileAstVisitor<R = unknown> {

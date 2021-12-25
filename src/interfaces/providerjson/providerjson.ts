@@ -9,6 +9,10 @@ export enum SecurityType {
   HTTP = 'http',
 }
 
+/**
+ * The placement of the API key.
+ * @$id ApiKeyPlacement
+ **/
 export enum ApiKeyPlacement {
   HEADER = 'header',
   BODY = 'body',
@@ -30,7 +34,7 @@ export type ApiKeySecurityScheme = {
   id: string;
   type: SecurityType.APIKEY;
   /**
-   * @$ref #/definitions/ApiKeyPlacement
+   * @$ref ApiKeyPlacement
    */
   in: ApiKeyPlacement;
   name?: string | undefined;
