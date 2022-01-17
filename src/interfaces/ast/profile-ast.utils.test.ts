@@ -221,6 +221,7 @@ describe('profile-ast.utils', () => {
 
       const enumValueNode: EnumValueNode = {
         kind: 'EnumValue',
+        name: 'FOO',
         value: 1,
       };
       expect(isType(enumValueNode)).toEqual(false);
@@ -237,6 +238,7 @@ describe('profile-ast.utils', () => {
 
       const enumValueNode: EnumValueNode = {
         kind: 'EnumValue',
+        name: 'FOO',
         value: 1,
       };
       expect(isEnumValueNode(enumValueNode)).toEqual(true);

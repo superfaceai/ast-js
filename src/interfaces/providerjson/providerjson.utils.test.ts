@@ -42,6 +42,14 @@ describe('ProviderJsonDocument', () => {
                 "id": "swapidev",
                 "type": "http",
                 "scheme": "basic"
+            },
+            {
+              "id": "swapidev",
+              "type": "http",
+              "scheme": "digest",
+              "statusCode": 401,
+              "challengeHeader": "www-authenticate",
+              "authorizationHeader": "authorizaation"
             }
         ],
         "defaultService": "swapidev",
@@ -73,6 +81,14 @@ describe('ProviderJsonDocument', () => {
             id: 'swapidev',
             type: 'http',
             scheme: 'basic',
+          },
+          {
+            id: 'swapidev',
+            type: 'http',
+            scheme: 'digest',
+            statusCode: 401,
+            challengeHeader: 'www-authenticate',
+            authorizationHeader: 'authorizaation',
           },
         ],
         defaultService: 'swapidev',
@@ -525,6 +541,51 @@ describe('ProviderJsonDocument', () => {
             id: 'swapidev',
             type: SecurityType.HTTP,
             scheme: HttpScheme.DIGEST,
+          })
+        ).toEqual(true);
+      }
+      {
+        expect(
+          isDigestSecurityScheme({
+            id: 'swapidev',
+            type: SecurityType.HTTP,
+            scheme: HttpScheme.DIGEST,
+            statusCode: 401,
+          })
+        ).toEqual(true);
+      }
+      {
+        expect(
+          isDigestSecurityScheme({
+            id: 'swapidev',
+            type: SecurityType.HTTP,
+            scheme: HttpScheme.DIGEST,
+            statusCode: 401,
+            challengeHeader: 'test',
+          })
+        ).toEqual(true);
+      }
+      {
+        expect(
+          isDigestSecurityScheme({
+            id: 'swapidev',
+            type: SecurityType.HTTP,
+            scheme: HttpScheme.DIGEST,
+            statusCode: 401,
+            challengeHeader: 'test',
+            authorizationHeader: 'auth',
+          })
+        ).toEqual(true);
+      }
+      {
+        expect(
+          isDigestSecurityScheme({
+            id: 'swapidev',
+            type: SecurityType.HTTP,
+            scheme: HttpScheme.DIGEST,
+            statusCode: undefined,
+            challengeHeader: undefined,
+            authorizationHeader: undefined,
           })
         ).toEqual(true);
       }
