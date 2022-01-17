@@ -439,20 +439,93 @@ describe('map-ast.utils', () => {
 
   describe('assertMapDocumentNode', () => {
     it('asserts node is map definition node', () => {
-      const outcomeNode: OutcomeStatementNode = {
-        kind: 'OutcomeStatement',
-        isError: false,
-        terminateFlow: false,
-        value: {
-          kind: 'ObjectLiteral',
-          fields: [],
-        },
-      };
-      expect(() => assertMapDocumentNode(outcomeNode)).toThrow(
-        "data must have required property 'astMetadata'"
-      );
+      {
+        const invalidNode = {
+          astMetadata: {
+            sourceChecksum: 'checksum',
+            astVersion: {
+              major: 1,
+              minor: 0,
+              patch: 0,
+            },
+            parserVersion: {
+              major: 1,
+              minor: 0,
+              patch: 0,
+            },
+          },
+          kind: 'MapDocument',
+          header: {
+            kind: 'MapHeader',
+            profile: {
+              name: 'test',
+              version: {
+                major: 'banana',
+                minor: 0,
+              },
+            },
+            provider: 'provider',
+          },
+          definitions: [],
+        };
+        expect(() => assertMapDocumentNode(invalidNode)).toThrow(
+          'header.profile.version.major: must be integer, received string'
+        );
+      }
 
-      const node: MapDocumentNode = {
+      {
+        const invalidNode = {
+          astMetadata: {
+            sourceChecksum: 'checksum',
+            astVersion: {
+              major: 1,
+              minor: 0,
+              patch: 0,
+            },
+            parserVersion: {
+              major: 1,
+              minor: 0,
+              patch: 0,
+            },
+          },
+          kind: 'MapDocument',
+          header: {
+            kind: 'MapHeader',
+            profile: {
+              name: 'test',
+              version: {
+                major: 7,
+                minor: 0,
+              },
+            },
+            provider: 'provider',
+          },
+          definitions: [
+            {
+              kind: 'MapDefinition',
+              name: 'test',
+              statements: [
+                {
+                  kind: 'OutcomeStatement',
+                  isError: false,
+                  terminateFlow: 'a banana',
+                  value: {
+                    kind: 'PrimitiveLiteral',
+                    value: 7,
+                  },
+                },
+              ],
+              usecaseName: 'test',
+            },
+          ],
+        };
+
+        expect(() => assertMapDocumentNode(invalidNode)).toThrow(
+          'definitions.0.statements.0.terminateFlow: must be boolean, received string'
+        );
+      }
+
+      const validNode: MapDocumentNode = {
         astMetadata: {
           sourceChecksum: 'checksum',
           astVersion: {
@@ -478,9 +551,26 @@ describe('map-ast.utils', () => {
           },
           provider: 'provider',
         },
-        definitions: [],
+        definitions: [
+          {
+            kind: 'MapDefinition',
+            name: 'test',
+            statements: [
+              {
+                kind: 'OutcomeStatement',
+                isError: false,
+                terminateFlow: true,
+                value: {
+                  kind: 'PrimitiveLiteral',
+                  value: 7,
+                },
+              },
+            ],
+            usecaseName: 'test',
+          },
+        ],
       };
-      expect(assertMapDocumentNode(node)).toEqual(node);
+      expect(assertMapDocumentNode(validNode)).toEqual(validNode);
     });
   });
 });

@@ -1,4 +1,4 @@
-import { prepareAssert, preparePrepareIs } from '../../validation';
+import { prepareAssert } from '../../validation';
 import {
   AssignmentNode,
   CallStatementNode,
@@ -20,63 +20,62 @@ import {
   SetStatementNode,
 } from './map-ast';
 import * as schema from './map-ast.schema.json';
-import { Assert, Guard } from './utils';
+import { Assert } from './utils';
 
-const prepareIs = preparePrepareIs(schema);
 const assertEquals: Assert<MapDocumentNode> = prepareAssert(schema);
 
-export const isAssignmentNode: Guard<AssignmentNode> =
-  prepareIs<AssignmentNode>('#/definitions/AssignmentNode');
-export const isCallStatementNode: Guard<CallStatementNode> =
-  prepareIs<CallStatementNode>('#/definitions/CallStatementNode');
-export const isConditionAtomNode: Guard<ConditionAtomNode> =
-  prepareIs<ConditionAtomNode>('#/definitions/ConditionAtomNode');
-export const isHttpCallStatementNode: Guard<HttpCallStatementNode> =
-  prepareIs<HttpCallStatementNode>('#/definitions/HttpCallStatementNode');
-export const isHttpRequestNode: Guard<HttpRequestNode> =
-  prepareIs<HttpRequestNode>('#/definitions/HttpRequestNode');
-export const isHttpResponseHandlerNode: Guard<HttpResponseHandlerNode> =
-  prepareIs<HttpResponseHandlerNode>('#/definitions/HttpResponseHandlerNode');
-export const isInlineCallNode: Guard<InlineCallNode> =
-  prepareIs<InlineCallNode>('#/definitions/InlineCallNode');
-export const isIterationAtomNode: Guard<IterationAtomNode> =
-  prepareIs<IterationAtomNode>('#/definitions/IterationAtomNode');
-export const isJessieExpressionNode: Guard<JessieExpressionNode> =
-  prepareIs<JessieExpressionNode>('#/definitions/JessieExpressionNode');
-export const isMapASTNode: Guard<MapASTNode> = prepareIs<MapASTNode>(
-  '#/definitions/MapASTNode'
-);
-export const isMapDefinitionNode: Guard<MapDefinitionNode> =
-  prepareIs<MapDefinitionNode>('#/definitions/MapDefinitionNode');
-export const isMapDocumentNode: Guard<MapDocumentNode> =
-  prepareIs<MapDocumentNode>('#/definitions/MapDocumentNode');
-export const isMapHeaderNode: Guard<MapHeaderNode> = prepareIs<MapHeaderNode>(
-  '#/definitions/MapHeaderNode'
-);
-export const isObjectLiteralNode: Guard<ObjectLiteralNode> =
-  prepareIs<ObjectLiteralNode>('#/definitions/ObjectLiteralNode');
-export const isOperationDefinitionNode: Guard<OperationDefinitionNode> =
-  prepareIs<OperationDefinitionNode>('#/definitions/OperationDefinitionNode');
-export const isOutcomeStatementNode: Guard<OutcomeStatementNode> =
-  prepareIs<OutcomeStatementNode>('#/definitions/OutcomeStatementNode');
-export const isPrimitiveLiteralNode: Guard<PrimitiveLiteralNode> =
-  prepareIs<PrimitiveLiteralNode>('#/definitions/PrimitiveLiteralNode');
-export const isSetStatementNode: Guard<SetStatementNode> =
-  prepareIs<SetStatementNode>('#/definitions/SetStatementNode');
+// We don't need to do JSON Schema validation on these, as they should be already validated
+export const isAssignmentNode = (node: MapASTNode): node is AssignmentNode =>
+  node.kind === 'Assignment';
+export const isCallStatementNode = (
+  node: MapASTNode
+): node is CallStatementNode => node.kind === 'CallStatement';
+export const isConditionAtomNode = (
+  node: MapASTNode
+): node is ConditionAtomNode => node.kind === 'ConditionAtom';
+export const isHttpCallStatementNode = (
+  node: MapASTNode
+): node is HttpCallStatementNode => node.kind === 'HttpCallStatement';
+export const isHttpRequestNode = (node: MapASTNode): node is HttpRequestNode =>
+  node.kind === 'HttpRequest';
+export const isHttpResponseHandlerNode = (
+  node: MapASTNode
+): node is HttpResponseHandlerNode => node.kind === 'HttpResponseHandler';
+export const isInlineCallNode = (node: MapASTNode): node is InlineCallNode =>
+  node.kind === 'InlineCall';
+export const isIterationAtomNode = (
+  node: MapASTNode
+): node is IterationAtomNode => node.kind === 'IterationAtom';
+export const isJessieExpressionNode = (
+  node: MapASTNode
+): node is JessieExpressionNode => node.kind === 'JessieExpression';
+export const isMapDefinitionNode = (
+  node: MapASTNode
+): node is MapDefinitionNode => node.kind === 'MapDefinition';
+export const isMapDocumentNode = (node: MapASTNode): node is MapDocumentNode =>
+  node.kind === 'MapDocument';
+export const isMapHeaderNode = (node: MapASTNode): node is MapHeaderNode =>
+  node.kind === 'MapHeader';
+export const isObjectLiteralNode = (
+  node: MapASTNode
+): node is ObjectLiteralNode => node.kind === 'ObjectLiteral';
+export const isOperationDefinitionNode = (
+  node: MapASTNode
+): node is OperationDefinitionNode => node.kind === 'OperationDefinition';
+export const isOutcomeStatementNode = (
+  node: MapASTNode
+): node is OutcomeStatementNode => node.kind === 'OutcomeStatement';
+export const isPrimitiveLiteralNode = (
+  node: MapASTNode
+): node is PrimitiveLiteralNode => node.kind === 'PrimitiveLiteral';
+export const isSetStatementNode = (
+  node: MapASTNode
+): node is SetStatementNode => node.kind === 'SetStatement';
 
 export function assertMapDocumentNode(node: unknown): MapDocumentNode {
   assertEquals(node);
 
   return node;
-  // const assert = createAssertEquals<MapDocumentNode>();
-  // try {
-  //   return assert(node);
-  // } catch (error) {
-  //   if (error instanceof TypeGuardError) {
-  //     throw new AssertionError(`Map AST ${error.message}`, error.path);
-  //   }
-  //   throw error;
-  // }
 }
 
 export interface MapAstVisitor<R = unknown> {

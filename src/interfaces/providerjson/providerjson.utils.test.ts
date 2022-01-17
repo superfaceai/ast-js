@@ -176,7 +176,7 @@ describe('ProviderJsonDocument', () => {
       }`;
     expect(() => {
       assertProviderJson(JSON.parse(providerJson));
-    }).toThrow("data must have required property 'name'");
+    }).toThrow('$: must have required property "name"');
   });
 
   it('throws error on document with invalid name', () => {
@@ -192,7 +192,7 @@ describe('ProviderJsonDocument', () => {
       }`;
     expect(() => {
       assertProviderJson(JSON.parse(providerJson));
-    }).toThrow('data/name must match pattern');
+    }).toThrow('$.name: must match pattern');
   });
 
   it('throws error on document with missing services', () => {
@@ -202,7 +202,7 @@ describe('ProviderJsonDocument', () => {
       }`;
     expect(() => {
       assertProviderJson(JSON.parse(providerJson));
-    }).toThrow("data must have required property 'services'");
+    }).toThrow('$: must have required property "services"');
   });
 
   it('throws error on document with missing property in services', () => {
@@ -217,7 +217,7 @@ describe('ProviderJsonDocument', () => {
       }`;
     expect(() => {
       assertProviderJson(JSON.parse(providerJson));
-    }).toThrow("data/services/0 must have required property 'baseUrl'");
+    }).toThrow('$.services.0: must have required property "baseUrl"');
   });
 
   it('throws error on document with missing defaultService', () => {
@@ -232,7 +232,7 @@ describe('ProviderJsonDocument', () => {
       }`;
     expect(() => {
       assertProviderJson(JSON.parse(providerJson));
-    }).toThrow(`data must have required property 'defaultService'`);
+    }).toThrow('$: must have required property "defaultService"');
   });
 
   it('throws error on document with missing id property in securitySchemes', () => {

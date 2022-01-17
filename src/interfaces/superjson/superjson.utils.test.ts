@@ -77,7 +77,7 @@ describe('super.json utils', () => {
         in: 'valid',
       };
       expect(() => assertSuperJsonDocument(superjson)).toThrow(
-        'data must NOT have additional properties'
+        '$: must not have additional property "in"'
       );
     });
   });

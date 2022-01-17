@@ -520,7 +520,7 @@ describe('profile-ast.utils', () => {
         name: 'boolean',
       };
       expect(() => assertProfileDocumentNode(primitiveNode)).toThrow(
-        "data must have required property 'astMetadata'"
+        '$: must have required property "astMetadata"'
       );
 
       const node: ProfileDocumentNode = {
