@@ -22,6 +22,66 @@ export enum HttpScheme {
   DIGEST = 'digest',
 }
 
+//OAuth
+export enum OAuthClientAuthenticationMethod {
+  CLIENT_SECRET_BASIC = 'client_secret_basic',
+  CLIENT_SECRET_POST = 'client_secret_post',
+  //TODO: jwt?
+}
+
+export enum OAuthScheme {
+  IMPLICIT = 'implicit',
+  AUTHORIZATION_CODE = 'authorizationCode',
+  PASSWORD = 'password',
+  CLIENT_CREDENTIALS = 'clientCredentials',
+  //TODO: missing something?
+}
+
+type OAuthBase = {
+  //In all OAuth security schemes
+  scopes: string[];
+  refreshUrl?: string;
+
+  //Customizable oauth properties
+  /**
+   * Defines how SDK sends client credentials, default is 'client_secret_basic'
+   */
+  clientAuthenticationMethod?: OAuthClientAuthenticationMethod;
+
+  /**
+   * Defines which HTTP status code is marking expired access token, default is 401
+   */
+  //TODO: better name
+  refreshStatusCode?: number;
+};
+
+//stolen from postman and openAPI: https://swagger.io/specification/#oauth-flows-object
+type ImplicitOAuthSecurityScheme = OAuthBase & {
+  //TODO: when working with urls - make them absolute or use base url from provider json?
+  authorizationUrl: string;
+};
+
+type AuthorizationCodeOAuthSecurityScheme = OAuthBase & {
+  authorizationUrl: string;
+  tokenUrl: string;
+};
+
+type PasswordOAuthSecurityScheme = OAuthBase & {
+  tokenUrl: string;
+};
+
+type ClientCredentialsOAuthSecurityScheme = OAuthBase & {
+  tokenUrl: string;
+};
+
+//TODO: make at least one security scheme required
+export type OAuthSecurityScheme = {
+  [OAuthScheme.IMPLICIT]?: ImplicitOAuthSecurityScheme;
+  [OAuthScheme.AUTHORIZATION_CODE]?: AuthorizationCodeOAuthSecurityScheme;
+  [OAuthScheme.PASSWORD]?: PasswordOAuthSecurityScheme;
+  [OAuthScheme.CLIENT_CREDENTIALS]?: ClientCredentialsOAuthSecurityScheme;
+};
+
 /**
  * Security scheme for api key authorization.
  */
@@ -79,7 +139,8 @@ export type SecurityScheme =
   | ApiKeySecurityScheme
   | BasicAuthSecurityScheme
   | BearerTokenSecurityScheme
-  | DigestSecurityScheme;
+  | DigestSecurityScheme
+  | OAuthSecurityScheme;
 
 export type ProviderService = {
   id: string;

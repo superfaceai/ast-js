@@ -48,6 +48,11 @@
             "items": {
                 "anyOf": [
                     {
+                        "properties": {
+                        },
+                        "type": "object"
+                    },
+                    {
                         "additionalProperties": false,
                         "description": "Security scheme for api key authorization.",
                         "properties": {

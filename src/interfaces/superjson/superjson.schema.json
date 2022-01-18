@@ -634,6 +634,39 @@
                                                 "username"
                                             ],
                                             "type": "object"
+                                        },
+                                        {
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "accessToken": {
+                                                    "type": "string"
+                                                },
+                                                "clientId": {
+                                                    "type": "string"
+                                                },
+                                                "clientSecret": {
+                                                    "type": "string"
+                                                },
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "refreshToken": {
+                                                    "type": "string"
+                                                },
+                                                "tokenType": {
+                                                    "enum": [
+                                                        "Bearer"
+                                                    ],
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "clientId",
+                                                "clientSecret",
+                                                "id",
+                                                "refreshToken"
+                                            ],
+                                            "type": "object"
                                         }
                                     ],
                                     "description": "Authorization variables."

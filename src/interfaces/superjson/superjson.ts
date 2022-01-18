@@ -226,6 +226,20 @@ export type DigestSecurityValues = IdBase & {
   password: string;
 };
 
+export enum OAuthTokenType {
+  BEARER = 'Bearer',
+  //TODO: mac
+}
+
+export type OAuthSecurityValues = IdBase & {
+  clientId: string;
+  clientSecret: string;
+  //TODO: refresh token is required only for now - make optional when we are able to do entire flow
+  refreshToken: string;
+  accessToken?: string;
+  tokenType?: OAuthTokenType;
+};
+
 /**
  * Authorization variables.
  */
@@ -233,7 +247,8 @@ export type SecurityValues =
   | ApiKeySecurityValues
   | BasicAuthSecurityValues
   | BearerTokenSecurityValues
-  | DigestSecurityValues;
+  | DigestSecurityValues
+  | OAuthSecurityValues;
 
 /**
  * Expanded provider settings for one provider name.
