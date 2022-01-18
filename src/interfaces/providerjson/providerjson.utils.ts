@@ -22,27 +22,14 @@ const prepareIs = preparePrepareIs(schema);
 export const isProviderJson: Guard<ProviderJson> =
   prepareIs<ProviderJson>('ProviderJson');
 
-const assertEquals: Assert<ProviderJson> = prepareAssert<ProviderJson>(schema);
+const assertProvider: Assert<ProviderJson> = prepareAssert<ProviderJson>(
+  schema,
+  'provider-json'
+);
 export function assertProviderJson(input: unknown): ProviderJson {
-  assertEquals(input);
+  assertProvider(input);
 
   return input;
-
-  // if (!isValidProviderName(parsedInput.name)) {
-  //   throw new AssertionError('invalid provider name', ['$', 'name']);
-  // }
-
-  // if (parsedInput.parameters !== undefined) {
-  //   for (const [index, parameter] of parsedInput.parameters.entries()) {
-  //     if (!isValidIdentifier(parameter.name)) {
-  //       throw new AssertionError('invalid parameter name', [
-  //         '$',
-  //         'parameters',
-  //         index.toString(),
-  //       ]);
-  //     }
-  //   }
-  // }
 }
 
 export const isApiKeySecurityScheme: Guard<ApiKeySecurityScheme> =

@@ -4,11 +4,12 @@ import addFormats from 'ajv-formats';
 import { AssertionError } from './error';
 import { Assert, Guard } from './interfaces';
 
+const ajv = new Ajv({ allowUnionTypes: true });
+addFormats(ajv);
+
 export function preparePrepareIs(
   schema: AnySchema
 ): <T>(id: string) => Guard<T> {
-  const ajv = new Ajv({ allowUnionTypes: true });
-  addFormats(ajv);
   ajv.addSchema(schema);
 
   return <T>(id: string) => {
@@ -103,10 +104,8 @@ function digIntoInput(input: unknown, path: string[]) {
   return current;
 }
 
-export function prepareAssert<T>(schema: AnySchema): Assert<T> {
-  const ajv = new Ajv({ allowUnionTypes: true });
-  addFormats(ajv);
-  ajv.addSchema(schema);
+export function prepareAssert<T>(schema: AnySchema, key: string): Assert<T> {
+  ajv.addSchema(schema, key);
 
   return function assert(input: unknown): asserts input is T {
     if (!ajv.validate(schema, input)) {

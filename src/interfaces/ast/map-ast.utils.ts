@@ -22,7 +22,10 @@ import {
 import * as schema from './map-ast.schema.json';
 import { Assert } from './utils';
 
-const assertEquals: Assert<MapDocumentNode> = prepareAssert(schema);
+const assertMapDocument: Assert<MapDocumentNode> = prepareAssert(
+  schema,
+  'map-ast'
+);
 
 // We don't need to do JSON Schema validation on these, as they should be already validated
 export const isAssignmentNode = (node: MapASTNode): node is AssignmentNode =>
@@ -73,7 +76,7 @@ export const isSetStatementNode = (
 ): node is SetStatementNode => node.kind === 'SetStatement';
 
 export function assertMapDocumentNode(node: unknown): MapDocumentNode {
-  assertEquals(node);
+  assertMapDocument(node);
 
   return node;
 }

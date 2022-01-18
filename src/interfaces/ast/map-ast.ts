@@ -178,7 +178,7 @@ export interface HttpResponseHandlerNode extends MapASTNodeBase {
 }
 
 /**
- * Http call statement: `http <method> <url> { <?request> <...responseHandlers> }`
+ * Http call statement: `http <method> <?service> <url> { <?request> <...responseHandlers> }`
  */
 export interface HttpCallStatementNode extends MapASTNodeBase {
   kind: 'HttpCallStatement';

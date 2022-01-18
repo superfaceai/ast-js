@@ -307,6 +307,11 @@ export type ProfileASTNode =
 // EXAMPLES //
 
 /**
+ * Construct of form: `example <?name> {
+ *   <?input> { ... }
+ *   <?result> { ... }
+ *   <?error> { ... }
+ * }`
  */
 export interface UseCaseExampleNode extends ProfileASTNodeBase {
   kind: 'UseCaseExample';
@@ -352,8 +357,6 @@ export interface ComlinkAssignmentNode
   value: ComlinkLiteralNode;
 }
 
-/**
- */
 export type ComlinkLiteralNode =
   | ComlinkPrimitiveLiteralNode
   | ComlinkObjectLiteralNode

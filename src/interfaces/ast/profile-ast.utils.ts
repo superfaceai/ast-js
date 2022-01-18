@@ -30,7 +30,10 @@ import {
 import * as schema from './profile-ast.schema.json';
 import { Assert } from './utils';
 
-const assertEquals: Assert<ProfileDocumentNode> = prepareAssert(schema);
+const assertProfileDocument: Assert<ProfileDocumentNode> = prepareAssert(
+  schema,
+  'profile-ast'
+);
 
 // We don't need to do JSON Schema validation on these, as they should be already validated
 export const isEnumDefinitionNode = (
@@ -142,7 +145,7 @@ export const isDocumentDefinition = (
   isNamedFieldDefinitionNode(input);
 
 export function assertProfileDocumentNode(node: unknown): ProfileDocumentNode {
-  assertEquals(node);
+  assertProfileDocument(node);
 
   return node;
 }

@@ -2340,6 +2340,7 @@
         },
         "UseCaseExampleNode": {
             "additionalProperties": false,
+            "description": "Construct of form: `example <?name> {\n  <?input> { ... }\n  <?result> { ... }\n  <?error> { ... }\n}`",
             "properties": {
                 "asyncResult": {
                     "$ref": "#/definitions/UseCaseSlotDefinitionNode<ComlinkLiteralNode>"

@@ -337,7 +337,7 @@
         },
         "HttpCallStatementNode": {
             "additionalProperties": false,
-            "description": "Http call statement: `http <method> <url> { <?request> <...responseHandlers> }`",
+            "description": "Http call statement: `http <method> <?service> <url> { <?request> <...responseHandlers> }`",
             "properties": {
                 "kind": {
                     "enum": [
