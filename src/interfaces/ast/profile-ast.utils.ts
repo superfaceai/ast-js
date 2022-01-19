@@ -2,6 +2,11 @@ import { createAssertEquals, createIs, TypeGuardError } from 'typescript-is';
 
 import { AssertionError } from '../../error';
 import {
+  ComlinkAssignmentNode,
+  ComlinkListLiteralNode,
+  ComlinkLiteralNode,
+  ComlinkObjectLiteralNode,
+  ComlinkPrimitiveLiteralNode,
   DocumentDefinition,
   EnumDefinitionNode,
   EnumValueNode,
@@ -21,6 +26,7 @@ import {
   TypeName,
   UnionDefinitionNode,
   UseCaseDefinitionNode,
+  UseCaseExampleNode,
   UseCaseSlotDefinitionNode,
 } from './profile-ast';
 import { Guard } from './utils';
@@ -63,6 +69,18 @@ export const isUseCaseDefinitionNode: Guard<UseCaseDefinitionNode> =
 export const isUseCaseSlotDefinitionNode: Guard<
   UseCaseSlotDefinitionNode<ProfileASTNode>
 > = createIs<UseCaseSlotDefinitionNode<ProfileASTNode>>();
+export const isUseCaseExampleNode: Guard<UseCaseExampleNode> =
+  createIs<UseCaseExampleNode>();
+export const isComlinkPrimitiveLiteralNode: Guard<ComlinkPrimitiveLiteralNode> =
+  createIs<ComlinkPrimitiveLiteralNode>();
+export const isComlinkObjectLiteralNode: Guard<ComlinkObjectLiteralNode> =
+  createIs<ComlinkObjectLiteralNode>();
+export const isComlinkListLiteralNode: Guard<ComlinkListLiteralNode> =
+  createIs<ComlinkListLiteralNode>();
+export const isComlinkLiteralNode: Guard<ComlinkLiteralNode> =
+  createIs<ComlinkLiteralNode>();
+export const isComlinkAssignmentNode: Guard<ComlinkAssignmentNode> =
+  createIs<ComlinkAssignmentNode>();
 
 export function assertProfileDocumentNode(node: unknown): ProfileDocumentNode {
   const assert = createAssertEquals<ProfileDocumentNode>();
@@ -123,6 +141,26 @@ export interface ProfileAstVisitor<R = unknown> {
   ): R;
   visitUseCaseDefinitionNode(
     node: UseCaseDefinitionNode,
+    ...parameters: unknown[]
+  ): R;
+  visitUseCaseExampleNode(
+    node: UseCaseExampleNode,
+    ...parameters: unknown[]
+  ): R;
+  visitComlinkPrimitiveLiteralNode(
+    node: ComlinkPrimitiveLiteralNode,
+    ...parameters: unknown[]
+  ): R;
+  visitComlinkObjectLiteralNode(
+    node: ComlinkObjectLiteralNode,
+    ...parameters: unknown[]
+  ): R;
+  visitComlinkListLiteralNode(
+    node: ComlinkListLiteralNode,
+    ...parameters: unknown[]
+  ): R;
+  visitComlinkAssignmentNode(
+    node: ComlinkAssignmentNode,
     ...parameters: unknown[]
   ): R;
 }

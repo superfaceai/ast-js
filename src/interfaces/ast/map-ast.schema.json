@@ -414,6 +414,9 @@
                     },
                     "type": "array"
                 },
+                "serviceId": {
+                    "type": "string"
+                },
                 "url": {
                     "format": "uri-reference",
                     "type": "string"

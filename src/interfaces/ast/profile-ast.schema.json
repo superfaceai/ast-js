@@ -708,6 +708,9 @@
                     ],
                     "type": "object"
                 },
+                "name": {
+                    "type": "string"
+                },
                 "value": {
                     "type": [
                         "string",

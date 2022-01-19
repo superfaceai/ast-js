@@ -135,6 +135,14 @@
                         "additionalProperties": false,
                         "description": "Security scheme for digest authorization.",
                         "properties": {
+                            "authorizationHeader": {
+                                "description": "Name of header containing authorization eg. Authorization",
+                                "type": "string"
+                            },
+                            "challengeHeader": {
+                                "description": "Name of header containing challenge from the server eg. www-authenticate",
+                                "type": "string"
+                            },
                             "id": {
                                 "type": "string"
                             },
@@ -143,6 +151,10 @@
                                     "digest"
                                 ],
                                 "type": "string"
+                            },
+                            "statusCode": {
+                                "description": "Code that should be returned from initial call for challenge eg. 401",
+                                "type": "number"
                             },
                             "type": {
                                 "enum": [

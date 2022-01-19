@@ -58,6 +58,18 @@ export type DigestSecurityScheme = {
   id: string;
   type: SecurityType.HTTP;
   scheme: HttpScheme.DIGEST;
+  /**
+   * Code that should be returned from initial call for challenge eg. 401
+   */
+  statusCode?: number | undefined;
+  /**
+   * Name of header containing challenge from the server eg. www-authenticate
+   */
+  challengeHeader?: string | undefined;
+  /**
+   * Name of header containing authorization eg. Authorization
+   */
+  authorizationHeader?: string | undefined;
 };
 
 /**

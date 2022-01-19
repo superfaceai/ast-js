@@ -1,27 +1,34 @@
 import { AssertionError } from '../../error';
 import {
-  isPrimitiveTypeNameNode,
-  ModelTypeNameNode,
-  PrimitiveTypeNameNode,
-} from '.';
-import {
+  ComlinkAssignmentNode,
+  ComlinkListLiteralNode,
+  ComlinkObjectLiteralNode,
+  ComlinkPrimitiveLiteralNode,
   EnumDefinitionNode,
   EnumValueNode,
   FieldDefinitionNode,
   ListDefinitionNode,
+  ModelTypeNameNode,
   NamedFieldDefinitionNode,
   NamedModelDefinitionNode,
   NonNullDefinitionNode,
   ObjectDefinitionNode,
+  PrimitiveTypeNameNode,
   ProfileDocumentNode,
   ProfileHeaderNode,
   Type,
   UnionDefinitionNode,
   UseCaseDefinitionNode,
+  UseCaseExampleNode,
   UseCaseSlotDefinitionNode,
 } from './profile-ast';
 import {
   assertProfileDocumentNode,
+  isComlinkAssignmentNode,
+  isComlinkListLiteralNode,
+  isComlinkLiteralNode,
+  isComlinkObjectLiteralNode,
+  isComlinkPrimitiveLiteralNode,
   isDocumentDefinition,
   isEnumDefinitionNode,
   isEnumValueNode,
@@ -32,6 +39,7 @@ import {
   isNamedModelDefinitionNode,
   isNonNullDefinitionNode,
   isObjectDefinitionNode,
+  isPrimitiveTypeNameNode,
   isProfileDocumentNode,
   isProfileHeaderNode,
   isType,
@@ -39,6 +47,7 @@ import {
   isTypeName,
   isUnionDefinitionNode,
   isUseCaseDefinitionNode,
+  isUseCaseExampleNode,
   isUseCaseSlotDefinitionNode,
 } from './profile-ast.utils';
 
@@ -213,6 +222,7 @@ describe('profile-ast.utils', () => {
 
       const enumValueNode: EnumValueNode = {
         kind: 'EnumValue',
+        name: 'FOO',
         value: 1,
       };
       expect(isType(enumValueNode)).toEqual(false);
@@ -229,6 +239,7 @@ describe('profile-ast.utils', () => {
 
       const enumValueNode: EnumValueNode = {
         kind: 'EnumValue',
+        name: 'FOO',
         value: 1,
       };
       expect(isEnumValueNode(enumValueNode)).toEqual(true);
@@ -385,6 +396,126 @@ describe('profile-ast.utils', () => {
       expect(isDocumentDefinition(node)).toEqual(true);
     });
   });
+
+  describe('isUseCaseExample', () => {
+    it('checks if node is usecase example node', () => {
+      const primitiveNode: PrimitiveTypeNameNode = {
+        kind: 'PrimitiveTypeName',
+        name: 'boolean',
+      };
+      expect(isUseCaseExampleNode(primitiveNode)).toEqual(false);
+
+      const node: UseCaseExampleNode = {
+        kind: 'UseCaseExample',
+        exampleName: 'test',
+      };
+      expect(isUseCaseExampleNode(node)).toEqual(true);
+    });
+  });
+
+  describe('isComlinkPrimitiveLiteral', () => {
+    it('checks if node is comlink primitive literal node', () => {
+      const primitiveNode: PrimitiveTypeNameNode = {
+        kind: 'PrimitiveTypeName',
+        name: 'boolean',
+      };
+      expect(isComlinkPrimitiveLiteralNode(primitiveNode)).toEqual(false);
+
+      const node: ComlinkPrimitiveLiteralNode = {
+        kind: 'ComlinkPrimitiveLiteral',
+        value: 'test',
+      };
+      expect(isComlinkPrimitiveLiteralNode(node)).toEqual(true);
+    });
+  });
+
+  describe('isComlinkObjectLiteral', () => {
+    it('checks if node is comlink object literal node', () => {
+      const primitiveNode: PrimitiveTypeNameNode = {
+        kind: 'PrimitiveTypeName',
+        name: 'boolean',
+      };
+      expect(isComlinkObjectLiteralNode(primitiveNode)).toEqual(false);
+
+      const node: ComlinkObjectLiteralNode = {
+        kind: 'ComlinkObjectLiteral',
+        fields: [
+          {
+            kind: 'ComlinkAssignment',
+            key: ['key'],
+            value: {
+              kind: 'ComlinkPrimitiveLiteral',
+              value: 'test',
+            },
+          },
+        ],
+      };
+      expect(isComlinkObjectLiteralNode(node)).toEqual(true);
+    });
+  });
+
+  describe('isComlinkListLiteral', () => {
+    it('checks if node is comlink list literal node', () => {
+      const primitiveNode: PrimitiveTypeNameNode = {
+        kind: 'PrimitiveTypeName',
+        name: 'boolean',
+      };
+      expect(isComlinkListLiteralNode(primitiveNode)).toEqual(false);
+
+      const node: ComlinkListLiteralNode = {
+        kind: 'ComlinkListLiteral',
+        items: [
+          {
+            kind: 'ComlinkPrimitiveLiteral',
+            value: 'test',
+          },
+        ],
+      };
+      expect(isComlinkListLiteralNode(node)).toEqual(true);
+    });
+  });
+
+  describe('isComlinkLiteral', () => {
+    it('checks if node is comlink literal node', () => {
+      const primitiveNode: PrimitiveTypeNameNode = {
+        kind: 'PrimitiveTypeName',
+        name: 'boolean',
+      };
+      expect(isComlinkLiteralNode(primitiveNode)).toEqual(false);
+
+      const node: ComlinkListLiteralNode = {
+        kind: 'ComlinkListLiteral',
+        items: [
+          {
+            kind: 'ComlinkPrimitiveLiteral',
+            value: 'test',
+          },
+        ],
+      };
+      expect(isComlinkLiteralNode(node)).toEqual(true);
+    });
+  });
+
+  describe('isComlinkAssignment', () => {
+    it('checks if node is comlink assignment node', () => {
+      const primitiveNode: PrimitiveTypeNameNode = {
+        kind: 'PrimitiveTypeName',
+        name: 'boolean',
+      };
+      expect(isComlinkAssignmentNode(primitiveNode)).toEqual(false);
+
+      const node: ComlinkAssignmentNode = {
+        kind: 'ComlinkAssignment',
+        key: ['test'],
+        value: {
+          kind: 'ComlinkPrimitiveLiteral',
+          value: 'test',
+        },
+      };
+      expect(isComlinkAssignmentNode(node)).toEqual(true);
+    });
+  });
+
   describe('assertProfileDocumentNode', () => {
     it('asserts node is profile document node', () => {
       const primitiveNode: PrimitiveTypeNameNode = {
