@@ -1,6 +1,6 @@
 {
+    "$ref": "#/definitions/MapDocumentNode",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "additionalProperties": false,
     "definitions": {
         "AssignmentNode": {
             "additionalProperties": false,
@@ -89,6 +89,7 @@
             "type": "object"
         },
         "AstMetadata": {
+            "$id": "AstMetadata",
             "additionalProperties": false,
             "description": "Information about AST and Parser used to compile provided AST",
             "properties": {
@@ -336,6 +337,7 @@
         },
         "HttpCallStatementNode": {
             "additionalProperties": false,
+            "description": "Http call statement: `http <method> <?service> <url> { <?request> <...responseHandlers> }`",
             "properties": {
                 "kind": {
                     "enum": [
@@ -432,7 +434,7 @@
         },
         "HttpRequestNode": {
             "additionalProperties": false,
-            "description": "Request definition for http:\n`request <?contentType> <?contentLanguage> { <?query> <?headers? <?body> }`",
+            "description": "Request definition for http:\n`request <?contentType> <?contentLanguage> { <?query> <?headers> <?body> }`",
             "properties": {
                 "body": {
                     "anyOf": [
@@ -530,6 +532,7 @@
                 "security": {
                     "items": {
                         "additionalProperties": false,
+                        "description": "Http security requirement: `security <id>`",
                         "properties": {
                             "id": {
                                 "type": "string"
@@ -835,6 +838,7 @@
         },
         "JessieExpressionNode": {
             "additionalProperties": false,
+            "description": "Jessie expression node: `<expression>`",
             "properties": {
                 "expression": {
                     "type": "string"
@@ -935,6 +939,7 @@
         },
         "MapDefinitionNode": {
             "additionalProperties": false,
+            "description": "Map definition: `map <name> { <...statements> }`",
             "properties": {
                 "documentation": {
                     "additionalProperties": false,
@@ -1111,8 +1116,106 @@
             ],
             "type": "object"
         },
+        "MapDocumentNode": {
+            "additionalProperties": false,
+            "description": "Map document:\n`<header>`\n`<...definitions>`",
+            "properties": {
+                "astMetadata": {
+                    "$ref": "AstMetadata"
+                },
+                "definitions": {
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/definitions/MapDefinitionNode"
+                            },
+                            {
+                                "$ref": "#/definitions/OperationDefinitionNode"
+                            }
+                        ]
+                    },
+                    "type": "array"
+                },
+                "header": {
+                    "$ref": "#/definitions/MapHeaderNode"
+                },
+                "kind": {
+                    "enum": [
+                        "MapDocument"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "description": "Location span within the source.",
+                    "properties": {
+                        "end": {
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
+                        },
+                        "start": {
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "astMetadata",
+                "definitions",
+                "header",
+                "kind"
+            ],
+            "type": "object"
+        },
         "MapHeaderNode": {
             "additionalProperties": false,
+            "description": "Map header:\n`profile = <profile>`\n`provider = <provider>`",
             "properties": {
                 "documentation": {
                     "additionalProperties": false,
@@ -1397,6 +1500,7 @@
         },
         "OperationDefinitionNode": {
             "additionalProperties": false,
+            "description": "Operation definition: `operation <name> { <...statements> }`",
             "properties": {
                 "documentation": {
                     "additionalProperties": false,
@@ -1826,99 +1930,6 @@
             ],
             "type": "object"
         }
-    },
-    "properties": {
-        "astMetadata": {
-            "$ref": "#/definitions/AstMetadata"
-        },
-        "definitions": {
-            "items": {
-                "anyOf": [
-                    {
-                        "$ref": "#/definitions/MapDefinitionNode"
-                    },
-                    {
-                        "$ref": "#/definitions/OperationDefinitionNode"
-                    }
-                ]
-            },
-            "type": "array"
-        },
-        "header": {
-            "$ref": "#/definitions/MapHeaderNode"
-        },
-        "kind": {
-            "enum": [
-                "MapDocument"
-            ],
-            "type": "string"
-        },
-        "location": {
-            "additionalProperties": false,
-            "description": "Location span within the source.",
-            "properties": {
-                "end": {
-                    "additionalProperties": false,
-                    "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
-                    "properties": {
-                        "charIndex": {
-                            "description": "Character index within the source code - starts at 0",
-                            "type": "number"
-                        },
-                        "column": {
-                            "description": "Column number - starts at 1",
-                            "type": "number"
-                        },
-                        "line": {
-                            "description": "Line number - starts at 1",
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "charIndex",
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "start": {
-                    "additionalProperties": false,
-                    "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
-                    "properties": {
-                        "charIndex": {
-                            "description": "Character index within the source code - starts at 0",
-                            "type": "number"
-                        },
-                        "column": {
-                            "description": "Column number - starts at 1",
-                            "type": "number"
-                        },
-                        "line": {
-                            "description": "Line number - starts at 1",
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "charIndex",
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                }
-            },
-            "required": [
-                "end",
-                "start"
-            ],
-            "type": "object"
-        }
-    },
-    "required": [
-        "astMetadata",
-        "definitions",
-        "header",
-        "kind"
-    ],
-    "type": "object"
+    }
 }
 

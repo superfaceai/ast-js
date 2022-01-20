@@ -21,7 +21,7 @@
     "lint:fix": "yarn lint --fix",
     "format": "prettier -c src/",
     "format:fix": "prettier --write src/",
-    "generate_schema": "typescript-json-schema --noExtraProps --required --strictNullChecks --tsNodeRegister",
+    "generate_schema": "typescript-json-schema --noExtraProps --required --strictNullChecks --tsNodeRegister --topRef",
     "generate_profile_schema": "yarn run generate_schema src/interfaces/ast/profile-ast.ts ProfileDocumentNode -o src/interfaces/ast/profile-ast.schema.json",
     "generate_map_schema": "yarn run generate_schema src/interfaces/ast/map-ast.ts MapDocumentNode -o src/interfaces/ast/map-ast.schema.json",
     "generate_superjson_schema": "yarn run generate_schema src/interfaces/superjson/superjson.ts SuperJsonDocument -o src/interfaces/superjson/superjson.schema.json",
@@ -30,7 +30,8 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "typescript-is": "^0.18.3"
+    "ajv": "^8.8.2",
+    "ajv-formats": "^2.1.1"
   },
   "devDependencies": {
     "@types/jest": "^26.0.24",
@@ -48,8 +49,7 @@
     "rimraf": "^3.0.2",
     "ts-jest": "^27.0.4",
     "ts-node": "^10.1.0",
-    "ttypescript": "^1.5.12",
-    "typescript": "^4.3.5",
+    "typescript": "^4",
     "typescript-json-schema": "^0.50.1"
   }
 }

@@ -38,7 +38,9 @@ export interface ProfileASTNodeBase {
 
 // TYPES //
 
-/** From keywords: `boolean`, `number` and `string` */
+/**
+ * From keywords: `boolean`, `number` and `string`
+ */
 export interface PrimitiveTypeNameNode extends ProfileASTNodeBase {
   kind: 'PrimitiveTypeName';
   name: 'boolean' | 'number' | 'string';
@@ -56,21 +58,28 @@ export interface ModelTypeNameNode extends ProfileASTNodeBase {
    **/
   name: string;
 }
+
 export type TypeName = PrimitiveTypeNameNode | ModelTypeNameNode;
 
-/** Construct of form: `enum { values... }` */
+/**
+ * Construct of form: `enum { values... }`
+ */
 export interface EnumDefinitionNode extends ProfileASTNodeBase {
   kind: 'EnumDefinition';
   values: EnumValueNode[];
 }
 
-/** Construct of form: `{ fields... }` */
+/**
+ * Construct of form: `{ fields... }`
+ */
 export interface ObjectDefinitionNode extends ProfileASTNodeBase {
   kind: 'ObjectDefinition';
   fields: FieldDefinitionNode[];
 }
 
-/** Array type: `[type]` */
+/**
+ * Array type: `[type]`
+ */
 export interface ListDefinitionNode extends ProfileASTNodeBase {
   kind: 'ListDefinition';
   elementType: Type;
@@ -91,7 +100,9 @@ export interface NonNullDefinitionNode extends ProfileASTNodeBase {
     | ListDefinitionNode;
 }
 
-/** Construct of form: `type | type | ...` */
+/**
+ * Construct of form: `type | type | ...`
+ */
 export interface UnionDefinitionNode extends ProfileASTNodeBase {
   kind: 'UnionDefinition';
   types: Exclude<Type, UnionDefinitionNode>[];
@@ -255,18 +266,20 @@ export interface ProfileHeaderNode extends ProfileASTNodeBase, DocumentedNode {
   };
 }
 
-/** Node enclosing the whole document */
+export type DocumentDefinition =
+  | UseCaseDefinitionNode
+  | NamedFieldDefinitionNode
+  | NamedModelDefinitionNode;
+
+/**
+ * Node enclosing the whole document
+ */
 export interface ProfileDocumentNode extends ProfileASTNodeBase {
   astMetadata: AstMetadata;
   kind: 'ProfileDocument';
   header: ProfileHeaderNode;
   definitions: DocumentDefinition[];
 }
-
-export type DocumentDefinition =
-  | UseCaseDefinitionNode
-  | NamedFieldDefinitionNode
-  | NamedModelDefinitionNode;
 
 export type ProfileASTNode =
   | EnumDefinitionNode
@@ -293,6 +306,13 @@ export type ProfileASTNode =
 
 // EXAMPLES //
 
+/**
+ * Construct of form: `example <?name> {
+ *   <?input> { ... }
+ *   <?result> { ... }
+ *   <?error> { ... }
+ * }`
+ */
 export interface UseCaseExampleNode extends ProfileASTNodeBase {
   kind: 'UseCaseExample';
   exampleName?: string;

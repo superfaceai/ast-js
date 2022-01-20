@@ -33,6 +33,7 @@ export interface DocumentedNode {
 
 /**
  * Information about AST and Parser used to compile provided AST
+ * @$id AstMetadata
  */
 export interface AstMetadata {
   astVersion: {

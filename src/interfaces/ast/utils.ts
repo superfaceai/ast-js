@@ -15,6 +15,7 @@ export function isValidDocumentName(input: string): boolean {
 }
 
 export type Guard<T> = (input: unknown) => input is T;
+export type Assert<T> = (input: unknown) => asserts input is T;
 
 /**
  * Checks if input string is valid version string.
