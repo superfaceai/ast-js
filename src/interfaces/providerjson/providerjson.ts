@@ -53,6 +53,11 @@ type OAuthBase = {
    */
   //TODO: better name
   refreshStatusCode?: number;
+
+  /**
+   * Secopes separator, default is whitespace
+   */
+  scopesSepartor?: string;
 };
 
 //stolen from postman and openAPI: https://swagger.io/specification/#oauth-flows-object
@@ -63,15 +68,18 @@ type ImplicitOAuthSecurityScheme = OAuthBase & {
 
 type AuthorizationCodeOAuthSecurityScheme = OAuthBase & {
   authorizationUrl: string;
-  tokenUrl: string;
+  //Some provider don't use refresh tokens at all
+  tokenUrl?: string;
 };
 
 type PasswordOAuthSecurityScheme = OAuthBase & {
-  tokenUrl: string;
+  //Some provider don't use refresh tokens at all
+  tokenUrl?: string;
 };
 
 type ClientCredentialsOAuthSecurityScheme = OAuthBase & {
-  tokenUrl: string;
+  //Some provider don't use refresh tokens at all
+  tokenUrl?: string;
 };
 
 //TODO: make at least one security scheme required
