@@ -6,6 +6,7 @@ export const PROVIDER_NAME_REGEX_SOURCE = PROVIDER_NAME_REGEX.source;
  */
 export enum SecurityType {
   APIKEY = 'apiKey',
+  OAUTH = 'oauth',
   HTTP = 'http',
 }
 
@@ -38,6 +39,7 @@ export enum OAuthScheme {
 }
 
 type OAuthBase = {
+  scheme: OAuthScheme
   //In all OAuth security schemes
   scopes: string[];
   refreshUrl?: string;
@@ -61,33 +63,40 @@ type OAuthBase = {
 };
 
 //stolen from postman and openAPI: https://swagger.io/specification/#oauth-flows-object
-type ImplicitOAuthSecurityScheme = OAuthBase & {
+export type ImplicitOAuthSecurityScheme = OAuthBase & {
+  scheme: OAuthScheme.IMPLICIT
   //TODO: when working with urls - make them absolute or use base url from provider json?
   authorizationUrl: string;
 };
 
-type AuthorizationCodeOAuthSecurityScheme = OAuthBase & {
+export type AuthorizationCodeOAuthSecurityScheme = OAuthBase & {
+  scheme: OAuthScheme.AUTHORIZATION_CODE
   authorizationUrl: string;
   //Some provider don't use refresh tokens at all
   tokenUrl?: string;
 };
 
-type PasswordOAuthSecurityScheme = OAuthBase & {
+export type PasswordOAuthSecurityScheme = OAuthBase & {
+  scheme: OAuthScheme.PASSWORD
   //Some provider don't use refresh tokens at all
   tokenUrl?: string;
 };
 
-type ClientCredentialsOAuthSecurityScheme = OAuthBase & {
+export type ClientCredentialsOAuthSecurityScheme = OAuthBase & {
+  scheme: OAuthScheme.CLIENT_CREDENTIALS
   //Some provider don't use refresh tokens at all
   tokenUrl?: string;
 };
 
 //TODO: make at least one security scheme required
+export type OAuthFlow =
+  ImplicitOAuthSecurityScheme | AuthorizationCodeOAuthSecurityScheme | PasswordOAuthSecurityScheme | ClientCredentialsOAuthSecurityScheme
+
+
 export type OAuthSecurityScheme = {
-  [OAuthScheme.IMPLICIT]?: ImplicitOAuthSecurityScheme;
-  [OAuthScheme.AUTHORIZATION_CODE]?: AuthorizationCodeOAuthSecurityScheme;
-  [OAuthScheme.PASSWORD]?: PasswordOAuthSecurityScheme;
-  [OAuthScheme.CLIENT_CREDENTIALS]?: ClientCredentialsOAuthSecurityScheme;
+  id: string;
+  type: SecurityType.OAUTH
+  flows: OAuthFlow[]
 };
 
 /**

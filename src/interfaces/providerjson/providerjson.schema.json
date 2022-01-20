@@ -10,6 +10,15 @@
                 "query"
             ],
             "type": "string"
+        },
+        "OAuthScheme": {
+            "enum": [
+                "authorizationCode",
+                "clientCredentials",
+                "implicit",
+                "password"
+            ],
+            "type": "string"
         }
     },
     "description": "Type decribing provider.json document.",
@@ -48,8 +57,211 @@
             "items": {
                 "anyOf": [
                     {
+                        "additionalProperties": false,
                         "properties": {
+                            "flows": {
+                                "items": {
+                                    "anyOf": [
+                                        {
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "authorizationUrl": {
+                                                    "type": "string"
+                                                },
+                                                "clientAuthenticationMethod": {
+                                                    "description": "Defines how SDK sends client credentials, default is 'client_secret_basic'",
+                                                    "enum": [
+                                                        "client_secret_basic",
+                                                        "client_secret_post"
+                                                    ],
+                                                    "type": "string"
+                                                },
+                                                "refreshStatusCode": {
+                                                    "description": "Defines which HTTP status code is marking expired access token, default is 401",
+                                                    "type": "number"
+                                                },
+                                                "refreshUrl": {
+                                                    "type": "string"
+                                                },
+                                                "scheme": {
+                                                    "enum": [
+                                                        "implicit"
+                                                    ],
+                                                    "type": "string"
+                                                },
+                                                "scopes": {
+                                                    "items": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": "array"
+                                                },
+                                                "scopesSepartor": {
+                                                    "description": "Secopes separator, default is whitespace",
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "authorizationUrl",
+                                                "scheme",
+                                                "scopes"
+                                            ],
+                                            "type": "object"
+                                        },
+                                        {
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "authorizationUrl": {
+                                                    "type": "string"
+                                                },
+                                                "clientAuthenticationMethod": {
+                                                    "description": "Defines how SDK sends client credentials, default is 'client_secret_basic'",
+                                                    "enum": [
+                                                        "client_secret_basic",
+                                                        "client_secret_post"
+                                                    ],
+                                                    "type": "string"
+                                                },
+                                                "refreshStatusCode": {
+                                                    "description": "Defines which HTTP status code is marking expired access token, default is 401",
+                                                    "type": "number"
+                                                },
+                                                "refreshUrl": {
+                                                    "type": "string"
+                                                },
+                                                "scheme": {
+                                                    "enum": [
+                                                        "authorizationCode"
+                                                    ],
+                                                    "type": "string"
+                                                },
+                                                "scopes": {
+                                                    "items": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": "array"
+                                                },
+                                                "scopesSepartor": {
+                                                    "description": "Secopes separator, default is whitespace",
+                                                    "type": "string"
+                                                },
+                                                "tokenUrl": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "authorizationUrl",
+                                                "scheme",
+                                                "scopes"
+                                            ],
+                                            "type": "object"
+                                        },
+                                        {
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "clientAuthenticationMethod": {
+                                                    "description": "Defines how SDK sends client credentials, default is 'client_secret_basic'",
+                                                    "enum": [
+                                                        "client_secret_basic",
+                                                        "client_secret_post"
+                                                    ],
+                                                    "type": "string"
+                                                },
+                                                "refreshStatusCode": {
+                                                    "description": "Defines which HTTP status code is marking expired access token, default is 401",
+                                                    "type": "number"
+                                                },
+                                                "refreshUrl": {
+                                                    "type": "string"
+                                                },
+                                                "scheme": {
+                                                    "enum": [
+                                                        "password"
+                                                    ],
+                                                    "type": "string"
+                                                },
+                                                "scopes": {
+                                                    "items": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": "array"
+                                                },
+                                                "scopesSepartor": {
+                                                    "description": "Secopes separator, default is whitespace",
+                                                    "type": "string"
+                                                },
+                                                "tokenUrl": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "scheme",
+                                                "scopes"
+                                            ],
+                                            "type": "object"
+                                        },
+                                        {
+                                            "additionalProperties": false,
+                                            "properties": {
+                                                "clientAuthenticationMethod": {
+                                                    "description": "Defines how SDK sends client credentials, default is 'client_secret_basic'",
+                                                    "enum": [
+                                                        "client_secret_basic",
+                                                        "client_secret_post"
+                                                    ],
+                                                    "type": "string"
+                                                },
+                                                "refreshStatusCode": {
+                                                    "description": "Defines which HTTP status code is marking expired access token, default is 401",
+                                                    "type": "number"
+                                                },
+                                                "refreshUrl": {
+                                                    "type": "string"
+                                                },
+                                                "scheme": {
+                                                    "enum": [
+                                                        "clientCredentials"
+                                                    ],
+                                                    "type": "string"
+                                                },
+                                                "scopes": {
+                                                    "items": {
+                                                        "type": "string"
+                                                    },
+                                                    "type": "array"
+                                                },
+                                                "scopesSepartor": {
+                                                    "description": "Secopes separator, default is whitespace",
+                                                    "type": "string"
+                                                },
+                                                "tokenUrl": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "scheme",
+                                                "scopes"
+                                            ],
+                                            "type": "object"
+                                        }
+                                    ]
+                                },
+                                "type": "array"
+                            },
+                            "id": {
+                                "type": "string"
+                            },
+                            "type": {
+                                "enum": [
+                                    "oauth"
+                                ],
+                                "type": "string"
+                            }
                         },
+                        "required": [
+                            "flows",
+                            "id",
+                            "type"
+                        ],
                         "type": "object"
                     },
                     {

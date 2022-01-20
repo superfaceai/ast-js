@@ -8,6 +8,7 @@ import {
   BearerTokenSecurityValues,
   DigestSecurityValues,
   FILE_URI_REGEX,
+  OAuthSecurityValues,
   SEMVER_REGEX,
   SuperJsonDocument,
 } from './superjson';
@@ -90,7 +91,8 @@ export const assertSuperJsonDocument: (input: unknown) => SuperJsonDocument = (
 
   return parsedInput;
 };
-
+export const isOAuthSecurityValues: Guard<OAuthSecurityValues> =
+  createIs<OAuthSecurityValues>();
 export const isApiKeySecurityValues: Guard<ApiKeySecurityValues> =
   createIs<ApiKeySecurityValues>();
 export const isBasicAuthSecurityValues: Guard<BasicAuthSecurityValues> =
