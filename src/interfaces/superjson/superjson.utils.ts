@@ -35,7 +35,7 @@ export const assertSuperJsonDocument: (input: unknown) => SuperJsonDocument = (
   return input;
 };
 export const isOAuthSecurityValues: Guard<OAuthSecurityValues> =
-  createIs<OAuthSecurityValues>();
+  prepareIs<OAuthSecurityValues>('OAuthSecurityValues');
 export const isApiKeySecurityValues: Guard<ApiKeySecurityValues> =
   prepareIs<ApiKeySecurityValues>('ApiKeySecurityValues');
 export const isBasicAuthSecurityValues: Guard<BasicAuthSecurityValues> =

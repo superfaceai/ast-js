@@ -60,7 +60,6 @@
             "items": {
                 "anyOf": [
                     {
-                        "$id": "ApiKeySecurityScheme",
                         "additionalProperties": false,
                         "properties": {
                             "flows": {
@@ -269,6 +268,7 @@
                         "type": "object"
                     },
                     {
+                        "$id": "ApiKeySecurityScheme",
                         "additionalProperties": false,
                         "description": "Security scheme for api key authorization.",
                         "properties": {

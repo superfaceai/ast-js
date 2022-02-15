@@ -12,7 +12,7 @@
   "author": "Superface Team",
   "license": "MIT",
   "scripts": {
-    "build": "ttsc -p tsconfig.release.json --outDir dist",
+    "build": "tsc -p tsconfig.release.json --outDir dist",
     "watch": "yarn build --watch",
     "clean": "rimraf dist/",
     "prebuild": "yarn clean",
