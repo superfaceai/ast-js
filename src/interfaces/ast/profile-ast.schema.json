@@ -1,8 +1,9 @@
 {
+    "$ref": "#/definitions/ProfileDocumentNode",
     "$schema": "http://json-schema.org/draft-07/schema#",
-    "additionalProperties": false,
     "definitions": {
         "AstMetadata": {
+            "$id": "AstMetadata",
             "additionalProperties": false,
             "description": "Information about AST and Parser used to compile provided AST",
             "properties": {
@@ -1757,6 +1758,106 @@
             ],
             "type": "object"
         },
+        "ProfileDocumentNode": {
+            "additionalProperties": false,
+            "description": "Node enclosing the whole document",
+            "properties": {
+                "astMetadata": {
+                    "$ref": "#/definitions/AstMetadata"
+                },
+                "definitions": {
+                    "items": {
+                        "anyOf": [
+                            {
+                                "$ref": "#/definitions/NamedFieldDefinitionNode"
+                            },
+                            {
+                                "$ref": "#/definitions/NamedModelDefinitionNode"
+                            },
+                            {
+                                "$ref": "#/definitions/UseCaseDefinitionNode"
+                            }
+                        ]
+                    },
+                    "type": "array"
+                },
+                "header": {
+                    "$ref": "#/definitions/ProfileHeaderNode"
+                },
+                "kind": {
+                    "enum": [
+                        "ProfileDocument"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "description": "Location span within the source.",
+                    "properties": {
+                        "end": {
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
+                        },
+                        "start": {
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "astMetadata",
+                "definitions",
+                "header",
+                "kind"
+            ],
+            "type": "object"
+        },
         "ProfileHeaderNode": {
             "additionalProperties": false,
             "description": "The node containing document information.",
@@ -2239,6 +2340,7 @@
         },
         "UseCaseExampleNode": {
             "additionalProperties": false,
+            "description": "Construct of form: `example <?name> {\n  <?input> { ... }\n  <?result> { ... }\n  <?error> { ... }\n}`",
             "properties": {
                 "asyncResult": {
                     "$ref": "#/definitions/UseCaseSlotDefinitionNode<ComlinkLiteralNode>"
@@ -2972,103 +3074,6 @@
             ],
             "type": "object"
         }
-    },
-    "description": "Node enclosing the whole document",
-    "properties": {
-        "astMetadata": {
-            "$ref": "#/definitions/AstMetadata"
-        },
-        "definitions": {
-            "items": {
-                "anyOf": [
-                    {
-                        "$ref": "#/definitions/NamedFieldDefinitionNode"
-                    },
-                    {
-                        "$ref": "#/definitions/NamedModelDefinitionNode"
-                    },
-                    {
-                        "$ref": "#/definitions/UseCaseDefinitionNode"
-                    }
-                ]
-            },
-            "type": "array"
-        },
-        "header": {
-            "$ref": "#/definitions/ProfileHeaderNode"
-        },
-        "kind": {
-            "enum": [
-                "ProfileDocument"
-            ],
-            "type": "string"
-        },
-        "location": {
-            "additionalProperties": false,
-            "description": "Location span within the source.",
-            "properties": {
-                "end": {
-                    "additionalProperties": false,
-                    "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
-                    "properties": {
-                        "charIndex": {
-                            "description": "Character index within the source code - starts at 0",
-                            "type": "number"
-                        },
-                        "column": {
-                            "description": "Column number - starts at 1",
-                            "type": "number"
-                        },
-                        "line": {
-                            "description": "Line number - starts at 1",
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "charIndex",
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                },
-                "start": {
-                    "additionalProperties": false,
-                    "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
-                    "properties": {
-                        "charIndex": {
-                            "description": "Character index within the source code - starts at 0",
-                            "type": "number"
-                        },
-                        "column": {
-                            "description": "Column number - starts at 1",
-                            "type": "number"
-                        },
-                        "line": {
-                            "description": "Line number - starts at 1",
-                            "type": "number"
-                        }
-                    },
-                    "required": [
-                        "charIndex",
-                        "column",
-                        "line"
-                    ],
-                    "type": "object"
-                }
-            },
-            "required": [
-                "end",
-                "start"
-            ],
-            "type": "object"
-        }
-    },
-    "required": [
-        "astMetadata",
-        "definitions",
-        "header",
-        "kind"
-    ],
-    "type": "object"
+    }
 }
 

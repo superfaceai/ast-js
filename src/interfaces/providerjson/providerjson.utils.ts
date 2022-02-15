@@ -1,7 +1,5 @@
-import { assertEquals, createIs, TypeGuardError } from 'typescript-is';
-
-import { AssertionError } from '../../error';
-import { Guard, isValidIdentifier } from '../ast';
+import { prepareAssert, preparePrepareIs } from '../../validation';
+import { Assert, Guard } from '../ast';
 import { SecurityValues } from '../superjson';
 import { IntegrationParameter } from '.';
 import {
@@ -13,50 +11,35 @@ import {
   ProviderJson,
   SecurityScheme,
 } from './providerjson';
+import * as schema from './providerjson.schema.json';
 
 export function isValidProviderName(name: string): boolean {
   return PROVIDER_NAME_REGEX.test(name);
 }
 
-export const isProviderJson: Guard<ProviderJson> = createIs<ProviderJson>();
+const prepareIs = preparePrepareIs(schema);
 
+export const isProviderJson: Guard<ProviderJson> =
+  prepareIs<ProviderJson>('ProviderJson');
+
+const assertProvider: Assert<ProviderJson> = prepareAssert<ProviderJson>(
+  schema,
+  'provider-json'
+);
 export function assertProviderJson(input: unknown): ProviderJson {
-  let parsedInput: ProviderJson;
-  try {
-    parsedInput = assertEquals<ProviderJson>(input);
-  } catch (error) {
-    if (error instanceof TypeGuardError) {
-      throw new AssertionError(`Provider JSON ${error.message}`, error.path);
-    }
-    throw error;
-  }
-  if (!isValidProviderName(parsedInput.name)) {
-    throw new AssertionError('invalid provider name', ['$', 'name']);
-  }
+  assertProvider(input);
 
-  if (parsedInput.parameters !== undefined) {
-    for (const [index, parameter] of parsedInput.parameters.entries()) {
-      if (!isValidIdentifier(parameter.name)) {
-        throw new AssertionError('invalid parameter name', [
-          '$',
-          'parameters',
-          index.toString(),
-        ]);
-      }
-    }
-  }
-
-  return parsedInput;
+  return input;
 }
 
 export const isApiKeySecurityScheme: Guard<ApiKeySecurityScheme> =
-  createIs<ApiKeySecurityScheme>();
+  prepareIs<ApiKeySecurityScheme>('ApiKeySecurityScheme');
 export const isBasicAuthSecurityScheme: Guard<BasicAuthSecurityScheme> =
-  createIs<BasicAuthSecurityScheme>();
+  prepareIs<BasicAuthSecurityScheme>('BasicAuthSecurityScheme');
 export const isBearerTokenSecurityScheme: Guard<BearerTokenSecurityScheme> =
-  createIs<BearerTokenSecurityScheme>();
+  prepareIs<BearerTokenSecurityScheme>('BearerTokenSecurityScheme');
 export const isDigestSecurityScheme: Guard<DigestSecurityScheme> =
-  createIs<DigestSecurityScheme>();
+  prepareIs<DigestSecurityScheme>('DigestSecurityScheme');
 
 export function prepareSecurityValues(
   providerName: string,

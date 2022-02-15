@@ -1,8 +1,11 @@
 {
+    "$id": "ProviderJson",
     "$schema": "http://json-schema.org/draft-07/schema#",
     "additionalProperties": false,
     "definitions": {
         "ApiKeyPlacement": {
+            "$id": "ApiKeyPlacement",
+            "description": "The placement of the API key.",
             "enum": [
                 "body",
                 "header",
@@ -57,6 +60,7 @@
             "items": {
                 "anyOf": [
                     {
+                        "$id": "ApiKeySecurityScheme",
                         "additionalProperties": false,
                         "properties": {
                             "flows": {
@@ -272,7 +276,7 @@
                                 "type": "string"
                             },
                             "in": {
-                                "$ref": "#/definitions/ApiKeyPlacement"
+                                "$ref": "ApiKeyPlacement"
                             },
                             "name": {
                                 "type": "string"
@@ -292,6 +296,7 @@
                         "type": "object"
                     },
                     {
+                        "$id": "BasicAuthSecurityScheme",
                         "additionalProperties": false,
                         "description": "Security scheme for basic authorization.",
                         "properties": {
@@ -319,6 +324,7 @@
                         "type": "object"
                     },
                     {
+                        "$id": "BearerTokenSecurityScheme",
                         "additionalProperties": false,
                         "description": "Security scheme for bearer authorization.",
                         "properties": {
@@ -349,6 +355,7 @@
                         "type": "object"
                     },
                     {
+                        "$id": "DigestSecurityScheme",
                         "additionalProperties": false,
                         "description": "Security scheme for digest authorization.",
                         "properties": {

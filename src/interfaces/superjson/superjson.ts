@@ -208,19 +208,32 @@ export type IdBase = {
   id: string;
 };
 
+/**
+ * @$id ApiKeySecurityValues
+ **/
 export type ApiKeySecurityValues = IdBase & {
   apikey: string;
 };
 
+/**
+ * @$id BasicAuthSecurityValues
+ **/
 export type BasicAuthSecurityValues = IdBase & {
   username: string;
   password: string;
 };
 
+/**
+ * @$id BearerTokenSecurityValues
+ **/
 export type BearerTokenSecurityValues = IdBase & {
   token: string;
 };
 
+/**
+ * Security values for digest security scheme
+ * @$id DigestSecurityValues
+ **/
 export type DigestSecurityValues = IdBase & {
   username: string;
   password: string;

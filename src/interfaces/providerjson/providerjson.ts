@@ -10,6 +10,10 @@ export enum SecurityType {
   HTTP = 'http',
 }
 
+/**
+ * The placement of the API key.
+ * @$id ApiKeyPlacement
+ **/
 export enum ApiKeyPlacement {
   HEADER = 'header',
   BODY = 'body',
@@ -101,16 +105,21 @@ export type OAuthSecurityScheme = {
 
 /**
  * Security scheme for api key authorization.
+ * @$id ApiKeySecurityScheme
  */
 export type ApiKeySecurityScheme = {
   id: string;
   type: SecurityType.APIKEY;
+  /**
+   * @$ref ApiKeyPlacement
+   */
   in: ApiKeyPlacement;
   name?: string | undefined;
 };
 
 /**
  * Security scheme for basic authorization.
+ * @$id BasicAuthSecurityScheme
  */
 export type BasicAuthSecurityScheme = {
   id: string;
@@ -120,6 +129,7 @@ export type BasicAuthSecurityScheme = {
 
 /**
  * Security scheme for bearer authorization.
+ * @$id BearerTokenSecurityScheme
  */
 export type BearerTokenSecurityScheme = {
   id: string;
@@ -130,6 +140,7 @@ export type BearerTokenSecurityScheme = {
 
 /**
  * Security scheme for digest authorization.
+ * @$id DigestSecurityScheme
  */
 export type DigestSecurityScheme = {
   id: string;
@@ -178,6 +189,7 @@ export type IntegrationParameter = {
 
 /**
  * Type decribing provider.json document.
+ * @$id ProviderJson
  */
 export type ProviderJson = {
   /**

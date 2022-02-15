@@ -4,25 +4,26 @@
     "downlevelIteration": true,
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
-    "lib": [],
+    "lib": [
+      "ESNext"
+    ],
     "module": "CommonJS",
     "moduleResolution": "node",
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "resolveJsonModule": true,
     "preserveConstEnums": true,
-    "plugins": [
-      {
-        "transform": "typescript-is/lib/transform-inline/transformer",
-        "disallowSuperfluousObjectProperties": true
-      }
-    ],
     "sourceMap": true,
     "strict": true,
     "strictPropertyInitialization": true,
     "target": "ES5",
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": [
+      "node_modules/@types"
+    ]
   },
-  "include": ["src/**/*.ts"]
+  "include": [
+    "src/**/*.ts"
+  ]
 }
