@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Changed
+- removed `typescript-is` and replaced it with `ajv` validation
 - `isProfileDocumentNode` and `isMapDocumentNode` do full schema validation
 
 ## [1.1.0] - 2022-01-19
