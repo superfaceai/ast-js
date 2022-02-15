@@ -35,6 +35,18 @@ const assertProfileDocument: Assert<ProfileDocumentNode> = prepareAssert(
   'profile-ast'
 );
 
+export const isProfileDocumentNode = (
+  node: unknown
+): node is ProfileDocumentNode => {
+  try {
+    assertProfileDocument(node);
+
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 // We don't need to do JSON Schema validation on these, as they should be already validated
 export const isEnumDefinitionNode = (
   node: ProfileASTNode
@@ -65,9 +77,6 @@ export const isObjectDefinitionNode = (
 export const isPrimitiveTypeNameNode = (
   node: ProfileASTNode
 ): node is PrimitiveTypeNameNode => node.kind === 'PrimitiveTypeName';
-export const isProfileDocumentNode = (
-  node: ProfileASTNode
-): node is ProfileDocumentNode => node.kind === 'ProfileDocument';
 export const isProfileHeaderNode = (
   node: ProfileASTNode
 ): node is ProfileHeaderNode => node.kind === 'ProfileHeader';
