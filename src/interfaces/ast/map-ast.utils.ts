@@ -27,6 +27,16 @@ const assertMapDocument: Assert<MapDocumentNode> = prepareAssert(
   'map-ast'
 );
 
+export const isMapDocumentNode = (node: unknown): node is MapDocumentNode => {
+  try {
+    assertMapDocument(node);
+
+    return true;
+  } catch {
+    return false;
+  }
+};
+
 // We don't need to do JSON Schema validation on these, as they should be already validated
 export const isAssignmentNode = (node: MapASTNode): node is AssignmentNode =>
   node.kind === 'Assignment';
@@ -55,8 +65,6 @@ export const isJessieExpressionNode = (
 export const isMapDefinitionNode = (
   node: MapASTNode
 ): node is MapDefinitionNode => node.kind === 'MapDefinition';
-export const isMapDocumentNode = (node: MapASTNode): node is MapDocumentNode =>
-  node.kind === 'MapDocument';
 export const isMapHeaderNode = (node: MapASTNode): node is MapHeaderNode =>
   node.kind === 'MapHeader';
 export const isObjectLiteralNode = (
