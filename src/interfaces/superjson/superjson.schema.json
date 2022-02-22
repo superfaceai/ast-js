@@ -67,6 +67,29 @@
                                                                     {
                                                                         "additionalProperties": false,
                                                                         "properties": {
+                                                                            "kind": {
+                                                                                "enum": [
+                                                                                    "simple"
+                                                                                ],
+                                                                                "type": "string"
+                                                                            },
+                                                                            "maxContiguousRetries": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "requestTimeout": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "kind"
+                                                                        ],
+                                                                        "type": "object"
+                                                                    },
+                                                                    {
+                                                                        "additionalProperties": false,
+                                                                        "properties": {
                                                                             "backoff": {
                                                                                 "anyOf": [
                                                                                     {
@@ -110,6 +133,10 @@
                                                                                 "minimum": 0,
                                                                                 "type": "integer"
                                                                             },
+                                                                            "openTime": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            },
                                                                             "requestTimeout": {
                                                                                 "minimum": 0,
                                                                                 "type": "integer"
@@ -123,7 +150,8 @@
                                                                     {
                                                                         "enum": [
                                                                             "circuit-breaker",
-                                                                            "none"
+                                                                            "none",
+                                                                            "simple"
                                                                         ],
                                                                         "type": "string"
                                                                     }
@@ -176,6 +204,29 @@
                                                                     {
                                                                         "additionalProperties": false,
                                                                         "properties": {
+                                                                            "kind": {
+                                                                                "enum": [
+                                                                                    "simple"
+                                                                                ],
+                                                                                "type": "string"
+                                                                            },
+                                                                            "maxContiguousRetries": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "requestTimeout": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "kind"
+                                                                        ],
+                                                                        "type": "object"
+                                                                    },
+                                                                    {
+                                                                        "additionalProperties": false,
+                                                                        "properties": {
                                                                             "backoff": {
                                                                                 "anyOf": [
                                                                                     {
@@ -219,6 +270,10 @@
                                                                                 "minimum": 0,
                                                                                 "type": "integer"
                                                                             },
+                                                                            "openTime": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            },
                                                                             "requestTimeout": {
                                                                                 "minimum": 0,
                                                                                 "type": "integer"
@@ -232,7 +287,8 @@
                                                                     {
                                                                         "enum": [
                                                                             "circuit-breaker",
-                                                                            "none"
+                                                                            "none",
+                                                                            "simple"
                                                                         ],
                                                                         "type": "string"
                                                                     }
@@ -336,6 +392,29 @@
                                                                     {
                                                                         "additionalProperties": false,
                                                                         "properties": {
+                                                                            "kind": {
+                                                                                "enum": [
+                                                                                    "simple"
+                                                                                ],
+                                                                                "type": "string"
+                                                                            },
+                                                                            "maxContiguousRetries": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "requestTimeout": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "kind"
+                                                                        ],
+                                                                        "type": "object"
+                                                                    },
+                                                                    {
+                                                                        "additionalProperties": false,
+                                                                        "properties": {
                                                                             "backoff": {
                                                                                 "anyOf": [
                                                                                     {
@@ -379,6 +458,10 @@
                                                                                 "minimum": 0,
                                                                                 "type": "integer"
                                                                             },
+                                                                            "openTime": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            },
                                                                             "requestTimeout": {
                                                                                 "minimum": 0,
                                                                                 "type": "integer"
@@ -392,7 +475,8 @@
                                                                     {
                                                                         "enum": [
                                                                             "circuit-breaker",
-                                                                            "none"
+                                                                            "none",
+                                                                            "simple"
                                                                         ],
                                                                         "type": "string"
                                                                     }
@@ -445,6 +529,29 @@
                                                                     {
                                                                         "additionalProperties": false,
                                                                         "properties": {
+                                                                            "kind": {
+                                                                                "enum": [
+                                                                                    "simple"
+                                                                                ],
+                                                                                "type": "string"
+                                                                            },
+                                                                            "maxContiguousRetries": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            },
+                                                                            "requestTimeout": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            }
+                                                                        },
+                                                                        "required": [
+                                                                            "kind"
+                                                                        ],
+                                                                        "type": "object"
+                                                                    },
+                                                                    {
+                                                                        "additionalProperties": false,
+                                                                        "properties": {
                                                                             "backoff": {
                                                                                 "anyOf": [
                                                                                     {
@@ -488,6 +595,10 @@
                                                                                 "minimum": 0,
                                                                                 "type": "integer"
                                                                             },
+                                                                            "openTime": {
+                                                                                "minimum": 0,
+                                                                                "type": "integer"
+                                                                            },
                                                                             "requestTimeout": {
                                                                                 "minimum": 0,
                                                                                 "type": "integer"
@@ -501,7 +612,8 @@
                                                                     {
                                                                         "enum": [
                                                                             "circuit-breaker",
-                                                                            "none"
+                                                                            "none",
+                                                                            "simple"
                                                                         ],
                                                                         "type": "string"
                                                                     }

@@ -21,6 +21,7 @@ export type UriPath = string;
 // Retry policy
 export enum OnFail {
   NONE = 'none',
+  SIMPLE = 'simple',
   CIRCUIT_BREAKER = 'circuit-breaker',
 }
 
@@ -28,15 +29,45 @@ export enum BackoffKind {
   EXPONENTIAL = 'exponential',
 }
 
+export type BackoffPolicy =
+  | BackoffKind.EXPONENTIAL
+  | {
+      kind: BackoffKind.EXPONENTIAL;
+      /**
+       * @TJS-minimum 0
+       * @TJS-type integer
+       **/
+      start?: number | undefined;
+      /**
+       * @TJS-minimum 0
+       * @TJS-type integer
+       **/
+      factor?: number | undefined;
+    };
+
 /**
  * RetryPolicy per usecase values.
  */
 export type RetryPolicy =
   | OnFail.NONE
-  | OnFail.CIRCUIT_BREAKER
   | {
       kind: OnFail.NONE;
     }
+  | OnFail.SIMPLE
+  | {
+      kind: OnFail.SIMPLE;
+      /**
+       * @TJS-minimum 0
+       * @TJS-type integer
+       **/
+      maxContiguousRetries?: number | undefined;
+      /**
+       * @TJS-minimum 0
+       * @TJS-type integer
+       **/
+      requestTimeout?: number | undefined;
+    }
+  | OnFail.CIRCUIT_BREAKER
   | {
       kind: OnFail.CIRCUIT_BREAKER;
       /**
@@ -48,31 +79,35 @@ export type RetryPolicy =
        * @TJS-minimum 0
        * @TJS-type integer
        **/
+      openTime?: number | undefined;
+      /**
+       * @TJS-minimum 0
+       * @TJS-type integer
+       **/
       requestTimeout?: number | undefined;
-      backoff?:
-        | BackoffKind.EXPONENTIAL
-        | {
-            kind: BackoffKind.EXPONENTIAL;
-            /**
-             * @TJS-minimum 0
-             * @TJS-type integer
-             **/
-            start?: number | undefined;
-            /**
-             * @TJS-minimum 0
-             * @TJS-type integer
-             **/
-            factor?: number | undefined;
-          }
-        | undefined;
+      backoff?: BackoffPolicy | undefined;
     };
+
+export type NormalizedBackoffPolicy = {
+  kind: BackoffKind.EXPONENTIAL;
+  /**
+   * @TJS-minimum 0
+   * @TJS-type integer
+   **/
+  start?: number | undefined;
+  /**
+   * @TJS-minimum 0
+   * @TJS-type integer
+   **/
+  factor?: number | undefined;
+};
 
 export type NormalizedRetryPolicy =
   | {
       kind: OnFail.NONE;
     }
   | {
-      kind: OnFail.CIRCUIT_BREAKER;
+      kind: OnFail.SIMPLE;
       /**
        * @TJS-minimum 0
        * @TJS-type integer
@@ -83,21 +118,25 @@ export type NormalizedRetryPolicy =
        * @TJS-type integer
        **/
       requestTimeout?: number | undefined;
-      backoff?:
-        | {
-            kind: BackoffKind.EXPONENTIAL;
-            /**
-             * @TJS-minimum 0
-             * @TJS-type integer
-             **/
-            start?: number | undefined;
-            /**
-             * @TJS-minimum 0
-             * @TJS-type integer
-             **/
-            factor?: number | undefined;
-          }
-        | undefined;
+    }
+  | {
+      kind: OnFail.CIRCUIT_BREAKER;
+      /**
+       * @TJS-minimum 0
+       * @TJS-type integer
+       **/
+      maxContiguousRetries?: number | undefined;
+      /**
+       * @TJS-minimum 0
+       * @TJS-type integer
+       **/
+      openTime?: number | undefined;
+      /**
+       * @TJS-minimum 0
+       * @TJS-type integer
+       **/
+      requestTimeout?: number | undefined;
+      backoff: NormalizedBackoffPolicy;
     };
 
 /**
