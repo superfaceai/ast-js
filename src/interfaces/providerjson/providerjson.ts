@@ -43,7 +43,7 @@ export enum OAuthScheme {
 }
 
 type OAuthBase = {
-  scheme: OAuthScheme
+  scheme: OAuthScheme;
   //In all OAuth security schemes
   scopes: string[];
   refreshUrl?: string;
@@ -68,39 +68,45 @@ type OAuthBase = {
 
 //stolen from postman and openAPI: https://swagger.io/specification/#oauth-flows-object
 export type ImplicitOAuthSecurityScheme = OAuthBase & {
-  scheme: OAuthScheme.IMPLICIT
+  scheme: OAuthScheme.IMPLICIT;
   //TODO: when working with urls - make them absolute or use base url from provider json?
   authorizationUrl: string;
 };
 
 export type AuthorizationCodeOAuthSecurityScheme = OAuthBase & {
-  scheme: OAuthScheme.AUTHORIZATION_CODE
+  scheme: OAuthScheme.AUTHORIZATION_CODE;
   authorizationUrl: string;
   //Some provider don't use refresh tokens at all
   tokenUrl?: string;
 };
 
 export type PasswordOAuthSecurityScheme = OAuthBase & {
-  scheme: OAuthScheme.PASSWORD
+  scheme: OAuthScheme.PASSWORD;
   //Some provider don't use refresh tokens at all
   tokenUrl?: string;
 };
 
 export type ClientCredentialsOAuthSecurityScheme = OAuthBase & {
-  scheme: OAuthScheme.CLIENT_CREDENTIALS
+  scheme: OAuthScheme.CLIENT_CREDENTIALS;
   //Some provider don't use refresh tokens at all
   tokenUrl?: string;
 };
 
 //TODO: make at least one security scheme required
 export type OAuthFlow =
-  ImplicitOAuthSecurityScheme | AuthorizationCodeOAuthSecurityScheme | PasswordOAuthSecurityScheme | ClientCredentialsOAuthSecurityScheme
+  | ImplicitOAuthSecurityScheme
+  | AuthorizationCodeOAuthSecurityScheme
+  | PasswordOAuthSecurityScheme
+  | ClientCredentialsOAuthSecurityScheme;
 
-
+/**
+ * Security scheme for o auth authorization.
+ * @$id OAuthSecurityScheme
+ */
 export type OAuthSecurityScheme = {
   id: string;
-  type: SecurityType.OAUTH
-  flows: OAuthFlow[]
+  type: SecurityType.OAUTH;
+  flows: OAuthFlow[];
 };
 
 /**

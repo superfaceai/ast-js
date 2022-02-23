@@ -60,7 +60,9 @@
             "items": {
                 "anyOf": [
                     {
+                        "$id": "OAuthSecurityScheme",
                         "additionalProperties": false,
+                        "description": "Security scheme for o auth authorization.",
                         "properties": {
                             "flows": {
                                 "items": {

@@ -244,6 +244,10 @@ export enum OAuthTokenType {
   //TODO: mac
 }
 
+/**
+ * Security values for o auth security scheme
+ * @$id OAuthSecurityValues
+ **/
 export type OAuthSecurityValues = IdBase & {
   clientId: string;
   clientSecret: string;

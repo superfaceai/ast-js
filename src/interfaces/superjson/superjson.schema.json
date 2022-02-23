@@ -641,7 +641,9 @@
                                             "type": "object"
                                         },
                                         {
+                                            "$id": "OAuthSecurityValues",
                                             "additionalProperties": false,
+                                            "description": "Security values for o auth security scheme",
                                             "properties": {
                                                 "accessToken": {
                                                     "type": "string"
