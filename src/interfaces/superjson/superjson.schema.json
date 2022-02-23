@@ -639,6 +639,41 @@
                                                 "username"
                                             ],
                                             "type": "object"
+                                        },
+                                        {
+                                            "$id": "OAuthSecurityValues",
+                                            "additionalProperties": false,
+                                            "description": "Security values for o auth security scheme",
+                                            "properties": {
+                                                "accessToken": {
+                                                    "type": "string"
+                                                },
+                                                "clientId": {
+                                                    "type": "string"
+                                                },
+                                                "clientSecret": {
+                                                    "type": "string"
+                                                },
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "refreshToken": {
+                                                    "type": "string"
+                                                },
+                                                "tokenType": {
+                                                    "enum": [
+                                                        "Bearer"
+                                                    ],
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "clientId",
+                                                "clientSecret",
+                                                "id",
+                                                "refreshToken"
+                                            ],
+                                            "type": "object"
                                         }
                                     ],
                                     "description": "Authorization variables."

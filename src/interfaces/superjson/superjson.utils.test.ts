@@ -1,3 +1,4 @@
+import { isOAuthSecurityValues } from '.';
 import {
   assertSuperJsonDocument,
   isApiKeySecurityValues,
@@ -167,6 +168,23 @@ describe('super.json utils', () => {
 
     it('should return false on invalid values', () => {
       expect(isDigestSecurityValues({ id: 7 })).toBe(false);
+    });
+  });
+
+  describe('isOAuthSecurityValues', () => {
+    it('should return true on valid values', () => {
+      expect(
+        isOAuthSecurityValues({
+          id: 'some-id',
+          clientId: 'id',
+          clientSecret: 'secret',
+          refreshToken: 'token',
+        })
+      ).toBe(true);
+    });
+
+    it('should return false on invalid values', () => {
+      expect(isOAuthSecurityValues({ id: 7 })).toBe(false);
     });
   });
 });
