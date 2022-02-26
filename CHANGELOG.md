@@ -10,6 +10,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - removed `typescript-is` and replaced it with `ajv` validation
 - `isProfileDocumentNode` and `isMapDocumentNode` do full schema validation
 
+### Fixed
+- Fixed `AssertionError::detailed` message spreading an already-string message
+
 ## [1.1.0] - 2022-01-19
 ### Added
 - Added guards and visit functions for `UseCaseExampleNode` and `ComlinkLiteralNode`
