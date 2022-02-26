@@ -37,7 +37,7 @@ export type ApiKeySecurityScheme = {
    * @$ref ApiKeyPlacement
    */
   in: ApiKeyPlacement;
-  name?: string | undefined;
+  name?: string;
 };
 
 /**
@@ -58,7 +58,7 @@ export type BearerTokenSecurityScheme = {
   id: string;
   type: SecurityType.HTTP;
   scheme: HttpScheme.BEARER;
-  bearerFormat?: string | undefined;
+  bearerFormat?: string;
 };
 
 /**
@@ -72,15 +72,15 @@ export type DigestSecurityScheme = {
   /**
    * Code that should be returned from initial call for challenge eg. 401
    */
-  statusCode?: number | undefined;
+  statusCode?: number;
   /**
    * Name of header containing challenge from the server eg. www-authenticate
    */
-  challengeHeader?: string | undefined;
+  challengeHeader?: string;
   /**
    * Name of header containing authorization eg. Authorization
    */
-  authorizationHeader?: string | undefined;
+  authorizationHeader?: string;
 };
 
 /**
@@ -105,8 +105,8 @@ export type IntegrationParameter = {
    * @pattern require('../ast/utils').IDENTIFIER_RE_SOURCE
    */
   name: string;
-  description?: string | undefined;
-  default?: string | undefined;
+  description?: string;
+  default?: string;
 };
 
 /**
@@ -119,7 +119,7 @@ export type ProviderJson = {
    */
   name: string;
   services: ProviderService[];
-  securitySchemes?: SecurityScheme[] | undefined;
+  securitySchemes?: SecurityScheme[];
   defaultService: string;
-  parameters?: IntegrationParameter[] | undefined;
+  parameters?: IntegrationParameter[];
 };

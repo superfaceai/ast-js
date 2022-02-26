@@ -22,13 +22,11 @@ export type LocationSpan = {
 
 /** Node preceded by documenting string literal */
 export interface DocumentedNode {
-  documentation?:
-    | {
-        title: string;
-        description?: string | undefined;
-        location?: LocationSpan | undefined;
-      }
-    | undefined;
+  documentation?: {
+    title: string;
+    description?: string;
+    location?: LocationSpan;
+  };
 }
 
 /**
@@ -40,13 +38,13 @@ export interface AstMetadata {
     major: number;
     minor: number;
     patch: number;
-    label?: string | undefined;
+    label?: string;
   };
   parserVersion: {
     major: number;
     minor: number;
     patch: number;
-    label?: string | undefined;
+    label?: string;
   };
   sourceChecksum: string;
 }

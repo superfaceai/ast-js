@@ -26,7 +26,7 @@ export type MapNodeKind =
 
 export interface MapASTNodeBase {
   kind: MapNodeKind;
-  location?: LocationSpan | undefined;
+  location?: LocationSpan;
 }
 
 // ATOMS
@@ -53,8 +53,8 @@ export interface ObjectLiteralNode extends MapASTNodeBase {
 export interface JessieExpressionNode extends MapASTNodeBase {
   kind: 'JessieExpression';
   expression: string;
-  source?: string | undefined;
-  sourceMap?: string | undefined;
+  source?: string;
+  sourceMap?: string;
 }
 
 /**
@@ -62,8 +62,8 @@ export interface JessieExpressionNode extends MapASTNodeBase {
  */
 export interface InlineCallNode extends MapASTNodeBase {
   kind: 'InlineCall';
-  condition?: ConditionAtomNode | undefined;
-  iteration?: IterationAtomNode | undefined;
+  condition?: ConditionAtomNode;
+  iteration?: IterationAtomNode;
   operationName: string;
   arguments: AssignmentNode[];
 }
@@ -109,7 +109,7 @@ export interface IterationAtomNode extends MapASTNodeBase {
  */
 export interface OutcomeStatementNode extends MapASTNodeBase {
   kind: 'OutcomeStatement';
-  condition?: ConditionAtomNode | undefined;
+  condition?: ConditionAtomNode;
   isError: boolean;
   terminateFlow: boolean;
   value: LiteralNode;
@@ -122,7 +122,7 @@ export interface OutcomeStatementNode extends MapASTNodeBase {
  */
 export interface SetStatementNode extends MapASTNodeBase {
   kind: 'SetStatement';
-  condition?: ConditionAtomNode | undefined;
+  condition?: ConditionAtomNode;
   assignments: AssignmentNode[];
 }
 
@@ -131,8 +131,8 @@ export interface SetStatementNode extends MapASTNodeBase {
  */
 export interface CallStatementNode extends MapASTNodeBase {
   kind: 'CallStatement';
-  iteration?: IterationAtomNode | undefined;
-  condition?: ConditionAtomNode | undefined;
+  iteration?: IterationAtomNode;
+  condition?: ConditionAtomNode;
   operationName: string;
   arguments: AssignmentNode[];
   statements: (SetStatementNode | OutcomeStatementNode)[];
@@ -144,7 +144,7 @@ export interface CallStatementNode extends MapASTNodeBase {
 export type HttpSecurityRequirement = {
   id: string;
   /** Optional scheme information. */
-  scheme?: 'apikey' | 'basic' | 'bearer' | undefined;
+  scheme?: 'apikey' | 'basic' | 'bearer';
 };
 
 /**
@@ -153,11 +153,11 @@ export type HttpSecurityRequirement = {
  */
 export interface HttpRequestNode extends MapASTNodeBase {
   kind: 'HttpRequest';
-  contentType?: string | undefined;
-  contentLanguage?: string | undefined;
-  query?: ObjectLiteralNode | undefined;
-  headers?: ObjectLiteralNode | undefined;
-  body?: LiteralNode | undefined;
+  contentType?: string;
+  contentLanguage?: string;
+  query?: ObjectLiteralNode;
+  headers?: ObjectLiteralNode;
+  body?: LiteralNode;
   security: HttpSecurityRequirement[];
 }
 
@@ -171,9 +171,9 @@ export interface HttpResponseHandlerNode extends MapASTNodeBase {
    * @TJS-minimum 200
    * @TJS-maximum 599
    **/
-  statusCode?: number | undefined;
-  contentType?: string | undefined;
-  contentLanguage?: string | undefined;
+  statusCode?: number;
+  contentType?: string;
+  contentLanguage?: string;
   statements: (SetStatementNode | OutcomeStatementNode)[];
 }
 
@@ -183,12 +183,12 @@ export interface HttpResponseHandlerNode extends MapASTNodeBase {
 export interface HttpCallStatementNode extends MapASTNodeBase {
   kind: 'HttpCallStatement';
   method: string;
-  serviceId?: string | undefined;
+  serviceId?: string;
   /**
    * @format uri-reference
    **/
   url: string;
-  request?: HttpRequestNode | undefined;
+  request?: HttpRequestNode;
   responseHandlers: HttpResponseHandlerNode[];
 }
 
@@ -244,7 +244,7 @@ export interface MapHeaderNode extends MapASTNodeBase, DocumentedNode {
     /**
      * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
      **/
-    scope?: string | undefined;
+    scope?: string;
     /**
      * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
      **/
@@ -264,11 +264,11 @@ export interface MapHeaderNode extends MapASTNodeBase, DocumentedNode {
        * @TJS-minimum 0
        * @TJS-type integer
        **/
-      patch?: number | undefined;
+      patch?: number;
       /**
        * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
        **/
-      label?: string | undefined;
+      label?: string;
     };
   };
 
@@ -279,7 +279,7 @@ export interface MapHeaderNode extends MapASTNodeBase, DocumentedNode {
   /**
    * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
    **/
-  variant?: string | undefined;
+  variant?: string;
 }
 
 /**

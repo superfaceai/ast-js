@@ -155,7 +155,8 @@
                                                                         ],
                                                                         "type": "string"
                                                                     }
-                                                                ]
+                                                                ],
+                                                                "description": "Retry policy configuration."
                                                             }
                                                         },
                                                         "type": "object"
@@ -292,7 +293,8 @@
                                                                         ],
                                                                         "type": "string"
                                                                     }
-                                                                ]
+                                                                ],
+                                                                "description": "Retry policy configuration."
                                                             }
                                                         },
                                                         "type": "object"
@@ -480,7 +482,8 @@
                                                                         ],
                                                                         "type": "string"
                                                                     }
-                                                                ]
+                                                                ],
+                                                                "description": "Retry policy configuration."
                                                             }
                                                         },
                                                         "type": "object"
@@ -617,7 +620,8 @@
                                                                         ],
                                                                         "type": "string"
                                                                     }
-                                                                ]
+                                                                ],
+                                                                "description": "Retry policy configuration."
                                                             }
                                                         },
                                                         "type": "object"
