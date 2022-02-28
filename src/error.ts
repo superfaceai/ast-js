@@ -20,7 +20,7 @@ export class AssertionError extends Error {
   detailed(): string {
     return [
       'Found errors:',
-      ...this.message,
+      this.message,
       'Validated data:',
       JSON.stringify(this.data, undefined, 2),
     ].join('\n');
