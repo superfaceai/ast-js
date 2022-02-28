@@ -161,10 +161,12 @@
                     "type": "array"
                 },
                 "condition": {
-                    "$ref": "#/definitions/ConditionAtomNode"
+                    "$ref": "#/definitions/ConditionAtomNode",
+                    "description": "Statement condition atom: `if (<jessie>)`"
                 },
                 "iteration": {
-                    "$ref": "#/definitions/IterationAtomNode"
+                    "$ref": "#/definitions/IterationAtomNode",
+                    "description": "Iteration atom: `foreach (<iterationVariable> of <iterable>)`"
                 },
                 "kind": {
                     "enum": [
@@ -408,7 +410,8 @@
                     "type": "string"
                 },
                 "request": {
-                    "$ref": "#/definitions/HttpRequestNode"
+                    "$ref": "#/definitions/HttpRequestNode",
+                    "description": "Request definition for http:\n`request <?contentType> <?contentLanguage> { <?query> <?headers> <?body> }`"
                 },
                 "responseHandlers": {
                     "items": {
@@ -459,7 +462,8 @@
                     "type": "string"
                 },
                 "headers": {
-                    "$ref": "#/definitions/ObjectLiteralNode"
+                    "$ref": "#/definitions/ObjectLiteralNode",
+                    "description": "Object literal node: `{ <...assignments> }`"
                 },
                 "kind": {
                     "enum": [
@@ -527,7 +531,8 @@
                     "type": "object"
                 },
                 "query": {
-                    "$ref": "#/definitions/ObjectLiteralNode"
+                    "$ref": "#/definitions/ObjectLiteralNode",
+                    "description": "Object literal node: `{ <...assignments> }`"
                 },
                 "security": {
                     "items": {
@@ -672,10 +677,12 @@
                     "type": "array"
                 },
                 "condition": {
-                    "$ref": "#/definitions/ConditionAtomNode"
+                    "$ref": "#/definitions/ConditionAtomNode",
+                    "description": "Statement condition atom: `if (<jessie>)`"
                 },
                 "iteration": {
-                    "$ref": "#/definitions/IterationAtomNode"
+                    "$ref": "#/definitions/IterationAtomNode",
+                    "description": "Iteration atom: `foreach (<iterationVariable> of <iterable>)`"
                 },
                 "kind": {
                     "enum": [
@@ -1677,7 +1684,8 @@
             "description": "Outcome node, specifying what value to return and whether to terminate the flow immediately:\n`return/fail <?condition> <value>`\n`map result/error <?condition> <value>`",
             "properties": {
                 "condition": {
-                    "$ref": "#/definitions/ConditionAtomNode"
+                    "$ref": "#/definitions/ConditionAtomNode",
+                    "description": "Statement condition atom: `if (<jessie>)`"
                 },
                 "isError": {
                     "type": "boolean"
@@ -1856,7 +1864,8 @@
                     "type": "array"
                 },
                 "condition": {
-                    "$ref": "#/definitions/ConditionAtomNode"
+                    "$ref": "#/definitions/ConditionAtomNode",
+                    "description": "Statement condition atom: `if (<jessie>)`"
                 },
                 "kind": {
                     "enum": [

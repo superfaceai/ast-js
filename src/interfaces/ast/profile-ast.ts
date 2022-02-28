@@ -33,7 +33,7 @@ export type ProfileNodeKind =
 export interface ProfileASTNodeBase {
   kind: ProfileNodeKind;
   // Stripped during transfer, but provided during parsing
-  location?: LocationSpan | undefined;
+  location?: LocationSpan;
 }
 
 // TYPES //
@@ -126,7 +126,7 @@ export type Type = TypeName | TypeDefinition;
  */
 export interface EnumValueNode extends ProfileASTNodeBase, DocumentedNode {
   kind: 'EnumValue';
-  name?: string | undefined;
+  name?: string;
   value: string | number | boolean;
 }
 
@@ -143,7 +143,7 @@ export interface FieldDefinitionNode
   fieldName: string;
   /** Non-required fields don't have to be present at all */
   required: boolean;
-  type?: Type | undefined;
+  type?: Type;
 }
 
 /**
@@ -160,7 +160,7 @@ export interface NamedFieldDefinitionNode
    * @pattern require('./utils').IDENTIFIER_RE_SOURCE
    **/
   fieldName: string;
-  type?: Type | undefined;
+  type?: Type;
 }
 
 // MODEL //
@@ -181,7 +181,7 @@ export interface NamedModelDefinitionNode
    * @pattern require('./utils').IDENTIFIER_RE_SOURCE
    **/
   modelName: string;
-  type?: Type | undefined;
+  type?: Type;
 }
 
 // USECASE //
@@ -220,12 +220,12 @@ export interface UseCaseDefinitionNode
    **/
   useCaseName: string;
   /** Usecase safety indicator */
-  safety?: 'safe' | 'unsafe' | 'idempotent' | undefined;
-  input?: UseCaseSlotDefinitionNode<ObjectDefinitionNode> | undefined;
-  result?: UseCaseSlotDefinitionNode<Type> | undefined;
-  asyncResult?: UseCaseSlotDefinitionNode<Type> | undefined;
-  error?: UseCaseSlotDefinitionNode<Type> | undefined;
-  examples?: UseCaseSlotDefinitionNode<UseCaseExampleNode>[] | undefined;
+  safety?: 'safe' | 'unsafe' | 'idempotent';
+  input?: UseCaseSlotDefinitionNode<ObjectDefinitionNode>;
+  result?: UseCaseSlotDefinitionNode<Type>;
+  asyncResult?: UseCaseSlotDefinitionNode<Type>;
+  error?: UseCaseSlotDefinitionNode<Type>;
+  examples?: UseCaseSlotDefinitionNode<UseCaseExampleNode>[];
 }
 
 // DOCUMENT //
@@ -238,7 +238,7 @@ export interface ProfileHeaderNode extends ProfileASTNodeBase, DocumentedNode {
   /**
    * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
    **/
-  scope?: string | undefined;
+  scope?: string;
   /**
    * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
    **/
@@ -262,7 +262,7 @@ export interface ProfileHeaderNode extends ProfileASTNodeBase, DocumentedNode {
     /**
      * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
      **/
-    label?: string | undefined;
+    label?: string;
   };
 }
 
@@ -316,10 +316,10 @@ export type ProfileASTNode =
 export interface UseCaseExampleNode extends ProfileASTNodeBase {
   kind: 'UseCaseExample';
   exampleName?: string;
-  input?: UseCaseSlotDefinitionNode<ComlinkLiteralNode> | undefined;
-  result?: UseCaseSlotDefinitionNode<ComlinkLiteralNode> | undefined;
-  asyncResult?: UseCaseSlotDefinitionNode<ComlinkLiteralNode> | undefined;
-  error?: UseCaseSlotDefinitionNode<ComlinkLiteralNode> | undefined;
+  input?: UseCaseSlotDefinitionNode<ComlinkLiteralNode>;
+  result?: UseCaseSlotDefinitionNode<ComlinkLiteralNode>;
+  asyncResult?: UseCaseSlotDefinitionNode<ComlinkLiteralNode>;
+  error?: UseCaseSlotDefinitionNode<ComlinkLiteralNode>;
 }
 
 /**

@@ -37,16 +37,16 @@ export type BackoffPolicy =
        * @TJS-minimum 0
        * @TJS-type integer
        **/
-      start?: number | undefined;
+      start?: number;
       /**
        * @TJS-minimum 0
        * @TJS-type integer
        **/
-      factor?: number | undefined;
+      factor?: number;
     };
 
 /**
- * RetryPolicy per usecase values.
+ * Retry policy configuration.
  */
 export type RetryPolicy =
   | OnFail.NONE
@@ -60,12 +60,12 @@ export type RetryPolicy =
        * @TJS-minimum 0
        * @TJS-type integer
        **/
-      maxContiguousRetries?: number | undefined;
+      maxContiguousRetries?: number;
       /**
        * @TJS-minimum 0
        * @TJS-type integer
        **/
-      requestTimeout?: number | undefined;
+      requestTimeout?: number;
     }
   | OnFail.CIRCUIT_BREAKER
   | {
@@ -74,18 +74,18 @@ export type RetryPolicy =
        * @TJS-minimum 0
        * @TJS-type integer
        **/
-      maxContiguousRetries?: number | undefined;
+      maxContiguousRetries?: number;
       /**
        * @TJS-minimum 0
        * @TJS-type integer
        **/
-      openTime?: number | undefined;
+      openTime?: number;
       /**
        * @TJS-minimum 0
        * @TJS-type integer
        **/
-      requestTimeout?: number | undefined;
-      backoff?: BackoffPolicy | undefined;
+      requestTimeout?: number;
+      backoff?: BackoffPolicy;
     };
 
 export type NormalizedBackoffPolicy = {
@@ -94,12 +94,12 @@ export type NormalizedBackoffPolicy = {
    * @TJS-minimum 0
    * @TJS-type integer
    **/
-  start?: number | undefined;
+  start?: number;
   /**
    * @TJS-minimum 0
    * @TJS-type integer
    **/
-  factor?: number | undefined;
+  factor?: number;
 };
 
 export type NormalizedRetryPolicy =
@@ -112,12 +112,12 @@ export type NormalizedRetryPolicy =
        * @TJS-minimum 0
        * @TJS-type integer
        **/
-      maxContiguousRetries?: number | undefined;
+      maxContiguousRetries?: number;
       /**
        * @TJS-minimum 0
        * @TJS-type integer
        **/
-      requestTimeout?: number | undefined;
+      requestTimeout?: number;
     }
   | {
       kind: OnFail.CIRCUIT_BREAKER;
@@ -125,17 +125,17 @@ export type NormalizedRetryPolicy =
        * @TJS-minimum 0
        * @TJS-type integer
        **/
-      maxContiguousRetries?: number | undefined;
+      maxContiguousRetries?: number;
       /**
        * @TJS-minimum 0
        * @TJS-type integer
        **/
-      openTime?: number | undefined;
+      openTime?: number;
       /**
        * @TJS-minimum 0
        * @TJS-type integer
        **/
-      requestTimeout?: number | undefined;
+      requestTimeout?: number;
       backoff: NormalizedBackoffPolicy;
     };
 
@@ -144,8 +144,8 @@ export type NormalizedRetryPolicy =
  */
 export type UsecaseDefaults = {
   [usecase: string]: {
-    input?: { [key: string]: unknown } | undefined;
-    providerFailover?: boolean | undefined;
+    input?: { [key: string]: unknown };
+    providerFailover?: boolean;
   };
 };
 
@@ -161,8 +161,8 @@ export type NormalizedUsecaseDefaults = {
  */
 export type ProfileProviderDefaults = {
   [provider: string]: {
-    input?: { [key: string]: unknown } | undefined;
-    retryPolicy?: RetryPolicy | undefined;
+    input?: { [key: string]: unknown };
+    retryPolicy?: RetryPolicy;
   };
 };
 
@@ -177,14 +177,14 @@ export type NormalizedProfileProviderDefaults = {
  * Provider settings for specific profile.
  */
 export type ProfileProviderSettings = {
-  defaults?: ProfileProviderDefaults | undefined;
+  defaults?: ProfileProviderDefaults;
 } & (
   | {
       file: string;
     }
   | {
-      mapVariant?: string | undefined;
-      mapRevision?: string | undefined;
+      mapVariant?: string;
+      mapRevision?: string;
     }
 );
 
@@ -194,8 +194,8 @@ export type NormalizedProfileProviderSettings =
       defaults: NormalizedProfileProviderDefaults;
     }
   | {
-      mapVariant?: string | undefined;
-      mapRevision?: string | undefined;
+      mapVariant?: string;
+      mapRevision?: string;
       defaults: NormalizedProfileProviderDefaults;
     };
 
@@ -208,11 +208,9 @@ export type ProfileProviderEntry = UriPath | ProfileProviderSettings;
  * Expanded profile settings for one profile id.
  */
 export type ProfileSettings = {
-  priority?: string[] | undefined;
-  defaults?: UsecaseDefaults | undefined;
-  providers?:
-    | { [provider: string]: UriPath | ProfileProviderEntry }
-    | undefined;
+  priority?: string[];
+  defaults?: UsecaseDefaults;
+  providers?: { [provider: string]: UriPath | ProfileProviderEntry };
 } & (
   | {
       version: SemanticVersion;
@@ -291,13 +289,13 @@ export type SecurityValues =
  * Expanded provider settings for one provider name.
  */
 export type ProviderSettings = {
-  file?: string | undefined;
-  security?: SecurityValues[] | undefined;
-  parameters?: { [key: string]: string } | undefined;
+  file?: string;
+  security?: SecurityValues[];
+  parameters?: { [key: string]: string };
 };
 
 export type NormalizedProviderSettings = {
-  file?: string | undefined;
+  file?: string;
   security: SecurityValues[];
   parameters: { [key: string]: string };
 };
@@ -305,8 +303,8 @@ export type NormalizedProviderSettings = {
 export type ProviderEntry = UriPath | ProviderSettings;
 
 export type SuperJsonDocument = {
-  profiles?: { [profile: string]: ProfileEntry } | undefined;
-  providers?: { [provider: string]: ProviderEntry } | undefined;
+  profiles?: { [profile: string]: ProfileEntry };
+  providers?: { [provider: string]: ProviderEntry };
 };
 
 export type NormalizedSuperJsonDocument = {
@@ -321,7 +319,7 @@ export type AnonymizedSuperJsonDocument = {
       version: SemanticVersion | 'file';
       providers: {
         provider: string;
-        priority?: number | undefined;
+        priority?: number;
         version: SemanticVersion | 'file';
       }[];
     }

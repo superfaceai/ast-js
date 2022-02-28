@@ -2162,7 +2162,8 @@
             "description": "Construct of form:\n```\nusecase ident safety {\ninput {\n  ...fields\n}\nresult type\nasync result type\nerror type\n}\n```",
             "properties": {
                 "asyncResult": {
-                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>"
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>",
+                    "description": "Named slot definition for usecases and usecase examples.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation."
                 },
                 "documentation": {
                     "additionalProperties": false,
@@ -2239,7 +2240,8 @@
                     "type": "object"
                 },
                 "error": {
-                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>"
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>",
+                    "description": "Named slot definition for usecases and usecase examples.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation."
                 },
                 "examples": {
                     "items": {
@@ -2248,7 +2250,8 @@
                     "type": "array"
                 },
                 "input": {
-                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<ObjectDefinitionNode>"
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<ObjectDefinitionNode>",
+                    "description": "Named slot definition for usecases and usecase examples.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation."
                 },
                 "kind": {
                     "enum": [
@@ -2316,7 +2319,8 @@
                     "type": "object"
                 },
                 "result": {
-                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>"
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<Type>",
+                    "description": "Named slot definition for usecases and usecase examples.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation."
                 },
                 "safety": {
                     "description": "Usecase safety indicator",
@@ -2343,16 +2347,19 @@
             "description": "Construct of form: `example <?name> {\n  <?input> { ... }\n  <?result> { ... }\n  <?error> { ... }\n}`",
             "properties": {
                 "asyncResult": {
-                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<ComlinkLiteralNode>"
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<ComlinkLiteralNode>",
+                    "description": "Named slot definition for usecases and usecase examples.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation."
                 },
                 "error": {
-                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<ComlinkLiteralNode>"
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<ComlinkLiteralNode>",
+                    "description": "Named slot definition for usecases and usecase examples.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation."
                 },
                 "exampleName": {
                     "type": "string"
                 },
                 "input": {
-                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<ComlinkLiteralNode>"
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<ComlinkLiteralNode>",
+                    "description": "Named slot definition for usecases and usecase examples.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation."
                 },
                 "kind": {
                     "enum": [
@@ -2420,7 +2427,8 @@
                     "type": "object"
                 },
                 "result": {
-                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<ComlinkLiteralNode>"
+                    "$ref": "#/definitions/UseCaseSlotDefinitionNode<ComlinkLiteralNode>",
+                    "description": "Named slot definition for usecases and usecase examples.\n\nThe point of this node is so that the usecase slots (`input`, `result`, `async result` and `error`) can have proper spans and documentation."
                 }
             },
             "required": [
