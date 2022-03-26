@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - removed `typescript-is` and replaced it with `ajv` validation
 - `isProfileDocumentNode` and `isMapDocumentNode` do full schema validation
 - Cleaned up schema types by removing now obsolete `| undefined`.
+- Removed `uri-reference` format from `HttpCallNode::url` because it is incorrect and `ajv` is broken with it
 
 ### Fixed
 - Fixed `AssertionError::detailed` message spreading an already-string message
