@@ -572,5 +572,52 @@ describe('map-ast.utils', () => {
       };
       expect(assertMapDocumentNode(validNode)).toEqual(validNode);
     });
+
+    it('should not trip up assertion with special chars in url', () => {
+      const validNode: MapDocumentNode = {
+        astMetadata: {
+          sourceChecksum: 'checksum',
+          astVersion: {
+            major: 1,
+            minor: 0,
+            patch: 0,
+          },
+          parserVersion: {
+            major: 1,
+            minor: 0,
+            patch: 0,
+          },
+        },
+        kind: 'MapDocument',
+        header: {
+          kind: 'MapHeader',
+          profile: {
+            name: 'test',
+            version: {
+              major: 1,
+              minor: 0,
+            },
+          },
+          provider: 'provider',
+        },
+        definitions: [
+          {
+            kind: 'MapDefinition',
+            name: 'test',
+            usecaseName: 'test',
+            statements: [
+              {
+                kind: 'HttpCallStatement',
+                method: 'GET',
+                url: '/api/{input.wtf}[]\\{}/omg',
+                responseHandlers: []
+              }
+            ],
+          },
+        ],
+      };
+
+      expect(() => assertMapDocumentNode(validNode)).not.toThrow();
+    });
   });
 });

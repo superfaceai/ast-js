@@ -184,9 +184,6 @@ export interface HttpCallStatementNode extends MapASTNodeBase {
   kind: 'HttpCallStatement';
   method: string;
   serviceId?: string;
-  /**
-   * @format uri-reference
-   **/
   url: string;
   request?: HttpRequestNode;
   responseHandlers: HttpResponseHandlerNode[];
