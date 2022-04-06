@@ -1,6 +1,4 @@
-import { createAssertEquals, createIs, TypeGuardError } from 'typescript-is';
-
-import { AssertionError } from '../../error';
+import { prepareAssert } from '../../validation';
 import {
   ComlinkAssignmentNode,
   ComlinkListLiteralNode,
@@ -29,69 +27,136 @@ import {
   UseCaseExampleNode,
   UseCaseSlotDefinitionNode,
 } from './profile-ast';
-import { Guard } from './utils';
+import * as schema from './profile-ast.schema.json';
+import { Assert } from './utils';
 
-export const isDocumentDefinition: Guard<DocumentDefinition> =
-  createIs<DocumentDefinition>();
-export const isEnumDefinitionNode: Guard<EnumDefinitionNode> =
-  createIs<EnumDefinitionNode>();
-export const isEnumValueNode: Guard<EnumValueNode> = createIs<EnumValueNode>();
-export const isFieldDefinitionNode: Guard<FieldDefinitionNode> =
-  createIs<FieldDefinitionNode>();
-export const isListDefinitionNode: Guard<ListDefinitionNode> =
-  createIs<ListDefinitionNode>();
-export const isModelTypeNameNode: Guard<ModelTypeNameNode> =
-  createIs<ModelTypeNameNode>();
-export const isNamedFieldDefinitionNode: Guard<NamedFieldDefinitionNode> =
-  createIs<NamedFieldDefinitionNode>();
-export const isNamedModelDefinitionNode: Guard<NamedModelDefinitionNode> =
-  createIs<NamedModelDefinitionNode>();
-export const isNonNullDefinitionNode: Guard<NonNullDefinitionNode> =
-  createIs<NonNullDefinitionNode>();
-export const isObjectDefinitionNode: Guard<ObjectDefinitionNode> =
-  createIs<ObjectDefinitionNode>();
-export const isPrimitiveTypeNameNode: Guard<PrimitiveTypeNameNode> =
-  createIs<PrimitiveTypeNameNode>();
-export const isProfileASTNode: Guard<ProfileASTNode> =
-  createIs<ProfileASTNode>();
-export const isProfileDocumentNode: Guard<ProfileDocumentNode> =
-  createIs<ProfileDocumentNode>();
-export const isProfileHeaderNode: Guard<ProfileHeaderNode> =
-  createIs<ProfileHeaderNode>();
-export const isType: Guard<Type> = createIs<Type>();
-export const isTypeDefinition: Guard<TypeDefinition> =
-  createIs<TypeDefinition>();
-export const isTypeName: Guard<TypeName> = createIs<TypeName>();
-export const isUnionDefinitionNode: Guard<UnionDefinitionNode> =
-  createIs<UnionDefinitionNode>();
-export const isUseCaseDefinitionNode: Guard<UseCaseDefinitionNode> =
-  createIs<UseCaseDefinitionNode>();
-export const isUseCaseSlotDefinitionNode: Guard<
-  UseCaseSlotDefinitionNode<ProfileASTNode>
-> = createIs<UseCaseSlotDefinitionNode<ProfileASTNode>>();
-export const isUseCaseExampleNode: Guard<UseCaseExampleNode> =
-  createIs<UseCaseExampleNode>();
-export const isComlinkPrimitiveLiteralNode: Guard<ComlinkPrimitiveLiteralNode> =
-  createIs<ComlinkPrimitiveLiteralNode>();
-export const isComlinkObjectLiteralNode: Guard<ComlinkObjectLiteralNode> =
-  createIs<ComlinkObjectLiteralNode>();
-export const isComlinkListLiteralNode: Guard<ComlinkListLiteralNode> =
-  createIs<ComlinkListLiteralNode>();
-export const isComlinkLiteralNode: Guard<ComlinkLiteralNode> =
-  createIs<ComlinkLiteralNode>();
-export const isComlinkAssignmentNode: Guard<ComlinkAssignmentNode> =
-  createIs<ComlinkAssignmentNode>();
+const assertProfileDocument: Assert<ProfileDocumentNode> = prepareAssert(
+  schema,
+  'profile-ast'
+);
+
+export const isProfileDocumentNode = (
+  node: unknown
+): node is ProfileDocumentNode => {
+  try {
+    assertProfileDocument(node);
+
+    return true;
+  } catch {
+    return false;
+  }
+};
+
+// We don't need to do JSON Schema validation on these, as they should be already validated
+export const isEnumDefinitionNode = (
+  node: ProfileASTNode
+): node is EnumDefinitionNode => node.kind === 'EnumDefinition';
+export const isEnumValueNode = (node: ProfileASTNode): node is EnumValueNode =>
+  node.kind === 'EnumValue';
+export const isFieldDefinitionNode = (
+  node: ProfileASTNode
+): node is FieldDefinitionNode => node.kind === 'FieldDefinition';
+export const isListDefinitionNode = (
+  node: ProfileASTNode
+): node is ListDefinitionNode => node.kind === 'ListDefinition';
+export const isModelTypeNameNode = (
+  node: ProfileASTNode
+): node is ModelTypeNameNode => node.kind === 'ModelTypeName';
+export const isNamedFieldDefinitionNode = (
+  node: ProfileASTNode
+): node is NamedFieldDefinitionNode => node.kind === 'NamedFieldDefinition';
+export const isNamedModelDefinitionNode = (
+  node: ProfileASTNode
+): node is NamedModelDefinitionNode => node.kind === 'NamedModelDefinition';
+export const isNonNullDefinitionNode = (
+  node: ProfileASTNode
+): node is NonNullDefinitionNode => node.kind === 'NonNullDefinition';
+export const isObjectDefinitionNode = (
+  node: ProfileASTNode
+): node is ObjectDefinitionNode => node.kind === 'ObjectDefinition';
+export const isPrimitiveTypeNameNode = (
+  node: ProfileASTNode
+): node is PrimitiveTypeNameNode => node.kind === 'PrimitiveTypeName';
+export const isProfileHeaderNode = (
+  node: ProfileASTNode
+): node is ProfileHeaderNode => node.kind === 'ProfileHeader';
+export const isTypeDefinition = (
+  input: ProfileASTNode
+): input is TypeDefinition =>
+  isObjectDefinitionNode(input) ||
+  isEnumDefinitionNode(input) ||
+  isUnionDefinitionNode(input) ||
+  isNonNullDefinitionNode(input) ||
+  isUseCaseExampleNode(input) ||
+  isComlinkListLiteralNode(input);
+export const isTypeName = (input: ProfileASTNode): input is TypeName =>
+  isPrimitiveTypeNameNode(input) || isModelTypeNameNode(input);
+export const isType = (input: ProfileASTNode): input is Type =>
+  isTypeDefinition(input) || isTypeName(input);
+export const isUnionDefinitionNode = (
+  node: ProfileASTNode
+): node is UnionDefinitionNode => node.kind === 'UnionDefinition';
+export const isUseCaseDefinitionNode = (
+  node: ProfileASTNode
+): node is UseCaseDefinitionNode => node.kind === 'UseCaseDefinition';
+export const isUseCaseSlotDefinitionNodeType = (
+  node: ProfileASTNode
+): node is UseCaseSlotDefinitionNode<Type> =>
+  node.kind === 'UseCaseSlotDefinition' && isType(node.value);
+export const isUseCaseSlotDefinitionNodeUseCaseExampleNode = (
+  node: ProfileASTNode
+): node is UseCaseSlotDefinitionNode<UseCaseExampleNode> =>
+  node.kind === 'UseCaseSlotDefinition' && isUseCaseExampleNode(node.value);
+export const isUseCaseSlotDefinitionNodeComlinkLiteralNode = (
+  node: ProfileASTNode
+): node is UseCaseSlotDefinitionNode<ComlinkLiteralNode> =>
+  node.kind === 'UseCaseSlotDefinition' && isComlinkLiteralNode(node.value);
+export const isUseCaseSlotDefinitionNodeObjectDefinitionNode = (
+  node: ProfileASTNode
+): node is UseCaseSlotDefinitionNode<ObjectDefinitionNode> =>
+  node.kind === 'UseCaseSlotDefinition' && isObjectDefinitionNode(node.value);
+export const isUseCaseSlotDefinitionNode = (
+  input: ProfileASTNode
+): input is UseCaseSlotDefinitionNode<
+  Type | UseCaseExampleNode | ComlinkLiteralNode | ObjectDefinitionNode
+> =>
+  isUseCaseSlotDefinitionNodeType(input) ||
+  isUseCaseSlotDefinitionNodeUseCaseExampleNode(input) ||
+  isUseCaseSlotDefinitionNodeComlinkLiteralNode(input) ||
+  isUseCaseSlotDefinitionNodeObjectDefinitionNode(input);
+export const isUseCaseExampleNode = (
+  node: ProfileASTNode
+): node is UseCaseExampleNode => node.kind === 'UseCaseExample';
+export const isComlinkPrimitiveLiteralNode = (
+  node: ProfileASTNode
+): node is ComlinkPrimitiveLiteralNode =>
+  node.kind === 'ComlinkPrimitiveLiteral';
+export const isComlinkObjectLiteralNode = (
+  node: ProfileASTNode
+): node is ComlinkObjectLiteralNode => node.kind === 'ComlinkObjectLiteral';
+export const isComlinkListLiteralNode = (
+  node: ProfileASTNode
+): node is ComlinkListLiteralNode => node.kind === 'ComlinkListLiteral';
+export const isComlinkLiteralNode = (
+  node: ProfileASTNode
+): node is ComlinkLiteralNode =>
+  isComlinkPrimitiveLiteralNode(node) ||
+  isComlinkListLiteralNode(node) ||
+  isComlinkObjectLiteralNode(node);
+export const isComlinkAssignmentNode = (
+  node: ProfileASTNode
+): node is ComlinkAssignmentNode => node.kind === 'ComlinkAssignment';
+export const isDocumentDefinition = (
+  input: ProfileASTNode
+): input is DocumentDefinition =>
+  isUseCaseDefinitionNode(input) ||
+  isNamedModelDefinitionNode(input) ||
+  isNamedFieldDefinitionNode(input);
 
 export function assertProfileDocumentNode(node: unknown): ProfileDocumentNode {
-  const assert = createAssertEquals<ProfileDocumentNode>();
-  try {
-    return assert(node);
-  } catch (error) {
-    if (error instanceof TypeGuardError) {
-      throw new AssertionError(`Profile AST ${error.message}`, error.path);
-    }
-    throw error;
-  }
+  assertProfileDocument(node);
+
+  return node;
 }
 
 export interface ProfileAstVisitor<R = unknown> {

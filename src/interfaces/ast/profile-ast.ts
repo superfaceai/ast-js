@@ -33,12 +33,14 @@ export type ProfileNodeKind =
 export interface ProfileASTNodeBase {
   kind: ProfileNodeKind;
   // Stripped during transfer, but provided during parsing
-  location?: LocationSpan | undefined;
+  location?: LocationSpan;
 }
 
 // TYPES //
 
-/** From keywords: `boolean`, `number` and `string` */
+/**
+ * From keywords: `boolean`, `number` and `string`
+ */
 export interface PrimitiveTypeNameNode extends ProfileASTNodeBase {
   kind: 'PrimitiveTypeName';
   name: 'boolean' | 'number' | 'string';
@@ -56,21 +58,28 @@ export interface ModelTypeNameNode extends ProfileASTNodeBase {
    **/
   name: string;
 }
+
 export type TypeName = PrimitiveTypeNameNode | ModelTypeNameNode;
 
-/** Construct of form: `enum { values... }` */
+/**
+ * Construct of form: `enum { values... }`
+ */
 export interface EnumDefinitionNode extends ProfileASTNodeBase {
   kind: 'EnumDefinition';
   values: EnumValueNode[];
 }
 
-/** Construct of form: `{ fields... }` */
+/**
+ * Construct of form: `{ fields... }`
+ */
 export interface ObjectDefinitionNode extends ProfileASTNodeBase {
   kind: 'ObjectDefinition';
   fields: FieldDefinitionNode[];
 }
 
-/** Array type: `[type]` */
+/**
+ * Array type: `[type]`
+ */
 export interface ListDefinitionNode extends ProfileASTNodeBase {
   kind: 'ListDefinition';
   elementType: Type;
@@ -91,7 +100,9 @@ export interface NonNullDefinitionNode extends ProfileASTNodeBase {
     | ListDefinitionNode;
 }
 
-/** Construct of form: `type | type | ...` */
+/**
+ * Construct of form: `type | type | ...`
+ */
 export interface UnionDefinitionNode extends ProfileASTNodeBase {
   kind: 'UnionDefinition';
   types: Exclude<Type, UnionDefinitionNode>[];
@@ -115,7 +126,7 @@ export type Type = TypeName | TypeDefinition;
  */
 export interface EnumValueNode extends ProfileASTNodeBase, DocumentedNode {
   kind: 'EnumValue';
-  name?: string | undefined;
+  name?: string;
   value: string | number | boolean;
 }
 
@@ -132,7 +143,7 @@ export interface FieldDefinitionNode
   fieldName: string;
   /** Non-required fields don't have to be present at all */
   required: boolean;
-  type?: Type | undefined;
+  type?: Type;
 }
 
 /**
@@ -149,7 +160,7 @@ export interface NamedFieldDefinitionNode
    * @pattern require('./utils').IDENTIFIER_RE_SOURCE
    **/
   fieldName: string;
-  type?: Type | undefined;
+  type?: Type;
 }
 
 // MODEL //
@@ -170,7 +181,7 @@ export interface NamedModelDefinitionNode
    * @pattern require('./utils').IDENTIFIER_RE_SOURCE
    **/
   modelName: string;
-  type?: Type | undefined;
+  type?: Type;
 }
 
 // USECASE //
@@ -209,12 +220,12 @@ export interface UseCaseDefinitionNode
    **/
   useCaseName: string;
   /** Usecase safety indicator */
-  safety?: 'safe' | 'unsafe' | 'idempotent' | undefined;
-  input?: UseCaseSlotDefinitionNode<ObjectDefinitionNode> | undefined;
-  result?: UseCaseSlotDefinitionNode<Type> | undefined;
-  asyncResult?: UseCaseSlotDefinitionNode<Type> | undefined;
-  error?: UseCaseSlotDefinitionNode<Type> | undefined;
-  examples?: UseCaseSlotDefinitionNode<UseCaseExampleNode>[] | undefined;
+  safety?: 'safe' | 'unsafe' | 'idempotent';
+  input?: UseCaseSlotDefinitionNode<ObjectDefinitionNode>;
+  result?: UseCaseSlotDefinitionNode<Type>;
+  asyncResult?: UseCaseSlotDefinitionNode<Type>;
+  error?: UseCaseSlotDefinitionNode<Type>;
+  examples?: UseCaseSlotDefinitionNode<UseCaseExampleNode>[];
 }
 
 // DOCUMENT //
@@ -227,7 +238,7 @@ export interface ProfileHeaderNode extends ProfileASTNodeBase, DocumentedNode {
   /**
    * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
    **/
-  scope?: string | undefined;
+  scope?: string;
   /**
    * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
    **/
@@ -251,22 +262,24 @@ export interface ProfileHeaderNode extends ProfileASTNodeBase, DocumentedNode {
     /**
      * @pattern require('./utils').DOCUMENT_NAME_RE_SOURCE
      **/
-    label?: string | undefined;
+    label?: string;
   };
-}
-
-/** Node enclosing the whole document */
-export interface ProfileDocumentNode extends ProfileASTNodeBase {
-  astMetadata: AstMetadata;
-  kind: 'ProfileDocument';
-  header: ProfileHeaderNode;
-  definitions: DocumentDefinition[];
 }
 
 export type DocumentDefinition =
   | UseCaseDefinitionNode
   | NamedFieldDefinitionNode
   | NamedModelDefinitionNode;
+
+/**
+ * Node enclosing the whole document
+ */
+export interface ProfileDocumentNode extends ProfileASTNodeBase {
+  astMetadata: AstMetadata;
+  kind: 'ProfileDocument';
+  header: ProfileHeaderNode;
+  definitions: DocumentDefinition[];
+}
 
 export type ProfileASTNode =
   | EnumDefinitionNode
@@ -293,13 +306,20 @@ export type ProfileASTNode =
 
 // EXAMPLES //
 
+/**
+ * Construct of form: `example <?name> {
+ *   <?input> { ... }
+ *   <?result> { ... }
+ *   <?error> { ... }
+ * }`
+ */
 export interface UseCaseExampleNode extends ProfileASTNodeBase {
   kind: 'UseCaseExample';
   exampleName?: string;
-  input?: UseCaseSlotDefinitionNode<ComlinkLiteralNode> | undefined;
-  result?: UseCaseSlotDefinitionNode<ComlinkLiteralNode> | undefined;
-  asyncResult?: UseCaseSlotDefinitionNode<ComlinkLiteralNode> | undefined;
-  error?: UseCaseSlotDefinitionNode<ComlinkLiteralNode> | undefined;
+  input?: UseCaseSlotDefinitionNode<ComlinkLiteralNode>;
+  result?: UseCaseSlotDefinitionNode<ComlinkLiteralNode>;
+  asyncResult?: UseCaseSlotDefinitionNode<ComlinkLiteralNode>;
+  error?: UseCaseSlotDefinitionNode<ComlinkLiteralNode>;
 }
 
 /**

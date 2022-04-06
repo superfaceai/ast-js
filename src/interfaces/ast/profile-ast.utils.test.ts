@@ -1,4 +1,3 @@
-import { AssertionError } from '../../error';
 import {
   ComlinkAssignmentNode,
   ComlinkListLiteralNode,
@@ -522,11 +521,8 @@ describe('profile-ast.utils', () => {
         kind: 'PrimitiveTypeName',
         name: 'boolean',
       };
-      expect(() => assertProfileDocumentNode(primitiveNode)).toThrowError(
-        new AssertionError(
-          "Profile AST validation failed at $: expected 'astMetadata' in object, found: { kind: 'PrimitiveTypeName', name: 'boolean' }",
-          []
-        )
+      expect(() => assertProfileDocumentNode(primitiveNode)).toThrow(
+        '$: must have required property "astMetadata"'
       );
 
       const node: ProfileDocumentNode = {

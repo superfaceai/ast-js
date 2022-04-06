@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2022-04-06
+### Added
+- Added simple retry policy configuration to superjson schema
+- Added `openTime` field to circuit breaker configuration in superjson schema
+
+### Changed
+- removed `typescript-is` and replaced it with `ajv` validation
+- `isProfileDocumentNode` and `isMapDocumentNode` do full schema validation
+- Cleaned up schema types by removing now obsolete `| undefined`.
+- Removed `uri-reference` format from `HttpCallNode::url` because it is incorrect and `ajv` is broken with it
+
+### Fixed
+- Fixed `AssertionError::detailed` message spreading an already-string message
+
 ## [1.1.0] - 2022-01-19
 ### Added
 - Added guards and visit functions for `UseCaseExampleNode` and `ComlinkLiteralNode`
@@ -153,7 +167,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - First AST
 - Github workflow publishing
 
-[Unreleased]: https://github.com/superfaceai/ast-js/compare/v1.1.0...HEAD
+[Unreleased]: https://github.com/superfaceai/ast-js/compare/v1.2.0...HEAD
+[1.2.0]: https://github.com/superfaceai/ast-js/compare/v1.1.0...v1.2.0
 [1.1.0]: https://github.com/superfaceai/ast-js/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/superfaceai/ast-js/compare/v0.0.34...v1.0.0
 [0.0.34]: https://github.com/superfaceai/ast-js/compare/v0.0.33...v0.0.34

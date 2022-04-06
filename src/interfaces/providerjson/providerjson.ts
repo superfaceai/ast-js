@@ -9,6 +9,10 @@ export enum SecurityType {
   HTTP = 'http',
 }
 
+/**
+ * The placement of the API key.
+ * @$id ApiKeyPlacement
+ **/
 export enum ApiKeyPlacement {
   HEADER = 'header',
   BODY = 'body',
@@ -24,16 +28,21 @@ export enum HttpScheme {
 
 /**
  * Security scheme for api key authorization.
+ * @$id ApiKeySecurityScheme
  */
 export type ApiKeySecurityScheme = {
   id: string;
   type: SecurityType.APIKEY;
+  /**
+   * @$ref ApiKeyPlacement
+   */
   in: ApiKeyPlacement;
-  name?: string | undefined;
+  name?: string;
 };
 
 /**
  * Security scheme for basic authorization.
+ * @$id BasicAuthSecurityScheme
  */
 export type BasicAuthSecurityScheme = {
   id: string;
@@ -43,16 +52,18 @@ export type BasicAuthSecurityScheme = {
 
 /**
  * Security scheme for bearer authorization.
+ * @$id BearerTokenSecurityScheme
  */
 export type BearerTokenSecurityScheme = {
   id: string;
   type: SecurityType.HTTP;
   scheme: HttpScheme.BEARER;
-  bearerFormat?: string | undefined;
+  bearerFormat?: string;
 };
 
 /**
  * Security scheme for digest authorization.
+ * @$id DigestSecurityScheme
  */
 export type DigestSecurityScheme = {
   id: string;
@@ -61,15 +72,15 @@ export type DigestSecurityScheme = {
   /**
    * Code that should be returned from initial call for challenge eg. 401
    */
-  statusCode?: number | undefined;
+  statusCode?: number;
   /**
    * Name of header containing challenge from the server eg. www-authenticate
    */
-  challengeHeader?: string | undefined;
+  challengeHeader?: string;
   /**
    * Name of header containing authorization eg. Authorization
    */
-  authorizationHeader?: string | undefined;
+  authorizationHeader?: string;
 };
 
 /**
@@ -94,12 +105,13 @@ export type IntegrationParameter = {
    * @pattern require('../ast/utils').IDENTIFIER_RE_SOURCE
    */
   name: string;
-  description?: string | undefined;
-  default?: string | undefined;
+  description?: string;
+  default?: string;
 };
 
 /**
  * Type decribing provider.json document.
+ * @$id ProviderJson
  */
 export type ProviderJson = {
   /**
@@ -107,7 +119,7 @@ export type ProviderJson = {
    */
   name: string;
   services: ProviderService[];
-  securitySchemes?: SecurityScheme[] | undefined;
+  securitySchemes?: SecurityScheme[];
   defaultService: string;
-  parameters?: IntegrationParameter[] | undefined;
+  parameters?: IntegrationParameter[];
 };
