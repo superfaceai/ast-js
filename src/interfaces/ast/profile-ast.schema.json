@@ -309,6 +309,9 @@
         "ComlinkLiteralNode": {
             "anyOf": [
                 {
+                    "$ref": "#/definitions/ComlinkNoneLiteralNode"
+                },
+                {
                     "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
                 },
                 {
@@ -318,6 +321,81 @@
                     "$ref": "#/definitions/ComlinkListLiteralNode"
                 }
             ]
+        },
+        "ComlinkNoneLiteralNode": {
+            "additionalProperties": false,
+            "description": "Comlink None literal representing empty value",
+            "properties": {
+                "kind": {
+                    "enum": [
+                        "ComlinkNoneLiteral"
+                    ],
+                    "type": "string"
+                },
+                "location": {
+                    "additionalProperties": false,
+                    "description": "Location span within the source.",
+                    "properties": {
+                        "end": {
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
+                        },
+                        "start": {
+                            "additionalProperties": false,
+                            "description": "Location within the source.\n\nContains both the human-readable line:column information and character index.",
+                            "properties": {
+                                "charIndex": {
+                                    "description": "Character index within the source code - starts at 0",
+                                    "type": "number"
+                                },
+                                "column": {
+                                    "description": "Column number - starts at 1",
+                                    "type": "number"
+                                },
+                                "line": {
+                                    "description": "Line number - starts at 1",
+                                    "type": "number"
+                                }
+                            },
+                            "required": [
+                                "charIndex",
+                                "column",
+                                "line"
+                            ],
+                            "type": "object"
+                        }
+                    },
+                    "required": [
+                        "end",
+                        "start"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "kind"
+            ],
+            "type": "object"
         },
         "ComlinkObjectLiteralNode": {
             "additionalProperties": false,
@@ -904,6 +982,9 @@
                             "$ref": "#/definitions/UseCaseExampleNode"
                         },
                         {
+                            "$ref": "#/definitions/ComlinkNoneLiteralNode"
+                        },
+                        {
                             "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
                         },
                         {
@@ -951,6 +1032,9 @@
                         },
                         {
                             "$ref": "#/definitions/UseCaseExampleNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ComlinkNoneLiteralNode"
                         },
                         {
                             "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
@@ -1289,6 +1373,9 @@
                             "$ref": "#/definitions/UseCaseExampleNode"
                         },
                         {
+                            "$ref": "#/definitions/ComlinkNoneLiteralNode"
+                        },
+                        {
                             "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
                         },
                         {
@@ -1478,6 +1565,9 @@
                         },
                         {
                             "$ref": "#/definitions/UseCaseExampleNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ComlinkNoneLiteralNode"
                         },
                         {
                             "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
@@ -2136,6 +2226,9 @@
                             },
                             {
                                 "$ref": "#/definitions/UseCaseExampleNode"
+                            },
+                            {
+                                "$ref": "#/definitions/ComlinkNoneLiteralNode"
                             },
                             {
                                 "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
@@ -2910,6 +3003,9 @@
                         },
                         {
                             "$ref": "#/definitions/UseCaseExampleNode"
+                        },
+                        {
+                            "$ref": "#/definitions/ComlinkNoneLiteralNode"
                         },
                         {
                             "$ref": "#/definitions/ComlinkPrimitiveLiteralNode"
