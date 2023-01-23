@@ -25,10 +25,11 @@ export type ProfileNodeKind =
   | 'ProfileDocument'
   // EXAMPLES
   | 'UseCaseExample'
+  | 'ComlinkNoneLiteral'
   | 'ComlinkPrimitiveLiteral'
   | 'ComlinkObjectLiteral'
-  | 'ComlinkAssignment'
-  | 'ComlinkListLiteral';
+  | 'ComlinkListLiteral'
+  | 'ComlinkAssignment';
 
 export interface ProfileASTNodeBase {
   kind: ProfileNodeKind;
@@ -300,6 +301,7 @@ export type ProfileASTNode =
   | UseCaseSlotDefinitionNode<ComlinkLiteralNode>
   | UseCaseExampleNode
   | ComlinkPrimitiveLiteralNode
+  | ComlinkNoneLiteralNode
   | ComlinkObjectLiteralNode
   | ComlinkListLiteralNode
   | ComlinkAssignmentNode;
@@ -331,6 +333,13 @@ export interface ComlinkPrimitiveLiteralNode extends ProfileASTNodeBase {
 }
 
 /**
+ * Comlink None literal representing empty value
+ */
+export interface ComlinkNoneLiteralNode extends ProfileASTNodeBase {
+  kind: 'ComlinkNoneLiteral';
+}
+
+/**
  * Comlink object literal node: `{ <...assignments> }`
  */
 export interface ComlinkObjectLiteralNode extends ProfileASTNodeBase {
@@ -358,6 +367,7 @@ export interface ComlinkAssignmentNode
 }
 
 export type ComlinkLiteralNode =
+  | ComlinkNoneLiteralNode
   | ComlinkPrimitiveLiteralNode
   | ComlinkObjectLiteralNode
   | ComlinkListLiteralNode;

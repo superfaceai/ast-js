@@ -1,6 +1,7 @@
 import {
   ComlinkAssignmentNode,
   ComlinkListLiteralNode,
+  ComlinkNoneLiteralNode,
   ComlinkObjectLiteralNode,
   ComlinkPrimitiveLiteralNode,
   EnumDefinitionNode,
@@ -26,6 +27,7 @@ import {
   isComlinkAssignmentNode,
   isComlinkListLiteralNode,
   isComlinkLiteralNode,
+  isComlinkNoneLiteralNode,
   isComlinkObjectLiteralNode,
   isComlinkPrimitiveLiteralNode,
   isDocumentDefinition,
@@ -409,6 +411,15 @@ describe('profile-ast.utils', () => {
         exampleName: 'test',
       };
       expect(isUseCaseExampleNode(node)).toEqual(true);
+    });
+  });
+
+  describe('isComlinkNoneLiteral', () => {
+    it('checks if node is comlink primitive literal node', () => {
+      const node: ComlinkNoneLiteralNode = {
+        kind: 'ComlinkNoneLiteral'
+      };
+      expect(isComlinkNoneLiteralNode(node)).toEqual(true);
     });
   });
 
