@@ -3,6 +3,7 @@ import {
   ComlinkAssignmentNode,
   ComlinkListLiteralNode,
   ComlinkLiteralNode,
+  ComlinkNoneLiteralNode,
   ComlinkObjectLiteralNode,
   ComlinkPrimitiveLiteralNode,
   DocumentDefinition,
@@ -127,6 +128,8 @@ export const isUseCaseSlotDefinitionNode = (
 export const isUseCaseExampleNode = (
   node: ProfileASTNode
 ): node is UseCaseExampleNode => node.kind === 'UseCaseExample';
+export const isComlinkNoneLiteralNode = (node: ProfileASTNode): node is ComlinkNoneLiteralNode =>
+  node.kind === 'ComlinkNoneLiteral';
 export const isComlinkPrimitiveLiteralNode = (
   node: ProfileASTNode
 ): node is ComlinkPrimitiveLiteralNode =>
@@ -140,6 +143,7 @@ export const isComlinkListLiteralNode = (
 export const isComlinkLiteralNode = (
   node: ProfileASTNode
 ): node is ComlinkLiteralNode =>
+  isComlinkNoneLiteralNode(node) ||
   isComlinkPrimitiveLiteralNode(node) ||
   isComlinkListLiteralNode(node) ||
   isComlinkObjectLiteralNode(node);
@@ -210,6 +214,10 @@ export interface ProfileAstVisitor<R = unknown> {
   ): R;
   visitUseCaseExampleNode(
     node: UseCaseExampleNode,
+    ...parameters: unknown[]
+  ): R;
+  visitComlinkNoneLiteralNode(
+    node: ComlinkNoneLiteralNode,
     ...parameters: unknown[]
   ): R;
   visitComlinkPrimitiveLiteralNode(
