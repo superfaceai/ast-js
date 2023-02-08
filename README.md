@@ -1,6 +1,6 @@
 # Ast-js
 
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/superfaceai/ast-js/main.yml?branch=dev)](https://github.com/superfaceai/ast-js/actions/workflows/main.yml)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/superfaceai/ast-js/main.yml)](https://github.com/superfaceai/ast-js/actions/workflows/main.yml)
 ![NPM](https://img.shields.io/npm/v/@superfaceai/ast)
 [![NPM](https://img.shields.io/npm/l/@superfaceai/ast)](LICENSE)
 ![TypeScript](https://img.shields.io/badge/%3C%2F%3E-Typescript-blue)
