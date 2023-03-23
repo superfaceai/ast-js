@@ -95,10 +95,10 @@ export interface NonNullDefinitionNode extends ProfileASTNodeBase {
   kind: 'NonNullDefinition';
   // Should be `Exclude<Type, NonNullDefinitionNode | UnionDefinitionNode>` but it produces a TS(2502) error
   type:
-    | TypeName
-    | ObjectDefinitionNode
-    | EnumDefinitionNode
-    | ListDefinitionNode;
+  | TypeName
+  | ObjectDefinitionNode
+  | EnumDefinitionNode
+  | ListDefinitionNode;
 }
 
 /**
@@ -136,7 +136,7 @@ export interface EnumValueNode extends ProfileASTNodeBase, DocumentedNode {
  */
 export interface FieldDefinitionNode
   extends ProfileASTNodeBase,
-    DocumentedNode {
+  DocumentedNode {
   kind: 'FieldDefinition';
   /**
    * @pattern require('./utils').IDENTIFIER_RE_SOURCE
@@ -155,7 +155,7 @@ export interface FieldDefinitionNode
  */
 export interface NamedFieldDefinitionNode
   extends ProfileASTNodeBase,
-    DocumentedNode {
+  DocumentedNode {
   kind: 'NamedFieldDefinition';
   /**
    * @pattern require('./utils').IDENTIFIER_RE_SOURCE
@@ -176,7 +176,7 @@ export interface NamedFieldDefinitionNode
  */
 export interface NamedModelDefinitionNode
   extends ProfileASTNodeBase,
-    DocumentedNode {
+  DocumentedNode {
   kind: 'NamedModelDefinition';
   /**
    * @pattern require('./utils').IDENTIFIER_RE_SOURCE
@@ -194,7 +194,7 @@ export interface NamedModelDefinitionNode
  */
 export interface UseCaseSlotDefinitionNode<T extends ProfileASTNode>
   extends ProfileASTNodeBase,
-    DocumentedNode {
+  DocumentedNode {
   kind: 'UseCaseSlotDefinition';
   value: T;
 }
@@ -214,7 +214,7 @@ usecase ident safety {
 */
 export interface UseCaseDefinitionNode
   extends ProfileASTNodeBase,
-    DocumentedNode {
+  DocumentedNode {
   kind: 'UseCaseDefinition';
   /**
    * @pattern require('./utils').IDENTIFIER_RE_SOURCE
@@ -318,7 +318,7 @@ export type ProfileASTNode =
 export interface UseCaseExampleNode extends ProfileASTNodeBase {
   kind: 'UseCaseExample';
   exampleName?: string;
-  input?: UseCaseSlotDefinitionNode<ComlinkLiteralNode>;
+  input?: UseCaseSlotDefinitionNode<ComlinkObjectLiteralNode>;
   result?: UseCaseSlotDefinitionNode<ComlinkLiteralNode>;
   asyncResult?: UseCaseSlotDefinitionNode<ComlinkLiteralNode>;
   error?: UseCaseSlotDefinitionNode<ComlinkLiteralNode>;
@@ -360,7 +360,7 @@ export interface ComlinkListLiteralNode extends ProfileASTNodeBase {
  */
 export interface ComlinkAssignmentNode
   extends ProfileASTNodeBase,
-    DocumentedNode {
+  DocumentedNode {
   kind: 'ComlinkAssignment';
   key: string[];
   value: ComlinkLiteralNode;
