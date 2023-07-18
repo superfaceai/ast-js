@@ -55,6 +55,14 @@
                         "additionalProperties": false,
                         "description": "Security scheme for api key authorization.",
                         "properties": {
+                            "bodyType": {
+                                "$id": "ApiKeyBodyType",
+                                "description": "Body type to inject security value to.",
+                                "enum": [
+                                    "json"
+                                ],
+                                "type": "string"
+                            },
                             "id": {
                                 "type": "string"
                             },
@@ -122,46 +130,6 @@
                                     "bearer"
                                 ],
                                 "type": "string"
-                            },
-                            "type": {
-                                "enum": [
-                                    "http"
-                                ],
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "id",
-                            "scheme",
-                            "type"
-                        ],
-                        "type": "object"
-                    },
-                    {
-                        "$id": "DigestSecurityScheme",
-                        "additionalProperties": false,
-                        "description": "Security scheme for digest authorization.",
-                        "properties": {
-                            "authorizationHeader": {
-                                "description": "Name of header containing authorization eg. Authorization",
-                                "type": "string"
-                            },
-                            "challengeHeader": {
-                                "description": "Name of header containing challenge from the server eg. www-authenticate",
-                                "type": "string"
-                            },
-                            "id": {
-                                "type": "string"
-                            },
-                            "scheme": {
-                                "enum": [
-                                    "digest"
-                                ],
-                                "type": "string"
-                            },
-                            "statusCode": {
-                                "description": "Code that should be returned from initial call for challenge eg. 401",
-                                "type": "number"
                             },
                             "type": {
                                 "enum": [
