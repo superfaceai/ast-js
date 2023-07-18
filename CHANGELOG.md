@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Fixed `UseCaseExampleNode` input to be only `ComlinkObjectLiteralNode`
+
 ## [1.3.0] - 2023-01-31
 ### Added
 - Added `ComlinkNoneLiteral` to Profile AST
