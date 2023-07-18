@@ -32,18 +32,18 @@ export enum BackoffKind {
 export type BackoffPolicy =
   | BackoffKind.EXPONENTIAL
   | {
-      kind: BackoffKind.EXPONENTIAL;
-      /**
-       * @TJS-minimum 0
-       * @TJS-type integer
-       **/
-      start?: number;
-      /**
-       * @TJS-minimum 0
-       * @TJS-type integer
-       **/
-      factor?: number;
-    };
+    kind: BackoffKind.EXPONENTIAL;
+    /**
+     * @TJS-minimum 0
+     * @TJS-type integer
+     **/
+    start?: number;
+    /**
+     * @TJS-minimum 0
+     * @TJS-type integer
+     **/
+    factor?: number;
+  };
 
 /**
  * Retry policy configuration.
@@ -51,42 +51,42 @@ export type BackoffPolicy =
 export type RetryPolicy =
   | OnFail.NONE
   | {
-      kind: OnFail.NONE;
-    }
+    kind: OnFail.NONE;
+  }
   | OnFail.SIMPLE
   | {
-      kind: OnFail.SIMPLE;
-      /**
-       * @TJS-minimum 0
-       * @TJS-type integer
-       **/
-      maxContiguousRetries?: number;
-      /**
-       * @TJS-minimum 0
-       * @TJS-type integer
-       **/
-      requestTimeout?: number;
-    }
+    kind: OnFail.SIMPLE;
+    /**
+     * @TJS-minimum 0
+     * @TJS-type integer
+     **/
+    maxContiguousRetries?: number;
+    /**
+     * @TJS-minimum 0
+     * @TJS-type integer
+     **/
+    requestTimeout?: number;
+  }
   | OnFail.CIRCUIT_BREAKER
   | {
-      kind: OnFail.CIRCUIT_BREAKER;
-      /**
-       * @TJS-minimum 0
-       * @TJS-type integer
-       **/
-      maxContiguousRetries?: number;
-      /**
-       * @TJS-minimum 0
-       * @TJS-type integer
-       **/
-      openTime?: number;
-      /**
-       * @TJS-minimum 0
-       * @TJS-type integer
-       **/
-      requestTimeout?: number;
-      backoff?: BackoffPolicy;
-    };
+    kind: OnFail.CIRCUIT_BREAKER;
+    /**
+     * @TJS-minimum 0
+     * @TJS-type integer
+     **/
+    maxContiguousRetries?: number;
+    /**
+     * @TJS-minimum 0
+     * @TJS-type integer
+     **/
+    openTime?: number;
+    /**
+     * @TJS-minimum 0
+     * @TJS-type integer
+     **/
+    requestTimeout?: number;
+    backoff?: BackoffPolicy;
+  };
 
 export type NormalizedBackoffPolicy = {
   kind: BackoffKind.EXPONENTIAL;
@@ -104,40 +104,40 @@ export type NormalizedBackoffPolicy = {
 
 export type NormalizedRetryPolicy =
   | {
-      kind: OnFail.NONE;
-    }
+    kind: OnFail.NONE;
+  }
   | {
-      kind: OnFail.SIMPLE;
-      /**
-       * @TJS-minimum 0
-       * @TJS-type integer
-       **/
-      maxContiguousRetries?: number;
-      /**
-       * @TJS-minimum 0
-       * @TJS-type integer
-       **/
-      requestTimeout?: number;
-    }
+    kind: OnFail.SIMPLE;
+    /**
+     * @TJS-minimum 0
+     * @TJS-type integer
+     **/
+    maxContiguousRetries?: number;
+    /**
+     * @TJS-minimum 0
+     * @TJS-type integer
+     **/
+    requestTimeout?: number;
+  }
   | {
-      kind: OnFail.CIRCUIT_BREAKER;
-      /**
-       * @TJS-minimum 0
-       * @TJS-type integer
-       **/
-      maxContiguousRetries?: number;
-      /**
-       * @TJS-minimum 0
-       * @TJS-type integer
-       **/
-      openTime?: number;
-      /**
-       * @TJS-minimum 0
-       * @TJS-type integer
-       **/
-      requestTimeout?: number;
-      backoff: NormalizedBackoffPolicy;
-    };
+    kind: OnFail.CIRCUIT_BREAKER;
+    /**
+     * @TJS-minimum 0
+     * @TJS-type integer
+     **/
+    maxContiguousRetries?: number;
+    /**
+     * @TJS-minimum 0
+     * @TJS-type integer
+     **/
+    openTime?: number;
+    /**
+     * @TJS-minimum 0
+     * @TJS-type integer
+     **/
+    requestTimeout?: number;
+    backoff: NormalizedBackoffPolicy;
+  };
 
 /**
  * Default per usecase values.
@@ -179,25 +179,25 @@ export type NormalizedProfileProviderDefaults = {
 export type ProfileProviderSettings = {
   defaults?: ProfileProviderDefaults;
 } & (
-  | {
+    | {
       file: string;
     }
-  | {
+    | {
       mapVariant?: string;
       mapRevision?: string;
     }
-);
+  );
 
 export type NormalizedProfileProviderSettings =
   | {
-      file: string;
-      defaults: NormalizedProfileProviderDefaults;
-    }
+    file: string;
+    defaults: NormalizedProfileProviderDefaults;
+  }
   | {
-      mapVariant?: string;
-      mapRevision?: string;
-      defaults: NormalizedProfileProviderDefaults;
-    };
+    mapVariant?: string;
+    mapRevision?: string;
+    defaults: NormalizedProfileProviderDefaults;
+  };
 
 /**
  * Profile provider entry containing either `profileProviderSettings` or shorthands.
@@ -212,29 +212,29 @@ export type ProfileSettings = {
   defaults?: UsecaseDefaults;
   providers?: { [provider: string]: UriPath | ProfileProviderEntry };
 } & (
-  | {
+    | {
       version: SemanticVersion;
     }
-  | {
+    | {
       file: string;
     }
-);
+  );
 
 export type NormalizedProfileSettings = {
   priority: string[];
   defaults: NormalizedUsecaseDefaults;
   providers: { [provider: string]: NormalizedProfileProviderSettings };
 } & (
-  | {
+    | {
       version: SemanticVersion;
     }
-  | {
+    | {
       file: string;
       priority: string[];
       defaults: NormalizedUsecaseDefaults;
       providers: { [provider: string]: NormalizedProfileProviderSettings };
     }
-);
+  );
 
 /**
  * Profile entry containing either `profileSettings` or shorthands.
@@ -268,22 +268,12 @@ export type BearerTokenSecurityValues = IdBase & {
 };
 
 /**
- * Security values for digest security scheme
- * @$id DigestSecurityValues
- **/
-export type DigestSecurityValues = IdBase & {
-  username: string;
-  password: string;
-};
-
-/**
  * Authorization variables.
  */
 export type SecurityValues =
   | ApiKeySecurityValues
   | BasicAuthSecurityValues
-  | BearerTokenSecurityValues
-  | DigestSecurityValues;
+  | BearerTokenSecurityValues;
 
 /**
  * Expanded provider settings for one provider name.

@@ -733,28 +733,6 @@
                                                 "token"
                                             ],
                                             "type": "object"
-                                        },
-                                        {
-                                            "$id": "DigestSecurityValues",
-                                            "additionalProperties": false,
-                                            "description": "Security values for digest security scheme",
-                                            "properties": {
-                                                "id": {
-                                                    "type": "string"
-                                                },
-                                                "password": {
-                                                    "type": "string"
-                                                },
-                                                "username": {
-                                                    "type": "string"
-                                                }
-                                            },
-                                            "required": [
-                                                "id",
-                                                "password",
-                                                "username"
-                                            ],
-                                            "type": "object"
                                         }
                                     ],
                                     "description": "Authorization variables."

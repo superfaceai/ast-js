@@ -5,7 +5,6 @@ import {
   ApiKeySecurityValues,
   BasicAuthSecurityValues,
   BearerTokenSecurityValues,
-  DigestSecurityValues,
   FILE_URI_REGEX,
   SEMVER_REGEX,
   SuperJsonDocument,
@@ -40,5 +39,3 @@ export const isBasicAuthSecurityValues: Guard<BasicAuthSecurityValues> =
   prepareIs<BasicAuthSecurityValues>('BasicAuthSecurityValues');
 export const isBearerTokenSecurityValues: Guard<BearerTokenSecurityValues> =
   prepareIs<BearerTokenSecurityValues>('BearerTokenSecurityValues');
-export const isDigestSecurityValues: Guard<DigestSecurityValues> =
-  prepareIs<DigestSecurityValues>('DigestSecurityValues');

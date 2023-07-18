@@ -26,7 +26,6 @@ export enum ApiKeyPlacement {
 export enum HttpScheme {
   BASIC = 'basic',
   BEARER = 'bearer',
-  DIGEST = 'digest',
 }
 
 /**

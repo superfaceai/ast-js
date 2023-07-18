@@ -3,7 +3,6 @@ import {
   isApiKeySecurityValues,
   isBasicAuthSecurityValues,
   isBearerTokenSecurityValues,
-  isDigestSecurityValues,
   isFileURIString,
   isVersionString,
 } from './superjson.utils';
@@ -151,22 +150,6 @@ describe('super.json utils', () => {
 
     it('should return false on invalid values', () => {
       expect(isBearerTokenSecurityValues({ id: 7 })).toBe(false);
-    });
-  });
-
-  describe('isDigestSecurityValues', () => {
-    it('should return true on valid values', () => {
-      expect(
-        isDigestSecurityValues({
-          id: 'some-id',
-          username: 'some-user-name',
-          password: 'some-password',
-        })
-      ).toBe(true);
-    });
-
-    it('should return false on invalid values', () => {
-      expect(isDigestSecurityValues({ id: 7 })).toBe(false);
     });
   });
 });
