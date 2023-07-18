@@ -127,6 +127,9 @@ export type Type = TypeName | TypeDefinition;
  */
 export interface EnumValueNode extends ProfileASTNodeBase, DocumentedNode {
   kind: 'EnumValue';
+  /**
+   * @pattern require('./utils').IDENTIFIER_RE_SOURCE
+   **/
   name?: string;
   value: string | number | boolean;
 }
