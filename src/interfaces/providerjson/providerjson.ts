@@ -19,7 +19,6 @@ export enum HttpScheme {
 
 /**
  * The placement of the API key.
- * @$id ApiKeyPlacement
  */
 export enum ApiKeyPlacement {
   HEADER = 'header',
@@ -30,7 +29,6 @@ export enum ApiKeyPlacement {
 
 /**
  * Body type to inject security value to.
- * @$id ApiKeyBodyType
  */
 export enum ApiKeyBodyType {
   JSON = 'json',
@@ -38,21 +36,17 @@ export enum ApiKeyBodyType {
 
 /**
  * Security scheme for api key authorization.
- * @$id ApiKeySecurityScheme
  */
 export type ApiKeySecurityScheme = {
   id: string;
   type: SecurityType.APIKEY;
-  /** @$ref ApiKeyPlacement */
   in: ApiKeyPlacement;
-  /** @$ref ApiKeyBodyType */
   bodyType?: ApiKeyBodyType;
   name?: string;
 };
 
 /**
  * Security scheme for basic authorization.
- * @$id BasicAuthSecurityScheme
  */
 export type BasicAuthSecurityScheme = {
   id: string;
@@ -62,7 +56,6 @@ export type BasicAuthSecurityScheme = {
 
 /**
  * Security scheme for bearer authorization.
- * @$id BearerTokenSecurityScheme
  */
 export type BearerTokenSecurityScheme = {
   id: string;
@@ -73,7 +66,6 @@ export type BearerTokenSecurityScheme = {
 
 /**
  * Type describing general security scheme.
- * @$id SecurityScheme
  */
 export type SecurityScheme =
   | ApiKeySecurityScheme
@@ -99,13 +91,11 @@ export type IntegrationParameter = {
 
 /**
  * Type decribing provider.json document.
- * @$id ProviderJson
  */
 export type ProviderJson = {
   /** @pattern require('.').PROVIDER_NAME_REGEX_SOURCE */
   name: string;
   services: ProviderService[];
-  /** @$ref SecurityScheme */
   securitySchemes?: SecurityScheme[];
   defaultService: string;
   parameters?: IntegrationParameter[];
