@@ -12,7 +12,7 @@ export enum SecurityType {
 /**
  * The placement of the API key.
  * @$id ApiKeyPlacement
- **/
+ */
 export enum ApiKeyPlacement {
   HEADER = 'header',
   BODY = 'body',
@@ -20,10 +20,20 @@ export enum ApiKeyPlacement {
   QUERY = 'query',
 }
 
+/**
+ * Type of HTTP Authentication Scheme.
+ */
 export enum HttpScheme {
   BASIC = 'basic',
   BEARER = 'bearer',
-  DIGEST = 'digest',
+}
+
+/**
+ * Body type to inject security value to.
+ * @$id ApiKeyBodyType
+ */
+export enum ApiKeyBodyType {
+  JSON = 'json',
 }
 
 /**
@@ -33,10 +43,9 @@ export enum HttpScheme {
 export type ApiKeySecurityScheme = {
   id: string;
   type: SecurityType.APIKEY;
-  /**
-   * @$ref ApiKeyPlacement
-   */
+  /** @$ref ApiKeyPlacement */
   in: ApiKeyPlacement;
+  bodyType?: ApiKeyBodyType;
   name?: string;
 };
 
@@ -62,35 +71,12 @@ export type BearerTokenSecurityScheme = {
 };
 
 /**
- * Security scheme for digest authorization.
- * @$id DigestSecurityScheme
- */
-export type DigestSecurityScheme = {
-  id: string;
-  type: SecurityType.HTTP;
-  scheme: HttpScheme.DIGEST;
-  /**
-   * Code that should be returned from initial call for challenge eg. 401
-   */
-  statusCode?: number;
-  /**
-   * Name of header containing challenge from the server eg. www-authenticate
-   */
-  challengeHeader?: string;
-  /**
-   * Name of header containing authorization eg. Authorization
-   */
-  authorizationHeader?: string;
-};
-
-/**
  * Type describing general security scheme.
  */
 export type SecurityScheme =
   | ApiKeySecurityScheme
   | BasicAuthSecurityScheme
-  | BearerTokenSecurityScheme
-  | DigestSecurityScheme;
+  | BearerTokenSecurityScheme;
 
 export type ProviderService = {
   id: string;
@@ -108,6 +94,40 @@ export type IntegrationParameter = {
   description?: string;
   default?: string;
 };
+
+export type IdBase = {
+  id: string;
+};
+
+/**
+ * @$id ApiKeySecurityValues
+ **/
+export type ApiKeySecurityValues = IdBase & {
+  apikey: string;
+};
+
+/**
+ * @$id BasicAuthSecurityValues
+ **/
+export type BasicAuthSecurityValues = IdBase & {
+  username: string;
+  password: string;
+};
+
+/**
+ * @$id BearerTokenSecurityValues
+ **/
+export type BearerTokenSecurityValues = IdBase & {
+  token: string;
+};
+
+/**
+ * Authorization variables.
+ */
+export type SecurityValues =
+  | ApiKeySecurityValues
+  | BasicAuthSecurityValues
+  | BearerTokenSecurityValues;
 
 /**
  * Type decribing provider.json document.

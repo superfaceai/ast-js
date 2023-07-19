@@ -1,12 +1,10 @@
 import { prepareAssert, preparePrepareIs } from '../../validation';
 import { Assert, Guard } from '../ast';
-import { SecurityValues } from '../superjson';
-import { IntegrationParameter } from '.';
+import { IntegrationParameter, SecurityValues } from '.';
 import {
   ApiKeySecurityScheme,
   BasicAuthSecurityScheme,
   BearerTokenSecurityScheme,
-  DigestSecurityScheme,
   PROVIDER_NAME_REGEX,
   ProviderJson,
   SecurityScheme,
@@ -38,8 +36,6 @@ export const isBasicAuthSecurityScheme: Guard<BasicAuthSecurityScheme> =
   prepareIs<BasicAuthSecurityScheme>('BasicAuthSecurityScheme');
 export const isBearerTokenSecurityScheme: Guard<BearerTokenSecurityScheme> =
   prepareIs<BearerTokenSecurityScheme>('BearerTokenSecurityScheme');
-export const isDigestSecurityScheme: Guard<DigestSecurityScheme> =
-  prepareIs<DigestSecurityScheme>('DigestSecurityScheme');
 
 export function prepareSecurityValues(
   providerName: string,
@@ -64,12 +60,6 @@ export function prepareSecurityValues(
       security.push({
         id: scheme.id,
         token: `$${envProviderName}_TOKEN`,
-      });
-    } else if (isDigestSecurityScheme(scheme)) {
-      security.push({
-        id: scheme.id,
-        username: `$${envProviderName}_USERNAME`,
-        password: `$${envProviderName}_PASSWORD`,
       });
     }
   }

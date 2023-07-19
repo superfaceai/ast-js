@@ -13,6 +13,94 @@
                 "query"
             ],
             "type": "string"
+        },
+        "SecurityScheme": {
+            "anyOf": [
+                {
+                    "$id": "ApiKeySecurityScheme",
+                    "additionalProperties": false,
+                    "description": "Security scheme for api key authorization.",
+                    "properties": {
+                        "bodyType": {
+                            "$id": "ApiKeyBodyType",
+                            "const": "json",
+                            "description": "Body type to inject security value to.",
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "in": {
+                            "$ref": "ApiKeyPlacement"
+                        },
+                        "name": {
+                            "type": "string"
+                        },
+                        "type": {
+                            "const": "apiKey",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "id",
+                        "in",
+                        "type"
+                    ],
+                    "type": "object"
+                },
+                {
+                    "$id": "BasicAuthSecurityScheme",
+                    "additionalProperties": false,
+                    "description": "Security scheme for basic authorization.",
+                    "properties": {
+                        "id": {
+                            "type": "string"
+                        },
+                        "scheme": {
+                            "const": "basic",
+                            "type": "string"
+                        },
+                        "type": {
+                            "const": "http",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "id",
+                        "scheme",
+                        "type"
+                    ],
+                    "type": "object"
+                },
+                {
+                    "$id": "BearerTokenSecurityScheme",
+                    "additionalProperties": false,
+                    "description": "Security scheme for bearer authorization.",
+                    "properties": {
+                        "bearerFormat": {
+                            "type": "string"
+                        },
+                        "id": {
+                            "type": "string"
+                        },
+                        "scheme": {
+                            "const": "bearer",
+                            "type": "string"
+                        },
+                        "type": {
+                            "const": "http",
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "id",
+                        "scheme",
+                        "type"
+                    ],
+                    "type": "object"
+                }
+            ],
+            "description": "Type describing general security scheme."
         }
     },
     "description": "Type decribing provider.json document.",
@@ -49,136 +137,7 @@
         },
         "securitySchemes": {
             "items": {
-                "anyOf": [
-                    {
-                        "$id": "ApiKeySecurityScheme",
-                        "additionalProperties": false,
-                        "description": "Security scheme for api key authorization.",
-                        "properties": {
-                            "id": {
-                                "type": "string"
-                            },
-                            "in": {
-                                "$ref": "ApiKeyPlacement"
-                            },
-                            "name": {
-                                "type": "string"
-                            },
-                            "type": {
-                                "enum": [
-                                    "apiKey"
-                                ],
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "id",
-                            "in",
-                            "type"
-                        ],
-                        "type": "object"
-                    },
-                    {
-                        "$id": "BasicAuthSecurityScheme",
-                        "additionalProperties": false,
-                        "description": "Security scheme for basic authorization.",
-                        "properties": {
-                            "id": {
-                                "type": "string"
-                            },
-                            "scheme": {
-                                "enum": [
-                                    "basic"
-                                ],
-                                "type": "string"
-                            },
-                            "type": {
-                                "enum": [
-                                    "http"
-                                ],
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "id",
-                            "scheme",
-                            "type"
-                        ],
-                        "type": "object"
-                    },
-                    {
-                        "$id": "BearerTokenSecurityScheme",
-                        "additionalProperties": false,
-                        "description": "Security scheme for bearer authorization.",
-                        "properties": {
-                            "bearerFormat": {
-                                "type": "string"
-                            },
-                            "id": {
-                                "type": "string"
-                            },
-                            "scheme": {
-                                "enum": [
-                                    "bearer"
-                                ],
-                                "type": "string"
-                            },
-                            "type": {
-                                "enum": [
-                                    "http"
-                                ],
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "id",
-                            "scheme",
-                            "type"
-                        ],
-                        "type": "object"
-                    },
-                    {
-                        "$id": "DigestSecurityScheme",
-                        "additionalProperties": false,
-                        "description": "Security scheme for digest authorization.",
-                        "properties": {
-                            "authorizationHeader": {
-                                "description": "Name of header containing authorization eg. Authorization",
-                                "type": "string"
-                            },
-                            "challengeHeader": {
-                                "description": "Name of header containing challenge from the server eg. www-authenticate",
-                                "type": "string"
-                            },
-                            "id": {
-                                "type": "string"
-                            },
-                            "scheme": {
-                                "enum": [
-                                    "digest"
-                                ],
-                                "type": "string"
-                            },
-                            "statusCode": {
-                                "description": "Code that should be returned from initial call for challenge eg. 401",
-                                "type": "number"
-                            },
-                            "type": {
-                                "enum": [
-                                    "http"
-                                ],
-                                "type": "string"
-                            }
-                        },
-                        "required": [
-                            "id",
-                            "scheme",
-                            "type"
-                        ],
-                        "type": "object"
-                    }
-                ],
-                "description": "Type describing general security scheme."
+                "$ref": "#/definitions/SecurityScheme"
             },
             "type": "array"
         },

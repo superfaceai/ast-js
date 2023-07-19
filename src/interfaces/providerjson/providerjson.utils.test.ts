@@ -1,5 +1,6 @@
 import { IntegrationParameter, prepareProviderParameters } from '.';
 import {
+  ApiKeyBodyType,
   ApiKeyPlacement,
   HttpScheme,
   SecurityScheme,
@@ -10,7 +11,6 @@ import {
   isApiKeySecurityScheme,
   isBasicAuthSecurityScheme,
   isBearerTokenSecurityScheme,
-  isDigestSecurityScheme,
   isValidProviderName,
   prepareSecurityValues,
 } from './providerjson.utils';
@@ -42,14 +42,6 @@ describe('ProviderJsonDocument', () => {
                 "id": "swapidev",
                 "type": "http",
                 "scheme": "basic"
-            },
-            {
-              "id": "swapidev",
-              "type": "http",
-              "scheme": "digest",
-              "statusCode": 401,
-              "challengeHeader": "www-authenticate",
-              "authorizationHeader": "authorizaation"
             }
         ],
         "defaultService": "swapidev",
@@ -81,15 +73,7 @@ describe('ProviderJsonDocument', () => {
             id: 'swapidev',
             type: 'http',
             scheme: 'basic',
-          },
-          {
-            id: 'swapidev',
-            type: 'http',
-            scheme: 'digest',
-            statusCode: 401,
-            challengeHeader: 'www-authenticate',
-            authorizationHeader: 'authorizaation',
-          },
+          }
         ],
         defaultService: 'swapidev',
         parameters: [{ name: 'userId', description: "some user's id" }],
@@ -382,6 +366,17 @@ describe('ProviderJsonDocument', () => {
           isApiKeySecurityScheme({
             id: 'swapidev',
             type: SecurityType.APIKEY,
+            in: ApiKeyPlacement.BODY,
+            bodyType: ApiKeyBodyType.JSON,
+            name: 'X-API-Key',
+          })
+        ).toEqual(true);
+      }
+      {
+        expect(
+          isApiKeySecurityScheme({
+            id: 'swapidev',
+            type: SecurityType.APIKEY,
             in: ApiKeyPlacement.PATH,
             name: 'X-API-Key',
           })
@@ -412,15 +407,6 @@ describe('ProviderJsonDocument', () => {
             id: 'swapidev',
             type: SecurityType.HTTP,
             scheme: HttpScheme.BASIC,
-          })
-        ).toEqual(false);
-      }
-      {
-        expect(
-          isApiKeySecurityScheme({
-            id: 'swapidev',
-            type: SecurityType.HTTP,
-            scheme: HttpScheme.DIGEST,
           })
         ).toEqual(false);
       }
@@ -455,15 +441,6 @@ describe('ProviderJsonDocument', () => {
           })
         ).toEqual(true);
       }
-      {
-        expect(
-          isBasicAuthSecurityScheme({
-            id: 'swapidev',
-            type: SecurityType.HTTP,
-            scheme: HttpScheme.DIGEST,
-          })
-        ).toEqual(false);
-      }
     });
 
     it('checks BearerTokenSecurity type correctly', () => {
@@ -495,101 +472,8 @@ describe('ProviderJsonDocument', () => {
           })
         ).toEqual(false);
       }
-      {
-        expect(
-          isBearerTokenSecurityScheme({
-            id: 'swapidev',
-            type: SecurityType.HTTP,
-            scheme: HttpScheme.DIGEST,
-          })
-        ).toEqual(false);
-      }
     });
 
-    it('checks DigestAuthSecurity type correctly', () => {
-      {
-        expect(
-          isDigestSecurityScheme({
-            id: 'swapidev',
-            type: SecurityType.APIKEY,
-            in: ApiKeyPlacement.HEADER,
-            name: 'X-API-Key',
-          })
-        ).toEqual(false);
-      }
-      {
-        expect(
-          isDigestSecurityScheme({
-            id: 'swapidev',
-            type: SecurityType.HTTP,
-            scheme: HttpScheme.BEARER,
-          })
-        ).toEqual(false);
-      }
-      {
-        expect(
-          isDigestSecurityScheme({
-            id: 'swapidev',
-            type: SecurityType.HTTP,
-            scheme: HttpScheme.BASIC,
-          })
-        ).toEqual(false);
-      }
-      {
-        expect(
-          isDigestSecurityScheme({
-            id: 'swapidev',
-            type: SecurityType.HTTP,
-            scheme: HttpScheme.DIGEST,
-          })
-        ).toEqual(true);
-      }
-      {
-        expect(
-          isDigestSecurityScheme({
-            id: 'swapidev',
-            type: SecurityType.HTTP,
-            scheme: HttpScheme.DIGEST,
-            statusCode: 401,
-          })
-        ).toEqual(true);
-      }
-      {
-        expect(
-          isDigestSecurityScheme({
-            id: 'swapidev',
-            type: SecurityType.HTTP,
-            scheme: HttpScheme.DIGEST,
-            statusCode: 401,
-            challengeHeader: 'test',
-          })
-        ).toEqual(true);
-      }
-      {
-        expect(
-          isDigestSecurityScheme({
-            id: 'swapidev',
-            type: SecurityType.HTTP,
-            scheme: HttpScheme.DIGEST,
-            statusCode: 401,
-            challengeHeader: 'test',
-            authorizationHeader: 'auth',
-          })
-        ).toEqual(true);
-      }
-      {
-        expect(
-          isDigestSecurityScheme({
-            id: 'swapidev',
-            type: SecurityType.HTTP,
-            scheme: HttpScheme.DIGEST,
-            statusCode: undefined,
-            challengeHeader: undefined,
-            authorizationHeader: undefined,
-          })
-        ).toEqual(true);
-      }
-    });
   });
   describe('ProviderJson name check', () => {
     it('checks Provider name correctly', () => {
@@ -622,11 +506,6 @@ describe('prepareSecurityValues', () => {
       type: SecurityType.HTTP,
       scheme: HttpScheme.BASIC,
     },
-    {
-      id: 'digest',
-      type: SecurityType.HTTP,
-      scheme: HttpScheme.DIGEST,
-    },
   ];
 
   it('prepares security values', () => {
@@ -641,11 +520,6 @@ describe('prepareSecurityValues', () => {
       },
       {
         id: 'basic',
-        username: `$TEST_PROVIDER_USERNAME`,
-        password: `$TEST_PROVIDER_PASSWORD`,
-      },
-      {
-        id: 'digest',
         username: `$TEST_PROVIDER_USERNAME`,
         password: `$TEST_PROVIDER_PASSWORD`,
       },
