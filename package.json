@@ -24,9 +24,8 @@
     "generate_schema": "typescript-json-schema --noExtraProps --required --strictNullChecks --tsNodeRegister --topRef",
     "generate_profile_schema": "yarn run generate_schema src/interfaces/ast/profile-ast.ts ProfileDocumentNode -o src/interfaces/ast/profile-ast.schema.json",
     "generate_map_schema": "yarn run generate_schema src/interfaces/ast/map-ast.ts MapDocumentNode -o src/interfaces/ast/map-ast.schema.json",
-    "generate_superjson_schema": "yarn run generate_schema src/interfaces/superjson/superjson.ts SuperJsonDocument -o src/interfaces/superjson/superjson.schema.json",
     "generate_providerjson_schema": "yarn run generate_schema src/interfaces/providerjson/providerjson.ts ProviderJson -o src/interfaces/providerjson/providerjson.schema.json",
-    "generate_schemas": "yarn run generate_profile_schema && yarn run generate_map_schema && yarn run generate_superjson_schema && yarn run generate_providerjson_schema",
+    "generate_schemas": "yarn run generate_profile_schema && yarn run generate_map_schema && yarn run generate_providerjson_schema",
     "prepare": "husky install"
   },
   "dependencies": {

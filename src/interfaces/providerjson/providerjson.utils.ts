@@ -1,7 +1,6 @@
 import { prepareAssert, preparePrepareIs } from '../../validation';
 import { Assert, Guard } from '../ast';
-import { SecurityValues } from '../superjson';
-import { IntegrationParameter } from '.';
+import { IntegrationParameter, SecurityValues } from '.';
 import {
   ApiKeySecurityScheme,
   BasicAuthSecurityScheme,

@@ -95,6 +95,40 @@ export type IntegrationParameter = {
   default?: string;
 };
 
+export type IdBase = {
+  id: string;
+};
+
+/**
+ * @$id ApiKeySecurityValues
+ **/
+export type ApiKeySecurityValues = IdBase & {
+  apikey: string;
+};
+
+/**
+ * @$id BasicAuthSecurityValues
+ **/
+export type BasicAuthSecurityValues = IdBase & {
+  username: string;
+  password: string;
+};
+
+/**
+ * @$id BearerTokenSecurityValues
+ **/
+export type BearerTokenSecurityValues = IdBase & {
+  token: string;
+};
+
+/**
+ * Authorization variables.
+ */
+export type SecurityValues =
+  | ApiKeySecurityValues
+  | BasicAuthSecurityValues
+  | BearerTokenSecurityValues;
+
 /**
  * Type decribing provider.json document.
  * @$id ProviderJson
