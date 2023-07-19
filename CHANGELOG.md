@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Removed
 - **BREAKING CHANGE**: Removed `DigestSecurityScheme`
 - **BREAKING CHANGE**: Removed superjson schema
+- **BREAKING CHANGE**: Removed map AST schema
 
 ### Fixed
 - Profile AST JSON Schema regenerated
