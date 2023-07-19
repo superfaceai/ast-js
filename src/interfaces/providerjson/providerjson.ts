@@ -10,6 +10,14 @@ export enum SecurityType {
 }
 
 /**
+ * Type of HTTP Authentication Scheme.
+ */
+export enum HttpScheme {
+  BASIC = 'basic',
+  BEARER = 'bearer',
+}
+
+/**
  * The placement of the API key.
  * @$id ApiKeyPlacement
  */
@@ -18,14 +26,6 @@ export enum ApiKeyPlacement {
   BODY = 'body',
   PATH = 'path',
   QUERY = 'query',
-}
-
-/**
- * Type of HTTP Authentication Scheme.
- */
-export enum HttpScheme {
-  BASIC = 'basic',
-  BEARER = 'bearer',
 }
 
 /**
@@ -45,6 +45,7 @@ export type ApiKeySecurityScheme = {
   type: SecurityType.APIKEY;
   /** @$ref ApiKeyPlacement */
   in: ApiKeyPlacement;
+  /** @$ref ApiKeyBodyType */
   bodyType?: ApiKeyBodyType;
   name?: string;
 };
@@ -72,6 +73,7 @@ export type BearerTokenSecurityScheme = {
 
 /**
  * Type describing general security scheme.
+ * @$id SecurityScheme
  */
 export type SecurityScheme =
   | ApiKeySecurityScheme
@@ -100,11 +102,10 @@ export type IntegrationParameter = {
  * @$id ProviderJson
  */
 export type ProviderJson = {
-  /**
-   * @pattern require('.').PROVIDER_NAME_REGEX_SOURCE
-   */
+  /** @pattern require('.').PROVIDER_NAME_REGEX_SOURCE */
   name: string;
   services: ProviderService[];
+  /** @$ref SecurityScheme */
   securitySchemes?: SecurityScheme[];
   defaultService: string;
   parameters?: IntegrationParameter[];
